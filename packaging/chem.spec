@@ -44,7 +44,7 @@ a = Analysis(
     datas=datas,
     hiddenimports=hiddenimports,
     hookspath=[],
-    runtime_hooks=[],
+    runtime_hooks=[str(ROOT / "rthook_crashlog.py")],
     excludes=["pytest", "respx", "ruff", "packaging"],
     noarchive=False,
 )

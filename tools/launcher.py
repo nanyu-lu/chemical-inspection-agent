@@ -97,6 +97,19 @@ class ServerHandle:
 
         from chem_inspect.api.app import create_app
 
+        class QuietServer(uvicorn.Server):
+            """关闭信号处理。
+
+            我们在线程里跑服务，而 Windows 的 ProactorEventLoop 不支持
+            ``loop.add_signal_handler``，uvicorn 会退化成 ``signal.signal``，
+            在非主线程里直接抛 ``ValueError: signal only works in main thread``。
+            macOS/Linux 上 add_signal_handler 可用，所以这个坑只在 Windows 暴露。
+            退出由启动器按钮 / Ctrl+C（主线程）负责，不需要信号处理。
+            """
+
+            def install_signal_handlers(self) -> None:  # noqa: D102 - 见类注释
+                return
+
         app = create_app()
         config = uvicorn.Config(
             app,
@@ -109,7 +122,7 @@ class ServerHandle:
             log_level="info",
             access_log=False,
         )
-        self._server = uvicorn.Server(config)
+        self._server = QuietServer(config)
         self._thread = threading.Thread(target=self._run, name="uvicorn", daemon=True)
         self._thread.start()
 
