@@ -71,7 +71,7 @@ known_issues:
     detail: 合成图上模型对"有人无安全帽/出口堵塞"直接给 1.0，不能作为唯一阈值依据。
     fix: 阈值三分支仍需保留，但所有事件默认 need_manual_review=true；后续用真实数据做分桶校准。
 
-# 首轮真实数据评估（25 张，2026-11-06，详见 docs/评估报告初版.md）
+# 首轮真实数据评估（25 张，2026-11-06，详见 docs/测试报告.md）
 baseline:
   hz01_no_helmet: {hit: 2, n: 5, note: 远景/侧脸/小目标漏检，需 YOLO 裁剪放大后复判}
   hz04_channel_blocked: {hit: 2, n: 5, note: 部分占用判不出；与 05/06 跨类误报}

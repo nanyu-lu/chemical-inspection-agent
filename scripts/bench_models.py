@@ -12,7 +12,7 @@
     python scripts/bench_models.py --models qwen3-vl-plus qwen3.8-omni-flash
     python scripts/bench_models.py --workers 4
 
-产物：docs/模型对比报告.md、data/eval/model_bench.csv
+产物：data/eval/model_bench.csv（正式报告见 docs/测试报告.md）
 """
 
 from __future__ import annotations
@@ -40,7 +40,7 @@ from chem_inspect.prompt import build_judge_prompt, load_taxonomy, vl_categories
 from chem_inspect.settings import Settings
 
 DATA_DIR = ROOT / "测试图片"
-REPORT = ROOT / "docs" / "模型对比报告.md"
+REPORT = ROOT / "data" / "eval" / "model_bench_report.md"
 RAW_CSV = ROOT / "data" / "eval" / "model_bench.csv"
 
 DEFAULT_MODELS = [

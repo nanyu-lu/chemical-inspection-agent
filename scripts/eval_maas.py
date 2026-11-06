@@ -10,7 +10,7 @@
   uv run python scripts/eval_maas.py --per-class 6
   uv run python scripts/eval_maas.py --data-dir <图片根目录> --per-class 10
 产物：
-  docs/评估报告初版.md、data/eval/raw.csv
+  data/eval/eval_report.md、data/eval/raw.csv
 """
 
 from __future__ import annotations
@@ -63,7 +63,7 @@ TYPE_TO_NAME: dict[str, str] = {
 }
 
 RAW_DIR = ROOT / "data" / "eval"
-REPORT_PATH = ROOT / "docs" / "评估报告初版.md"
+REPORT_PATH = ROOT / "data" / "eval" / "eval_report.md"
 
 
 def sample_images(folder: Path, n: int) -> list[Path]:
