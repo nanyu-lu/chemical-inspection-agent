@@ -1,0 +1,39 @@
+# 点位（库位）清单 —— prompt 上下文来源
+#
+# 为什么必须有：HZ-04/05/06 属于"遮挡/堵塞"类，模型必须知道
+# 「这个点位应该有什么、哪里是通道/出口」，否则单帧无解。
+#
+# ⚠️ 以下为示例结构（非真实库位），需现场核实后替换。
+version: 0.1.0
+confirmed: false
+
+points:
+  - id: WH-A-03
+    name: 3号库房东侧消防通道
+    zone: A区
+    location_hint: 东侧主通道，连接 3 号库与装卸区
+    facilities:
+      - 手提式干粉灭火器 x2（东墙，编号待核）
+      - 应急出口门（北侧，门编号待核）
+    channel:
+      marked: true
+      min_pass_width_m: null      # TODO 待现场确认
+    focus: [HZ-04, HZ-05, HZ-06, HZ-01]
+
+  - id: WH-A-04
+    name: 4号库房应急出口（示例）
+    zone: A区
+    location_hint: 待现场核实
+    facilities:
+      - 应急出口门
+      - 应急指示灯
+    channel:
+      marked: true
+      min_pass_width_m: null
+    focus: [HZ-06, HZ-01]
+
+# 巡检路线（可选，MVP 手工选择点位即可）
+routes:
+  - id: RT-A-01
+    name: A区库房日常巡检
+    points: [WH-A-03, WH-A-04]

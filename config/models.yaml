@@ -1,0 +1,83 @@
+# 千炼（MaaS）接口事实清单
+# 来源：2026-11-06 实测 GET {base_url}/models（返回 200，共 183 个模型）
+# 约定：model id 只允许在此文件与 .env 中出现，业务代码禁止硬编码。
+version: 0.1.0
+
+provider:
+  name: 千炼 MaaS 网关
+  protocol: openai-compatible
+  base_url: https://ws-8cl1ej8elduuovea.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
+  dashscope_native: https://ws-8cl1ej8elduuovea.cn-beijing.maas.aliyuncs.com/api/v1
+  workspace_id: ws-8cl1ej8elduuovea
+  workspace_name: 化工巡检
+  auth: "Authorization: Bearer <MAAS_API_KEY>"
+
+roles:
+  # 主力：单图多类别隐患判定
+  vision_judge:
+    model: qwen3-vl-plus
+    verified: true           # 2026-11-06 探针：base64 + json_object 均可用
+    notes: 同族备选 qwen3.5-omni-plus / qwen3.8-omni-flash
+  # 附加：表计读数抽取（只读数字，不做超限判定）
+  meter_ocr:
+    model: qwen-vl-ocr
+    verified: true           # 探针：0.85 MPa 读取正确
+    notes: 备选 qwen3.5-ocr / vanchin/deepseek-ocr
+  # 可选：判级说明润色、隐患标准问答（MVP 默认不用）
+  text:
+    model: qwen3.8-flash
+    verified: true           # 探针：JSON 模式可用
+    notes: 备选 qwen3.8-max / deepseek-v4.1 / kimi-k3 / glm-5.3
+
+# 网关可用的视觉相关模型（探测快照，供切换时参考）
+vision_candidates:
+  - qwen3-vl-plus
+  - qwen3.5-omni-plus
+  - qwen3.5-omni-plus-realtime
+  - qwen3.5-omni-flash
+  - qwen3.8-omni-flash
+  - qwen3.8-omni-flash-realtime
+  - qwen3-omni-flash
+  - qwen-vl-ocr
+  - qwen-vl-ocr-2025-11-20
+  - qwen3.5-ocr
+  - vanchin/deepseek-ocr
+
+# 探针结果（2026-11-06 实测，脚本 scripts/probe_maas.py 可复现）
+probe:
+  ran_at: "2026-11-06T10:04:00+08:00"
+  report: docs/千炼探针报告.md
+  models_total: 183
+  vision_models_total: 17
+  base64_image_supported: true        # data:image/jpeg;base64 内联可用
+  json_object_supported: true         # response_format={"type":"json_object"} 可用
+  vision_latency_ms: [4100, 5603]     # 960x720 合成图，单次调用
+  vision_tokens: {prompt: 991, completion: 222}
+  ocr_latency_ms: [814, 929]
+  ocr_tokens: {prompt: 366, completion: 45}
+
+# 探针暴露的坑（已在代码/提示词中修正，后续务必保持）
+known_issues:
+  - id: KI-01
+    title: 提示词中的字面示例值会被模型照抄
+    detail: 首版示例写 "confidence":0.0，模型对全部检测项都返回 0.0，等于没有置信度。
+    fix: 示例改用 0.82 并显式声明「示例仅为格式示范，禁止照抄」；提示词评审时禁止出现 0/1 这类极端示例值。
+  - id: KI-02
+    title: bbox 是 0~1000 相对坐标，不是像素
+    detail: 实测 y2=915，而图像高度只有 720，按像素裁剪必然错位。
+    fix: Detection.bbox_space="norm1000"，入库前调用 Detection.to_pixel_bbox(w, h) 换算并裁剪。
+  - id: KI-03
+    title: 置信度普遍过高（正值报 1.0，负值报 0.0）
+    detail: 合成图上模型对"有人无安全帽/出口堵塞"直接给 1.0，不能作为唯一阈值依据。
+    fix: 阈值三分支仍需保留，但所有事件默认 need_manual_review=true；后续用真实数据做分桶校准。
+
+# 首轮真实数据评估（25 张，2026-11-06，详见 docs/评估报告初版.md）
+baseline:
+  hz01_no_helmet: {hit: 2, n: 5, note: 远景/侧脸/小目标漏检，需 YOLO 裁剪放大后复判}
+  hz04_channel_blocked: {hit: 2, n: 5, note: 部分占用判不出；与 05/06 跨类误报}
+  hz05_equipment_blocked: {hit: 4, n: 5, note: 表现较好}
+  hz06_exit_blocked: {hit: 5, n: 5, note: 表现最好，可作首个演示类别}
+  avg_latency_ms: 9077
+  avg_tokens: {in: 1392, out: 340}
+
+

@@ -1,0 +1,32 @@
+# --- secrets ---
+.env
+.env.*
+!.env.example
+千炼api/
+*.key
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# --- runtime ---
+data/
+!data/.gitkeep
+logs/
+
+# --- 第三方资料（体积大，不入库；测试图片已单独抽取）---
+云文档/
+
+# --- node ---
+node_modules/
+web/dist/
+
+# --- mac ---
+.DS_Store

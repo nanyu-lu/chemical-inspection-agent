@@ -1,0 +1,129 @@
+# 隐患类别与判定标准
+# 来源：《化工巡检项目研发计划表》sheet4「数据集整理」6 类
+#
+# ⚠️ 重要：draft_criteria 是开发侧起草的「视觉可判据」，用于跑通 MVP 与形成讨论稿，
+#    **不是法规/制度原文**。standard_ref 为 null 表示尚未拿到企业依据。
+#    在专家确认（criteria_confirmed: true）之前，此文件产出的结论只能作为「辅助提示」。
+#
+# 可判性分级：
+#   high   单帧 + 点位上下文即可判
+#   medium 需点位/量程/阈值等外部信息
+#   low    需多帧、计数或位姿（本期不做）
+version: 0.1.0
+updated_at: "2026-11-06"
+criteria_confirmed: false
+
+categories:
+  - id: HZ-01
+    name: 未佩戴安全帽
+    group: 人的不安全行为
+    vision_detectable: high
+    judged_by: vl
+    in_mvp: true
+    criteria_confirmed: false
+    draft_criteria:
+      - 画面中可辨识的人员，头部无安全帽（含棒球帽、发帽等非劳保帽）
+      - 人员头部区域高度 >= 24 像素，且未被完全遮挡
+    standard_ref: null          # TODO 待陈存银提供制度/法规条款号
+    required_context: []
+    confusing_cases:
+      - 远景 / 背对镜头 / 侧脸
+      - 手持安全帽未佩戴
+      - 安全帽颜色与背景（货架、纸箱）相近
+      - 玻璃反光造成的"缺帽"错觉
+    positive_examples: []
+
+  - id: HZ-02
+    name: 人员超员聚集
+    group: 人的不安全行为
+    vision_detectable: low
+    judged_by: yolo
+    in_mvp: false                 # 二期：需人数计数 + 区域阈值，交给 yolo
+    criteria_confirmed: false
+    draft_criteria:
+      - 单点位区域同时出现人员数量 > N（N 待定）
+      - 人员间距小于 M 米（M 待定）
+    standard_ref: null
+    required_context:
+      - 区域边界定义
+      - 人数阈值 N
+    confusing_cases:
+      - 远景计数不准（>5 人时误差显著）
+      - 遮挡导致漏计
+    positive_examples: []
+
+  - id: HZ-03
+    name: 表计读数异常
+    group: 物的不安全状态
+    vision_detectable: medium
+    judged_by: ocr
+    in_mvp: true                  # 附加模块：仅抽读数，超限判定需量程表
+    criteria_confirmed: false
+    draft_criteria:
+      - 从表盘/数字表中抽取读数与单位
+      - 读数超出该表计正常范围（需量程与上下限）
+    standard_ref: null
+    required_context:
+      - 表计编号与量程、正常区间、单位
+      - 表盘刻度类型（指针/数字/液位）
+    confusing_cases:
+      - 反光、玻璃罩污渍、指针阴影
+      - 小字与倾斜角度
+    positive_examples: []
+
+  - id: HZ-04
+    name: 消防通道堵塞
+    group: 环境的不安全因素
+    vision_detectable: medium
+    judged_by: vl
+    in_mvp: true
+    criteria_confirmed: false
+    draft_criteria:
+      - 通道划线区域内堆放托盘、货物、纸箱、周转筐等物品
+      - 或通道被车辆/设备占用，剩余通行宽度目测不足（阈值待定）
+    standard_ref: null
+    required_context:
+      - 通道边界（划线/区域示意）
+      - 最小通行宽度要求
+    confusing_cases:
+      - 划线外的合规暂存
+      - 地坪漆色块被误判为堆物
+    positive_examples: []
+
+  - id: HZ-05
+    name: 消防器材遮挡
+    group: 物的不安全状态
+    vision_detectable: high
+    judged_by: vl
+    in_mvp: true
+    criteria_confirmed: false
+    draft_criteria:
+      - 灭火器/消防栓/消防箱被货物、托盘、杂物遮挡，导致无法快速取用
+      - 或器材被移出原位、倒地、缺失
+    standard_ref: null
+    required_context:
+      - 该点位应有的消防器材清单与位置
+    confusing_cases:
+      - 器材正常靠墙摆放但被货架"半遮挡"（不影响取用）
+      - 消防箱门正常关闭
+    positive_examples: []
+
+  - id: HZ-06
+    name: 应急出口堵塞
+    group: 环境的不安全因素
+    vision_detectable: high
+    judged_by: vl
+    in_mvp: true
+    criteria_confirmed: false
+    draft_criteria:
+      - 出口门前方 1.5m 范围内堆放物品
+      - 出口门被锁链、货物、车辆封堵，或门无法正常开启
+      - 应急指示灯缺失/不亮（如画面可辨）
+    standard_ref: null
+    required_context:
+      - 该点位是否为应急出口（门编号/方位）
+      - 门前禁放范围
+    confusing_cases:
+      - 门正常关闭且门前空置
+      - 门外侧堆物（不在禁放范围内）
+    positive_examples: []

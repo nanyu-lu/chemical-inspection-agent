@@ -1,0 +1,48 @@
+# 判定规则表（模型只给"看见什么 + 置信度"，等级/条款/处置由本表决定）
+# ⚠️ levels 与 actions 为开发侧初稿，需化工专家确认后置 confirmed: true
+version: 0.1.0
+confirmed: false
+
+thresholds:
+  conf_drop: 0.45      # < 该值：丢弃，不入事件表（原始响应仍留存供抽样审查）
+  conf_review: 0.75    # 该区间内：入库 + 强制人工复核
+
+decision:
+  require_evidence: true     # 无证据图不入库
+  require_sop_ref: true      # 无条款号不入库（条款只能来自 taxonomy 的 standard_ref）
+  # 但 D2 阶段企业标准原文未到，taxonomy 的 standard_ref 仍为 null。
+  #   mark_review：事件入库 + 强制人工复核 + 标注「判据待专家确认」（默认，不丢真实隐患）
+  #   block：直接拦截不入库（等标准补齐后再切换）
+  missing_sop_policy: mark_review
+  max_detections_per_frame: 5
+  default_need_review: true  # 合规要求：任何自动结论都需人工确认
+
+
+levels:
+  HZ-01: 一般隐患
+  HZ-02: 一般隐患
+  HZ-03: 一般隐患
+  HZ-04: 较大隐患
+  HZ-05: 较大隐患
+  HZ-06: 较大隐患
+
+actions:
+  HZ-01: 现场提醒作业人员正确佩戴安全帽，记录班组并纳入当日安全交底。
+  HZ-02: 核实作业计划与区域人数上限，疏散超员人员并通知现场负责人。
+  HZ-03: 复核表计读数与工艺参数，必要时通知设备/工艺人员现场确认。
+  HZ-04: 立即清理通道内堆物，恢复通行宽度并留存整改前后照片。
+  HZ-05: 移开遮挡物，恢复器材取用空间，检查器材压力与有效期。
+  HZ-06: 清空出口门禁放范围，检查门锁与应急指示灯，确认可正常开启。
+
+dedupe:
+  enabled: true
+  window_hours: 24
+  same_point_same_type: true   # 同点位同类隐患 24h 内折叠展示（不删除事件）
+
+evidence:
+  crop_min_side_px: 160        # 裁剪后短边小于该值时，退化为整图 + 文字说明
+  prefer_crop: true
+
+degraded:
+  on_api_failure: mark_review  # mark_review：生成 need_manual_review 事件；drop：丢弃
+  retry_delays_s: [1, 4]
