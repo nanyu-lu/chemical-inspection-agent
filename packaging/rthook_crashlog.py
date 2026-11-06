@@ -29,7 +29,7 @@ def _write(text: str) -> None:
         pass
 
 
-def _hook(exc_type, exc, tb) -> None:  # noqa: ANN001 - 保持与 sys.excepthook 一致
+def _hook(exc_type, exc, tb) -> None:
     _write("".join(traceback.format_exception(exc_type, exc, tb)))
 
 

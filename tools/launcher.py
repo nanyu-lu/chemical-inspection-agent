@@ -107,7 +107,7 @@ class ServerHandle:
             退出由启动器按钮 / Ctrl+C（主线程）负责，不需要信号处理。
             """
 
-            def install_signal_handlers(self) -> None:  # noqa: D102 - 见类注释
+            def install_signal_handlers(self) -> None:
                 return
 
         app = create_app()
