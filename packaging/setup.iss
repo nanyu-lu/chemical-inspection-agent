@@ -29,7 +29,11 @@ ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 
 [Languages]
+; Inno Setup 不内置简体中文，CI 会尝试下载；拿不到就自动回落英文，保证一定能编译
+Name: "english"; MessagesFile: "compiler:Default.isl"
+#if FileExists("C:\Program Files (x86)\Inno Setup 6\Languages\ChineseSimplified.isl")
 Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
+#endif
 
 [Tasks]
 Name: "desktopicon"; Description: "创建桌面快捷方式"; GroupDescription: "附加任务:"
