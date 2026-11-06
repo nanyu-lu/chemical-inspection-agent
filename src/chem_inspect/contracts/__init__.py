@@ -3,6 +3,8 @@
 from .models import (
     SCHEMA_VERSION,
     Detection,
+    ElementItem,
+    ElementOutput,
     EngineInfo,
     EventStatus,
     FrameRef,
@@ -25,6 +27,8 @@ from .models import (
 __all__ = [
     "SCHEMA_VERSION",
     "Detection",
+    "ElementItem",
+    "ElementOutput",
     "EngineInfo",
     "EventStatus",
     "FrameRef",

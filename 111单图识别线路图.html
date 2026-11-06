@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>单图识别线路图</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#141413;color:#EDEBE6;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:44px 22px 70px}
+  h1{font-size:22px;font-weight:600;letter-spacing:-.2px;margin:0 0 6px}
+  .sub{font-size:12.5px;color:#8A8880;line-height:1.7;margin:0 0 22px}
+  .legend{display:flex;flex-wrap:wrap;gap:18px;margin:0 0 8px;padding:12px 16px;
+    background:#191918;border:1px solid rgba(255,255,255,.07);border-radius:10px}
+  .legend span{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#A8A69E}
+  .legend span::before{content:"";width:3px;height:14px;border-radius:2px;background:var(--c)}
+  .legend em{font-style:normal;color:#6F6D66;font-size:11px;margin-left:auto}
+  .canvas{margin-top:10px;border-radius:12px;overflow:hidden}
+  .note{margin-top:14px;font-size:11.5px;line-height:1.85;color:#6F6D66}
+  .note b{color:#A8A69E;font-weight:400}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>单图识别 · 线路图</h1>
+  <p class="sub">一张 JPEG 从上传到入库，全程一条主线；第 4 步分出三条支路（全图 / 瓦片 / OCR），第 6 步后按争议分流复核，最后汇回主线。</p>
+
+  <div class="legend">
+    <span style="--c:#85B7EB">接入</span>
+    <span style="--c:#FAC775">预处理</span>
+    <span style="--c:#5DCAA5">模型调用</span>
+    <span style="--c:#AFA9EC">后处理</span>
+    <span style="--c:#F09595">裁决</span>
+    <span style="--c:#C0DD97">存储展示</span>
+    <em>实线＝主链路　虚线＝条件支路</em>
+  </div>
+
+  <div class="canvas">
+  <svg width="100%" viewBox="0 0 1200 1500" role="img" xmlns="http://www.w3.org/2000/svg">
+    <title>单图识别线路图</title>
+    <desc>上传、判重、预处理后分出全图场景、瓦片小目标与 OCR 三条模型支路，汇合后解析、坐标还原、争议复核、规则裁决，最后裁剪证据并落库展示。</desc>
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+    <style>
+      .ln{fill:none;stroke:#7F7D76;stroke-width:1.5;marker-end:url(#ar)}
+      .lp{fill:none;stroke:#7F7D76;stroke-width:1.5}
+      .ld{fill:none;stroke:#EF9F27;stroke-width:1.5;stroke-dasharray:5 4;marker-end:url(#ar)}
+      .ldp{fill:none;stroke:#EF9F27;stroke-width:1.5;stroke-dasharray:5 4}
+      .ttl{font:500 13px -apple-system,system-ui,sans-serif;fill:#EDEBE6}
+      .too{font:400 10.5px ui-monospace,SFMono-Regular,Menlo,monospace;fill:#9C9A92}
+      .out{font:400 10.5px -apple-system,system-ui,sans-serif;fill:#7E7C75}
+      .tim{font:400 10px ui-monospace,Menlo,monospace;fill:#6F6D66}
+      .num{font:400 11px ui-monospace,Menlo,monospace;fill:#B4B2A9}
+    </style>
+
+    <rect x="410" y="40" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="40" width="3.5" height="72" fill="#85B7EB"/>
+    <circle cx="391" cy="76" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="80" text-anchor="middle">1</text>
+    <text class="ttl" x="426" y="64">上传接入</text>
+    <text class="tim" x="774" y="64" text-anchor="end">~20 ms</text>
+    <text class="too" x="426" y="86">FastAPI · uvicorn · python-multipart</text>
+    <text class="out" x="426" y="104">JPEG bytes × N → UploadFile</text>
+    <path class="ln" d="M600 112 V152"/>
+
+    <rect x="410" y="156" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="156" width="3.5" height="72" fill="#85B7EB"/>
+    <circle cx="391" cy="192" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="196" text-anchor="middle">2</text>
+    <text class="ttl" x="426" y="180">判重 · 入队</text>
+    <text class="tim" x="774" y="180" text-anchor="end">~15 ms</text>
+    <text class="too" x="426" y="202">hashlib.sha256 · sqlite3 (WAL)</text>
+    <text class="out" x="426" y="220">frame_id，status = pending</text>
+    <path class="ln" d="M600 228 V268"/>
+
+    <rect x="410" y="272" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="272" width="3.5" height="72" fill="#FAC775"/>
+    <circle cx="391" cy="308" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="312" text-anchor="middle">3</text>
+    <text class="ttl" x="426" y="296">解码 · 纠偏 · 缩放</text>
+    <text class="tim" x="774" y="296" text-anchor="end">~140 ms</text>
+    <text class="too" x="426" y="318">Pillow · exif_transpose · LANCZOS</text>
+    <text class="out" x="426" y="336">work 图（长边 1280）+ scale</text>
+    <path class="ln" d="M600 344 V384"/>
+
+    <rect x="410" y="388" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="388" width="3.5" height="72" fill="#FAC775"/>
+    <circle cx="391" cy="424" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="428" text-anchor="middle">4</text>
+    <text class="ttl" x="426" y="412">分块 / ROI 规划</text>
+    <text class="tim" x="774" y="412" text-anchor="end">~40 ms</text>
+    <text class="too" x="426" y="434">Image.crop · Ultralytics YOLOv8</text>
+    <text class="out" x="426" y="452">TilePlan[]（含 tile_origin）</text>
+
+    <path class="lp" d="M600 460 V476"/>
+    <path class="ln" d="M600 476 H340 V496"/>
+    <path class="ln" d="M600 476 H810 V542"/>
+    <path class="ld" d="M790 412 H1100 V542"/>
+    <text class="out" x="1010" y="404" text-anchor="middle">仅 HZ-03 表计</text>
+
+    <rect x="150" y="500" width="380" height="72" rx="8" fill="#12241F" stroke="#2F6B57" stroke-width="0.5"/>
+    <rect x="150" y="500" width="3.5" height="72" fill="#5DCAA5"/>
+    <text class="ttl" x="166" y="524">轮 0 · 场景要素识别</text>
+    <text class="tim" x="514" y="524" text-anchor="end">2 ~ 4 s</text>
+    <text class="too" x="166" y="546">qwen3-vl-plus · 640 小图 · temp 0</text>
+    <text class="out" x="166" y="564">门 / 划线 / 器材 / 人 → 决定剪枝</text>
+    <path class="ln" d="M340 572 V588"/>
+
+    <rect x="150" y="592" width="380" height="72" rx="8" fill="#12241F" stroke="#2F6B57" stroke-width="0.5"/>
+    <rect x="150" y="592" width="3.5" height="72" fill="#5DCAA5"/>
+    <text class="ttl" x="166" y="616">轮 1B · 全图判据链</text>
+    <text class="tim" x="514" y="616" text-anchor="end">5 ~ 7 s</text>
+    <text class="too" x="166" y="638">qwen3-vl-plus · 1280 全图 · temp 0</text>
+    <text class="out" x="166" y="656">逐题 yes / no / unsure JSON</text>
+
+    <rect x="620" y="546" width="380" height="72" rx="8" fill="#12241F" stroke="#2F6B57" stroke-width="0.5"/>
+    <rect x="620" y="546" width="3.5" height="72" fill="#5DCAA5"/>
+    <text class="ttl" x="636" y="570">轮 1A · 瓦片小目标</text>
+    <text class="tim" x="984" y="570" text-anchor="end">5 ~ 7 s</text>
+    <text class="too" x="636" y="592">qwen3-vl-plus · 2×2 瓦片 · 并发 4</text>
+    <text class="out" x="636" y="610">每人头 有帽 / 无帽 → bbox</text>
+
+    <rect x="1020" y="546" width="160" height="72" rx="8" fill="#12241F" stroke="#2F6B57" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <rect x="1020" y="546" width="3.5" height="72" fill="#5DCAA5"/>
+    <text class="ttl" x="1036" y="570">OCR 支路</text>
+    <text class="tim" x="1164" y="570" text-anchor="end">0.9 s</text>
+    <text class="too" x="1036" y="592">qwen-vl-ocr</text>
+    <text class="out" x="1036" y="610">读数 + 单位</text>
+
+    <path class="lp" d="M340 664 V690"/>
+    <path class="lp" d="M810 618 V690"/>
+    <path class="lp" d="M340 690 H810"/>
+    <path class="ln" d="M600 690 V708"/>
+
+    <rect x="410" y="712" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="712" width="3.5" height="72" fill="#AFA9EC"/>
+    <circle cx="391" cy="748" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="752" text-anchor="middle">5</text>
+    <text class="ttl" x="426" y="736">解析 · 契约校验</text>
+    <text class="tim" x="774" y="736" text-anchor="end">~5 ms</text>
+    <text class="too" x="426" y="758">json · Pydantic v2 model_validate</text>
+    <text class="out" x="426" y="776">三态答案 + norm1000 bbox</text>
+    <path class="ln" d="M600 784 V824"/>
+
+    <rect x="410" y="828" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="828" width="3.5" height="72" fill="#AFA9EC"/>
+    <circle cx="391" cy="864" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="868" text-anchor="middle">6</text>
+    <text class="ttl" x="426" y="852">坐标还原 · 跨块合并</text>
+    <text class="tim" x="774" y="852" text-anchor="end">~15 ms</text>
+    <text class="too" x="426" y="874">NumPy · bbox / 1000 × 块 → 加偏移 → 除 scale</text>
+    <text class="out" x="426" y="892">原图像素框，每类 1 个候选</text>
+
+    <path class="ld" d="M790 864 H816"/>
+    <rect x="820" y="828" width="360" height="72" rx="8" fill="#241C0E" stroke="#8A6420" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <rect x="820" y="828" width="3.5" height="72" fill="#EF9F27"/>
+    <text class="ttl" x="836" y="852">轮 2 / 轮 3 · 争议复核</text>
+    <text class="tim" x="1164" y="852" text-anchor="end">+3 ~ 6 s</text>
+    <text class="too" x="836" y="874">ROI 重问 2 票 · qwen3.5-omni-plus 反证</text>
+    <text class="out" x="836" y="892">投票计数 → 回填争议答案</text>
+    <path class="ldp" d="M1000 900 V920 H600"/>
+
+    <path class="ln" d="M600 900 V940"/>
+
+    <rect x="410" y="944" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="944" width="3.5" height="72" fill="#AFA9EC"/>
+    <circle cx="391" cy="980" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="984" text-anchor="middle">7</text>
+    <text class="ttl" x="426" y="968">一致率聚合</text>
+    <text class="tim" x="774" y="968" text-anchor="end">&lt;1 ms</text>
+    <text class="too" x="426" y="990">投票一致率代替模型自报 confidence</text>
+    <text class="out" x="426" y="1008">3/3 = 1.0 · 2/3 = 0.67 · 更低转人工</text>
+    <path class="ln" d="M600 1016 V1056"/>
+
+    <rect x="410" y="1060" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="1060" width="3.5" height="72" fill="#F09595"/>
+    <circle cx="391" cy="1096" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="1100" text-anchor="middle">8</text>
+    <text class="ttl" x="426" y="1084">规则裁决</text>
+    <text class="tim" x="774" y="1084" text-anchor="end">~3 ms</text>
+    <text class="too" x="426" y="1106">PyYAML · rules.decide() · 互斥白名单</text>
+    <text class="out" x="426" y="1124">丢弃 / 复核 / 自动 三分支，等级只查表</text>
+    <path class="ln" d="M600 1132 V1172"/>
+
+    <rect x="410" y="1176" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="1176" width="3.5" height="72" fill="#C0DD97"/>
+    <circle cx="391" cy="1212" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="1216" text-anchor="middle">9</text>
+    <text class="ttl" x="426" y="1200">证据裁剪</text>
+    <text class="tim" x="774" y="1200" text-anchor="end">~15 ms</text>
+    <text class="too" x="426" y="1222">Image.crop 外扩 12% · JPEG q88</text>
+    <text class="out" x="426" y="1240">crops/{event_id}_crop.jpg</text>
+    <path class="ln" d="M600 1248 V1288"/>
+
+    <rect x="410" y="1292" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="1292" width="3.5" height="72" fill="#C0DD97"/>
+    <circle cx="391" cy="1328" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="1332" text-anchor="middle">10</text>
+    <text class="ttl" x="426" y="1316">事件落库</text>
+    <text class="tim" x="774" y="1316" text-anchor="end">~8 ms</text>
+    <text class="too" x="426" y="1338">sqlite3 · events / llm_usage / reviews</text>
+    <text class="out" x="426" y="1356">engine 记 model / prompt / rule 三版本</text>
+    <path class="ln" d="M600 1364 V1404"/>
+
+    <rect x="410" y="1408" width="380" height="72" rx="8" fill="#1A1A19" stroke="#3A3A36" stroke-width="0.5"/>
+    <rect x="410" y="1408" width="3.5" height="72" fill="#C0DD97"/>
+    <circle cx="391" cy="1444" r="12" fill="#1F1F1E" stroke="#454541" stroke-width="0.5"/>
+    <text class="num" x="391" y="1448" text-anchor="middle">11</text>
+    <text class="ttl" x="426" y="1432">前端展示 · 复核回流</text>
+    <text class="tim" x="774" y="1432" text-anchor="end">5 s 轮询</text>
+    <text class="too" x="426" y="1454">React 18 · AntD 5 · StaticFiles</text>
+    <text class="out" x="426" y="1472">看板确认 / 驳回 → bad case 回流改 YAML</text>
+  </svg>
+  </div>
+
+  <p class="note">
+    <b>三个分支点：</b>第 4 步分出「全图场景 / 瓦片小目标 / OCR」三条线，第 5 步汇合；第 6 步后按争议分流，虚线支路只对约 20% 的图触发；争议答案回填到第 7 步再聚合。<br>
+    <b>只有三处出网：</b>轮 0（640 小图）、轮 1A/B（1280）、OCR。图片以 base64 内联进请求体，不落公网 URL。轮 0 用 640 是控成本的关键。
+  </p>
+</div>
+</body>
+</html>

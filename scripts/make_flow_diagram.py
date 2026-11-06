@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""生成「运行流程图」PNG（给评委看的一页纸说明）。
+"""生成「单图识别线路图」PNG（深色线路图风格）。
 
-内容分三段：
-  ① 评委看到的操作流程
-  ② 一张图片进来后系统内部发生了什么
-  ③ 三条保障（降级 / 判据待确认 / 全程留痕）
+版式参考 `111单图识别线路图.html`（深底、居中卡片链、左色条 + 序号圆点、
+技术栈/输入输出两行注释、实线主链路 + 橙色虚线支路），**内容为本项目真实实现**。
 
 用法：python scripts/make_flow_diagram.py
 产物：docs/运行流程图.png
@@ -13,7 +11,6 @@
 from __future__ import annotations
 
 import itertools
-import math
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -21,214 +18,249 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "docs" / "运行流程图.png"
 
-W, H = 2400, 1620
-FONT_PATHS = ("/System/Library/Fonts/STHeiti Medium.ttc", "/System/Library/Fonts/Hiragino Sans GB.ttc")
+S = 2  # 2 倍图，保证在微信/文档里清晰
+W, H = 2400, 3300
 
-NAVY = "#0f2b46"
-GRAY = "#595959"
-LIGHT = "#8c8c8c"
-BLUE = "#1677ff"
-CYAN = "#08979c"
-ORANGE = "#d46b08"
-GREEN = "#389e0d"
-RED = "#cf1322"
-PURPLE = "#531dab"
+SANS = "/System/Library/Fonts/STHeiti Medium.ttc"
+MONO = "/System/Library/Fonts/Menlo.ttc"
 
-BOX_STYLES = {
-    "user": ("#e6f4ff", BLUE),
-    "sys": ("#f5f5f5", "#434343"),
-    "model": ("#fff2e8", ORANGE),
-    "rule": ("#f0f5ff", "#2f54eb"),
-    "store": ("#f6ffed", GREEN),
-    "human": ("#f9f0ff", PURPLE),
-    "warn": ("#fffbe6", "#ad8b00"),
+BG = "#141413"
+CARD = "#1A1A19"
+CARD_STROKE = "#3A3A36"
+CIRCLE = "#1F1F1E"
+CIRCLE_STROKE = "#454541"
+FG = "#EDEBE6"
+MONO_FG = "#9C9A92"
+OUT_FG = "#7E7C75"
+TIME_FG = "#6F6D66"
+NUM_FG = "#B4B2A9"
+LINE = "#7F7D76"
+DASH = "#EF9F27"
+
+ACC = {
+    "接入": "#85B7EB",
+    "预处理": "#FAC775",
+    "模型": "#5DCAA5",
+    "后处理": "#AFA9EC",
+    "裁决": "#F09595",
+    "存储": "#C0DD97",
+    "人工": "#D3ADF7",
 }
 
+_cache: dict[tuple[str, int], ImageFont.FreeTypeFont] = {}
 
-def font(size: int) -> ImageFont.FreeTypeFont:
-    for path in FONT_PATHS:
+
+def f_sans(size: int) -> ImageFont.FreeTypeFont:
+    key = ("sans", size)
+    if key not in _cache:
+        _cache[key] = ImageFont.truetype(SANS, size)
+    return _cache[key]
+
+
+def f_mono(size: int) -> ImageFont.FreeTypeFont:
+    key = ("mono", size)
+    if key not in _cache:
         try:
-            return ImageFont.truetype(path, size)
+            _cache[key] = ImageFont.truetype(MONO, size)
         except OSError:
-            continue
-    raise SystemExit("找不到中文字体")
+            _cache[key] = ImageFont.truetype(SANS, size)
+    return _cache[key]
 
 
-def wrap(draw: ImageDraw.ImageDraw, text: str, f: ImageFont.FreeTypeFont, width: int) -> list[str]:
-    lines: list[str] = []
-    current = ""
-    for ch in text:
-        if ch == "\n":
-            lines.append(current)
-            current = ""
-            continue
-        if draw.textlength(current + ch, font=f) <= width:
-            current += ch
+def arrow(draw: ImageDraw.ImageDraw, points: list[tuple[int, int]], color: str = LINE,
+          dashed: bool = False, head: bool = True) -> None:
+    for (x1, y1), (x2, y2) in itertools.pairwise(points):
+        if dashed:
+            length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+            if length == 0:
+                continue
+            ux, uy = (x2 - x1) / length, (y2 - y1) / length
+            pos = 0.0
+            while pos < length:
+                end = min(pos + 12, length)
+                draw.line(
+                    [(x1 + ux * pos, y1 + uy * pos), (x1 + ux * end, y1 + uy * end)],
+                    fill=color,
+                    width=3,
+                )
+                pos += 20
         else:
-            lines.append(current)
-            current = ch
-    if current:
-        lines.append(current)
-    return lines
+            draw.line([(x1, y1), (x2, y2)], fill=color, width=3)
+    if not head:
+        return
+    (px, py), (qx, qy) = points[-2], points[-1]
+    if qy != py:  # 竖向
+        step = 1 if qy > py else -1
+        draw.polygon([(qx, qy), (qx - 9, qy - 15 * step), (qx + 9, qy - 15 * step)], fill=color)
+    else:  # 横向
+        step = 1 if qx > px else -1
+        draw.polygon([(qx, qy), (qx - 15 * step, qy - 9), (qx - 15 * step, qy + 9)], fill=color)
 
 
-def arrow(draw: ImageDraw.ImageDraw, points: list[tuple[float, float]], color: str = LIGHT) -> None:
-    for start, end in itertools.pairwise(points):
-        draw.line([start, end], fill=color, width=4)
-    (x1, y1), (x2, y2) = points[-2], points[-1]
-    angle = math.atan2(y2 - y1, x2 - x1)
-    size = 15
-    draw.polygon(
-        [
-            (x2, y2),
-            (x2 - size * math.cos(angle - 0.45), y2 - size * math.sin(angle - 0.45)),
-            (x2 - size * math.cos(angle + 0.45), y2 - size * math.sin(angle + 0.45)),
-        ],
-        fill=color,
-    )
-
-
-def box(
+def draw_rich(
     draw: ImageDraw.ImageDraw,
-    xy: tuple[int, int, int, int],
-    index: str,
-    title: str,
-    body: str,
-    style: str,
-    *,
-    title_size: int = 32,
-    body_size: int = 23,
+    x: int,
+    y: int,
+    text: str,
+    size: int,
+    color: str,
+    anchor: str = "la",
 ) -> None:
-    x0, y0, x1, y1 = xy
-    fill, border = BOX_STYLES[style]
-    draw.rounded_rectangle([x0, y0, x1, y1], radius=18, fill=fill, outline=border, width=3)
+    """中英混排：ASCII 用等宽字体（像代码），中文用黑体（Menlo 没有中文字形，会变方块）。"""
+    runs: list[tuple[str, ImageFont.FreeTypeFont]] = []
+    for is_ascii, group in itertools.groupby(text, key=lambda ch: ch.isascii()):
+        segment = "".join(group)
+        runs.append((segment, f_mono(size) if is_ascii else f_sans(size)))
 
-    r, cx, cy = 22, x0 + 34, y0 + 34
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=border)
-    num_font = font(24)
-    nw = draw.textlength(index, font=num_font)
-    draw.text((cx - nw / 2, cy - 16), index, font=num_font, fill="white")
-
-    draw.text((x0 + 70, y0 + 18), title, font=font(title_size), fill=NAVY)
-
-    if body:
-        f = font(body_size)
-        y = y0 + 66
-        for line in wrap(draw, body, f, x1 - x0 - 44)[:5]:
-            draw.text((x0 + 22, y), line, font=f, fill=GRAY)
-            y += body_size + 8
+    total = sum(draw.textlength(seg, font=f) for seg, f in runs)
+    if anchor.startswith("r"):
+        x -= int(total)
+    elif anchor.startswith("m"):
+        x -= int(total / 2)
+    for segment, f in runs:
+        draw.text((x, y), segment, font=f, fill=color, anchor="ls")
+        x += draw.textlength(segment, font=f)
 
 
-def section(draw: ImageDraw.ImageDraw, y: int, text: str, color: str, sub: str = "") -> None:
-    draw.rectangle([80, y, 92, y + 40], fill=color)
-    draw.text((112, y - 2), text, font=font(38), fill=color)
-    if sub:
-        offset = draw.textlength(text, font=font(38))
-        draw.text((112 + offset + 24, y + 8), sub, font=font(24), fill=LIGHT)
+def card(
+    draw: ImageDraw.ImageDraw,
+    x: int,
+    y: int,
+    w: int,
+    h: int,
+    index: int,
+    title: str,
+    acc_key: str,
+    time_text: str,
+    tech: str,
+    output: str,
+) -> None:
+    color = ACC[acc_key]
+    draw.rounded_rectangle([x, y, x + w, y + h], radius=16, fill=CARD, outline=CARD_STROKE, width=2)
+    draw.rectangle([x + 2, y + 6, x + 10, y + h - 6], fill=color)
+
+    cx, cy, r = x - 46, y + h // 2, 26
+    draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=CIRCLE, outline=CIRCLE_STROKE, width=2)
+    label = str(index)
+    draw.text((cx, cy), label, font=f_mono(24), fill=NUM_FG, anchor="mm")
+
+    draw.text((x + 34, y + 22), title, font=f_sans(34), fill=FG)
+    draw.text((x + w - 28, y + 30), time_text, font=f_mono(22), fill=TIME_FG, anchor="ra")
+    draw_rich(draw, x + 34, y + 94, tech, 21, MONO_FG)
+    draw.text((x + 34, y + 114), output, font=f_sans(20), fill=OUT_FG)
+
+
+def branch(
+    draw: ImageDraw.ImageDraw,
+    x: int,
+    y: int,
+    w: int,
+    h: int,
+    title: str,
+    desc: str,
+) -> None:
+    draw.rounded_rectangle(
+        [x, y, x + w, y + h], radius=14, fill="#1E1B15", outline="#7A5A22", width=2
+    )
+    draw_rich(draw, x + 24, y + 46, title, 22, DASH)
+    draw_rich(draw, x + 24, y + 98, desc, 20, MONO_FG)
 
 
 def main() -> int:
-    img = Image.new("RGB", (W, H), "white")
+    img = Image.new("RGB", (W, H), BG)
     d = ImageDraw.Draw(img)
 
-    d.text((80, 54), "化工巡检 · 隐患识别 Agent（MVP）", font=font(58), fill=NAVY)
-    d.text((80, 128), "评委验证流程 & 一张图片进来后系统做了什么", font=font(30), fill=GRAY)
-
-    # ---------------- ① 用户流程 ----------------
-    section(d, 208, "① 评委看到的操作流程（约 3 分钟）", BLUE, "双击即可用，不需要装 Python / Node / 数据库")
-
-    bw, bh, gap = 520, 156, 34
-    x_start, row1, row2 = 84, 272, 486
-
-    steps = [
-        ("1", "双击应用", "macOS 拖入 Applications\nWindows 双击安装包\n首次打开按说明放行一次", "user"),
-        ("2", "启动器窗口", "显示「已就绪 · 端口 8000」\n自动打开浏览器，无需手输地址", "user"),
-        ("3", "上传巡检", "选点位（如 3 号库房东侧通道）\n拖入 1~N 张现场图", "user"),
-        ("4", "自动识别", "每张 10~15 秒\n进度条自动刷新", "model"),
-        ("5", "隐患看板", "证据图 + 等级 + 置信度 + 判定理由\n依据条款 / 模型版本一并展示", "sys"),
-        ("6", "人工复核", "确认 或 驳回\n驳回必须选原因（误报 / 判错 / 看不清…）", "human"),
-        ("7", "导出台账", "一键导出 CSV\nExcel 直接打开（UTF-8 BOM）", "store"),
-        ("8", "数据回流", "驳回原因进入误报案例集\n用于后续提示词与规则调优", "rule"),
-    ]
-
-    for i, (idx, title, body, style) in enumerate(steps):
-        col, row = i % 4, i // 4
-        x0 = x_start + col * (bw + gap)
-        y0 = row1 if row == 0 else row2
-        box(d, (x0, y0, x0 + bw, y0 + bh), idx, title, body, style)
-
-    for row_y in (row1, row2):
-        for col in range(3):
-            ax = x_start + col * (bw + gap) + bw
-            arrow(d, [(ax + 4, row_y + bh // 2), (ax + gap - 6, row_y + bh // 2)])
-
-    x4 = x_start + 3 * (bw + gap) + bw // 2
-    x5 = x_start + bw // 2
-    arrow(d, [(x4, row1 + bh + 2), (x4, row1 + bh + 22), (x5, row1 + bh + 22), (x5, row2 - 4)])
-
-    # ---------------- ② 系统链路 ----------------
-    section(d, 706, "② 一张图片进来后发生了什么", CYAN, "模型只负责「看见什么」，等级与条款由规则表决定")
-
-    bw2, gap2, x2, y_top, h2 = 292, 30, 84, 772, 196
-    chain = [
-        ("1", "接入", "POST /frames\nsha256 去重\n落盘 + 入队", "sys"),
-        ("2", "预处理", "EXIF 纠正\n长边压到 1280\n转 JPEG", "sys"),
-        ("3", "视觉模型", "千炼 qwen3-vl-plus\n单图多类别判定\n强制 JSON 输出", "model"),
-        ("4", "契约校验", "Pydantic 严格校验\n不合格重试 1 次\n再失败转人工", "sys"),
-        ("5", "规则裁决", "阈值三分支\n等级 / 处置建议\n条款只来自规则表", "rule"),
-        ("6", "证据裁剪", "0~1000 相对坐标\n换算像素 + 外扩\n无框则退化为整图", "sys"),
-        ("7", "落库", "SQLite 事件表\nappend-only\n证据图存本地", "store"),
-    ]
-    for i, (idx, title, body, style) in enumerate(chain):
-        x0 = x2 + i * (bw2 + gap2)
-        box(d, (x0, y_top, x0 + bw2, y_top + h2), idx, title, body, style)
-        if i < len(chain) - 1:
-            ax = x0 + bw2
-            arrow(d, [(ax + 3, y_top + h2 // 2), (ax + gap2 - 5, y_top + h2 // 2)])
-
+    d.text((88, 66), "化工巡检 · 隐患识别 单图线路图", font=f_sans(48), fill=FG)
     d.text(
-        (84, y_top + h2 + 14),
-        "降级路径：模型超时 / 429 / 输出不合法 → 重试 → 仍失败则生成「需人工判定」事件（标 degraded），不丢帧、不返回 500",
-        font=font(24),
-        fill=RED,
+        (88, 136),
+        "一张巡检图从上传到台账导出，全程一条主线；第 5、7 步分出条件支路（异常降级 / 阈值分流），最终汇入人工复核。",
+        font=f_sans(24),
+        fill=TIME_FG,
     )
 
-    # ---------------- ③ 三条保障 ----------------
-    section(d, 1050, "③ 三条保障（化工场景的底线）", GREEN, "结果只作辅助，人工确认后才生效")
+    # ---------------- 图例 ----------------
+    d.rounded_rectangle([88, 196, W - 88, 276], radius=14, fill="#191918", outline="#2E2E2B", width=2)
+    x = 124
+    for key, color in ACC.items():
+        d.rectangle([x, 216, x + 6, 256], fill=color)
+        d.text((x + 16, 224), key, font=f_sans(24), fill="#A8A69E")
+        x += 16 + int(d.textlength(key, font=f_sans(24))) + 44
+    d.text((W - 124, 224), "实线＝主链路　虚线＝条件支路", font=f_sans(22), fill=TIME_FG, anchor="ra")
 
-    cards = [
-        ("断网 / 超时", "自动降级为「人工判定」，事件仍入库并标记 degraded；\n数据本地留存，恢复后可重跑。", "warn"),
-        ("判据未确认", "企业判定标准原文未到时，每条都标「判据待专家确认」，\n只作辅助提示，不自动下发处置。", "warn"),
-        ("全程可追溯", "记录模型 / 提示词 / 规则版本 + 复核人 + 驳回原因，\n任何一个结论都能回答「依据是什么」。", "store"),
+    # ---------------- 主链路 ----------------
+    cx, cw, ch, step, y0 = 700, 800, 144, 232, 320
+
+    nodes = [
+        ("双击启动", "接入", "~2 s", "PyInstaller · tkinter 启动器", "本地服务 127.0.0.1:8000（被占用自动顺延 8010）"),
+        ("上传巡检图", "接入", "~50 ms", "React 18 · AntD Upload · multipart", "JPEG bytes × N（可多选拖拽）"),
+        ("接入与去重", "接入", "~20 ms", "FastAPI · sha256 去重", "frames 落盘 + 入队（同一张图不重复计费）"),
+        ("预处理", "预处理", "~30 ms", "Pillow · EXIF 纠正 · 长边 1280 · JPEG q88", "工作图 bytes（≤1280，控制 token 成本）"),
+        ("视觉模型判定", "模型", "9~17 s", "千炼 MaaS · qwen3-vl-plus · 强制 JSON", "detections[]：类别 / 置信度 / bbox / 证据描述"),
+        ("契约校验", "后处理", "<5 ms", "Pydantic 严格校验 · 失败重试 1 次", "VLJudgeOutput（多吐字段直接拒收，防幻觉）"),
+        ("规则裁决", "裁决", "~3 ms", "rules.decide() · 阈值 0.45/0.75 · 等级查表", "隐患 / 丢弃 / 待复核；等级与条款只来自 YAML"),
+        ("证据裁剪", "存储", "~15 ms", "0~1000 相对坐标→像素 · 外扩 12%", "crops/{event_id}_crop.jpg（无框退化为整图）"),
+        ("事件落库", "存储", "~8 ms", "SQLite · events / llm_usage / reviews", "engine 记 model / prompt / rule 三版本"),
+        ("看板人工复核", "人工", "10~30 s/条", "AntD Table + Drawer · 驳回必选原因", "确认 / 驳回（原因入误报案例集）"),
+        ("导出台账", "存储", "~1 s", "CSV（UTF-8 BOM）· Excel 直接打开", "隐患台账 / 统计 / Token 成本"),
     ]
-    cw, cgap = 740, 34
-    for i, (title, body, style) in enumerate(cards):
-        x0 = 84 + i * (cw + cgap)
-        box(d, (x0, 1112, x0 + cw, 1262), str(i + 1), title, body, style, title_size=30, body_size=23)
 
-    # ---------------- 底部数据 ----------------
-    d.rounded_rectangle([84, 1300, W - 84, 1420], radius=16, fill="#fafafa", outline="#e0e0e0", width=2)
-    d.text((112, 1322), "真实数据基线（25 张现场图）", font=font(28), fill=NAVY)
-    d.text(
-        (112, 1364),
-        "应急出口堵塞 5/5=100%    消防器材遮挡 4/5=80%    未戴安全帽 2/5=40%    消防通道堵塞 2/5=40%    "
-        "单张 9~15 秒",
-        font=font(26),
-        fill=GRAY,
+    for i, (title, acc, t, tech, out) in enumerate(nodes):
+        y = y0 + i * step
+        card(d, cx, y, cw, ch, i + 1, title, acc, t, tech, out)
+        if i < len(nodes) - 1:
+            arrow(d, [(cx + cw // 2, y + ch + 10), (cx + cw // 2, y + step - 10)])
+
+    # ---------------- 条件支路 ----------------
+    bx, bw, bh = 1630, 560, 132
+    y5 = y0 + 4 * step + ch // 2
+    y7 = y0 + 6 * step + ch // 2
+    y10 = y0 + 9 * step + ch // 2
+
+    branch(d, bx, y5 - bh // 2, bw, bh, "异常支路 · 超时 / 429 / 非法 JSON",
+           "重试 1 次 → 仍失败转人工（标 degraded）")
+    arrow(d, [(cx + cw, y5), (bx - 8, y5)], color=DASH, dashed=True)
+
+    branch(d, bx, y7 - bh // 2, bw, bh, "阈值分流 · conf<0.45 丢弃",
+           "0.45~0.75 强制复核；原响应留存")
+    arrow(d, [(cx + cw, y7), (bx - 8, y7)], color=DASH, dashed=True)
+
+    # 支路回流到第 10 步（人工复核）：走卡片与支路框之间的空隙，避免穿过支路框
+    trunk = cx + cw + 64
+    arrow(
+        d,
+        [(trunk, y5 + bh // 2), (trunk, y10), (cx + cw + 6, y10)],
+        color=DASH,
+        dashed=True,
     )
+    d.line([(trunk, y7 + bh // 2), (trunk, y10)], fill=DASH, width=3)
 
-    chips = ["Python 3.11", "FastAPI", "SQLite", "React + AntD", "千炼 MaaS（OpenAI 兼容）", "PyInstaller"]
-    cx = 84
-    for chip in chips:
-        f = font(22)
-        tw = d.textlength(chip, font=f)
-        d.rounded_rectangle([cx, 1460, cx + tw + 36, 1508], radius=24, fill="#eef4ff",
-                            outline="#adc6ff", width=2)
-        d.text((cx + 18, 1470), chip, font=f, fill=BLUE)
-        cx += tw + 52
+    # ---------------- 页脚说明 ----------------
+    fy = y0 + 10 * step + ch + 96
+    d.line([(88, fy), (W - 88, fy)], fill="#2E2E2B", width=2)
 
-    d.text((84, 1536), "注：本图为 MVP 现状；人员超员计数等类别列为二期，交给 YOLO 方向。",
-           font=font(22), fill=LIGHT)
+    lines = [
+        ("三条保障", "断网/超时自动降级为人工判定；判据未确认时每条标「判据待专家确认」；全程记录模型/提示词/规则版本 + 复核人。"),
+        (
+            "实测基线",
+            (
+                "20 张现场图（可用「测试图片/」复现）：应急出口堵塞 4/5=80% · 消防器材遮挡 5/5=100% · "
+                "未戴安全帽 2/5=40% · 消防通道堵塞 3/5=60%；单张 9~18 s；跨类误报 20%。"
+            ),
+        ),
+        ("技术栈", "Python 3.11 · FastAPI · SQLite · React 18 + AntD 5 · 千炼 MaaS（OpenAI 兼容）· PyInstaller"),
+    ]
+    y = fy + 32
+    for label, text in lines:
+        d.text((88, y), label, font=f_sans(24), fill="#A8A69E")
+        d.text((232, y), text, font=f_sans(24), fill=TIME_FG)
+        y += 46
+
+    d.text(
+        (88, H - 56),
+        "注：本图为 MVP 现状；判定由模型给出、规则负责定级与兜底。人员超员计数等类别列为二期，交给 YOLO 方向。",
+        font=f_sans(22),
+        fill="#5C5A54",
+    )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     img.save(OUT, optimize=True)

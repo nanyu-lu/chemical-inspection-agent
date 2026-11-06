@@ -270,9 +270,33 @@ class MeterReading(BaseModel):
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
 
 
+class ElementItem(BaseModel):
+    """模型「只看不判」时输出的单个视觉元素。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    category: str = ""
+    bbox: list[float] | None = None
+    state: str = ""
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class ElementOutput(BaseModel):
+    """元素描述输出（T1 测评用）。不含任何「是否隐患」的结论。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    scene: str = ""
+    elements: list[ElementItem] = Field(default_factory=list)
+    notes: str = ""
+
+
 __all__ = [
     "SCHEMA_VERSION",
     "Detection",
+    "ElementItem",
+    "ElementOutput",
     "EngineInfo",
     "EventStatus",
     "FrameRef",

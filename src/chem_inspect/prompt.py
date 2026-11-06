@@ -90,9 +90,54 @@ def build_judge_prompt(
     return "\n".join(lines)
 
 
+ELEMENT_PROMPT_VERSION = "e1"
+
+_ELEMENT_SHAPE = (
+    '{"scene":"库房通道，地面有托盘","elements":['
+    '{"name":"手提式灭火器","category":"消防器材","bbox":[620,410,670,540],'
+    '"state":"被纸箱部分遮挡","confidence":0.86}],"notes":""}'
+)
+
+
+def build_element_prompt(prompt_version: str = ELEMENT_PROMPT_VERSION) -> str:
+    """「只看不判」的元素描述提示词（T1 测评用）。
+
+    与 ``build_judge_prompt`` 的本质区别：**不允许输出任何隐患结论**，
+    只描述画面中的元素与状态。这样测出来的才是"识别能力"本身。
+    """
+    lines = [
+        "你是化工仓库安全巡检的视觉观察员。**只描述，不下结论。**",
+        "",
+        "# 任务",
+        "把画面里与安全相关的元素尽量列全，不要判断是否存在隐患。",
+        "",
+        "# 元素类别（尽量归到这几类）",
+        (
+            "人员 / 设备（罐·泵·阀门·法兰·管道）/ 通道与门 / 消防器材 / 标识与指示灯 / "
+            "环境异常（积液·烟雾·堆放物·破损）"
+        ),
+        "",
+        "# 每个元素要给出",
+        "- name：具体名称（如「纸箱堆」「手提式灭火器」「应急出口门」）",
+        "- category：上面六类之一",
+        "- bbox：0~1000 相对坐标 [x1,y1,x2,y2]，认不出给 null",
+        "- state：状态（如「被纸箱部分遮挡」「正常摆放」「门前堆物」）",
+        "- confidence：0~1 的真实把握",
+        "",
+        "# 纪律",
+        "- 只写确实看到的；不确定的写进 notes，不要编。",
+        "- 禁止输出「存在隐患」「违反规定」「不合格」这类结论。",
+        "",
+        f"# 输出（严格 JSON，不要 markdown）\n{_ELEMENT_SHAPE}",
+    ]
+    return "\n".join(lines)
+
+
 __all__ = [
     "DEFAULT_TAXONOMY_PATH",
+    "ELEMENT_PROMPT_VERSION",
     "PROMPT_VERSION",
+    "build_element_prompt",
     "build_judge_prompt",
     "load_taxonomy",
     "mvp_categories",
