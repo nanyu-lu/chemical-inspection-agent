@@ -5,9 +5,11 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from .contracts import NetworkMode
+from .paths import app_home, resources_root
 
 DEFAULT_BASE_URL = (
     "https://ws-8cl1ej8elduuovea.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
@@ -53,12 +55,21 @@ class Settings(BaseSettings):
 
     # 前端托管（单端口交付：后端直接托管 web/dist）
     serve_web: bool = True
-    web_dist: Path = Path("web/dist")
+    web_dist: Path = Field(default_factory=lambda: resources_root() / "web" / "dist")
     port: int = 8000
 
-    # 路径
-    data_dir: Path = Path("data")
-    config_dir: Path = Path("config")
+    # 路径：数据写用户目录（打包后可写），配置与前端从资源目录读
+    data_dir: Path = Field(default_factory=lambda: app_home() / "data")
+    config_dir: Path = Field(default_factory=lambda: resources_root() / "config")
+
+    def model_post_init(self, __context: object, /) -> None:
+        # Key 优先级：环境变量/.env（已由 BaseSettings 读入）> 用户目录 config.json
+        if not self.maas_api_key:
+            from .credentials import load_api_key
+
+            key = load_api_key()
+            if key:
+                self.maas_api_key = key
 
     @property
     def has_key(self) -> bool:

@@ -260,18 +260,30 @@ def uvicorn_cmd(port: int) -> list[str]:
 def cmd_start(args: argparse.Namespace) -> int:
     pid = read_pid()
     if pid and pid_alive(pid):
-        info(f"服务已在运行（pid={pid}）→ http://127.0.0.1:{args.port}")
+        saved_port = args.port
+        try:
+            saved_port = int(json.loads(PID_FILE.read_text(encoding="utf-8")).get("port", args.port))
+        except (OSError, ValueError, json.JSONDecodeError):
+            pass
+        info(f"服务已在运行（pid={pid}）→ http://127.0.0.1:{saved_port}")
         if not args.no_open:
-            webbrowser.open(f"http://127.0.0.1:{args.port}")
+            webbrowser.open(f"http://127.0.0.1:{saved_port}")
         return 0
 
-    if not port_free(args.port):
-        die(f"端口 {args.port} 已有服务在运行，请换一个：python tools/manage.py start --port 8010")
+    port = args.port
+    if not port_free(port):
+        for candidate in range(8000, 8011):
+            if port_free(candidate):
+                info(f"端口 {args.port} 已被占用，自动改用 {candidate}")
+                port = candidate
+                break
+        else:
+            die("8000~8010 端口都被占用，请先关闭占用程序")
 
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    cmd = uvicorn_cmd(args.port)
+    cmd = uvicorn_cmd(port)
 
     popen_kwargs: dict = {
         "cwd": str(ROOT),
@@ -289,21 +301,22 @@ def cmd_start(args: argparse.Namespace) -> int:
     proc = subprocess.Popen(cmd, **popen_kwargs)
     PID_FILE.write_text(
         json.dumps(
-            {"pid": proc.pid, "port": args.port, "started_at": time.strftime("%Y-%m-%d %H:%M:%S")},
+            {"pid": proc.pid, "port": port, "started_at": time.strftime("%Y-%m-%d %H:%M:%S")},
             ensure_ascii=False,
         ),
         encoding="utf-8",
     )
+    (DATA_DIR / ".port").write_text(str(port), encoding="utf-8")
 
-    info(f"启动中（pid={proc.pid}），日志：{LOG_FILE}")
-    if not wait_health(args.port):
+    info(f"启动中（pid={proc.pid}，端口 {port}），日志：{LOG_FILE}")
+    if not wait_health(port):
         info("启动超时。最后 20 行日志：")
         if LOG_FILE.exists():
             lines = LOG_FILE.read_text(encoding="utf-8", errors="ignore").splitlines()[-20:]
             print("\n".join(lines))
         return 1
 
-    url = f"http://127.0.0.1:{args.port}"
+    url = f"http://127.0.0.1:{port}"
     info(f"已就绪：{url}")
     if not args.no_open:
         webbrowser.open(url)

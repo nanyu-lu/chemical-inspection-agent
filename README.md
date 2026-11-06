@@ -147,6 +147,29 @@ docs/                    MVP开发计划、探针报告、评估报告
 > 运行期**不需要 Node**（前端已构建并由后端托管），也**不需要 nginx**（单端口 8000）。
 > 目标机没有 Python 3.11+ 时，安装脚本会用 uv 自动拉一个（需联网）。
 
+## 桌面版打包（DMG / EXE，评委双击即用）
+
+```bash
+# 1) 本地打 macOS 包（需要 pyinstaller，已在 build 组）
+uv sync --group build
+uv run pyinstaller packaging/chem.spec --noconfirm --distpath build/dist --workpath build/work
+bash packaging/make_dmg.sh                 # → dist/chem-inspect-v0.1.0-arm64.dmg
+
+# 2) Windows 安装包（必须在 Windows 上）
+uv run pyinstaller packaging/chem.spec --noconfirm --distpath build\dist --workpath build\work
+choco install innosetup -y
+"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" packaging\setup.iss   # → dist\chem-inspect-Setup-0.1.0.exe
+```
+
+**CI**：`.github/workflows/desktop.yml` —— 只在打 tag 时触发，三平台并行（macOS arm64 / macOS x86_64 / Windows），每个平台都会先跑一次「冻结包启动自检」再出包，最后汇总到 GitHub Release。
+
+| 关键设计 | 说明 |
+|---|---|
+| 数据与资源分离 | 打包后数据写 `~/Library/Application Support/ChemInspect`（Win: `%APPDATA%\ChemInspect`），bundle 内只读，见 `src/chem_inspect/paths.py` |
+| 同进程跑服务 | `tools/launcher.py` 用 `uvicorn.Server` + 后台线程，关窗口即结束，无孤儿进程 |
+| Key 不外带 | 首次启动弹窗输入，存用户目录 `config.json`（600），**不打进二进制、不进 git** |
+| 签名现状 | 未购买证书：mac 仅 ad-hoc 签名，Windows 无签名 → 首次打开需"右键打开 / 仍要运行"，见 `packaging/首次打开说明.txt` |
+
 ## 三条硬约定（改动需走评审）
 
 1. **契约冻结**：`contracts/models.py` 只允许向后兼容地新增可选字段；`schema_version` 同步递增。

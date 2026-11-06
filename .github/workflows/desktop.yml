@@ -1,0 +1,170 @@
+name: desktop-build
+
+# 只在打 tag 或手动触发时构建，避免烧掉 macOS runner 的 10 倍计费分钟
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    name: macOS ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    # macos-13 若已被 GitHub 下线，x86_64 会失败但不阻塞 arm64 与 Windows
+    continue-on-error: ${{ matrix.arch == 'x86_64' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-14
+          - arch: x86_64
+            runner: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: 安装后端依赖
+        run: uv sync --frozen --no-dev --group build
+
+      - name: 构建前端
+        run: cd web && npm ci --no-audit --no-fund && npm run build
+
+      - name: 生成图标
+        run: uv run python packaging/make_icon.py
+
+      - name: PyInstaller 打包
+        run: uv run pyinstaller packaging/chem.spec --noconfirm --distpath build/dist --workpath build/work
+
+      - name: 冻结包启动自检（Mock 模式）
+        run: |
+          set -euo pipefail
+          BIN="build/dist/化工巡检.app/Contents/MacOS/ChemInspect"
+          "$BIN" --serve-only --no-browser --port 8123 &
+          PID=$!
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8123/api/v1/health >/dev/null; then ok=1; break; fi
+            sleep 1
+          done
+          kill "$PID" 2>/dev/null || true
+          [ "$ok" = "1" ] || { echo "❌ 冻结包启动失败"; exit 1; }
+          echo "✓ 冻结包可启动且健康检查通过"
+
+      - name: 生成 dmg
+        run: bash packaging/make_dmg.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.arch }}
+          path: dist/*.dmg
+          if-no-files-found: error
+
+  windows:
+    name: Windows installer
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: 安装后端依赖
+        run: uv sync --frozen --no-dev --group build
+
+      - name: 构建前端
+        shell: pwsh
+        run: |
+          cd web
+          npm ci --no-audit --no-fund
+          npm run build
+
+      - name: 生成图标
+        run: uv run python packaging/make_icon.py
+
+      - name: PyInstaller 打包
+        run: uv run pyinstaller packaging/chem.spec --noconfirm --distpath build/dist --workpath build/work
+
+      - name: 冻结包启动自检（Mock 模式）
+        shell: pwsh
+        run: |
+          $proc = Start-Process -FilePath "build\dist\ChemInspect\ChemInspect.exe" `
+            -ArgumentList "--serve-only","--no-browser","--port","8123" -PassThru
+          $ok = $false
+          for ($i = 0; $i -lt 60; $i++) {
+            try {
+              $r = Invoke-WebRequest "http://127.0.0.1:8123/api/v1/health" -UseBasicParsing -TimeoutSec 2
+              if ($r.StatusCode -eq 200) { $ok = $true; break }
+            } catch { Start-Sleep -Seconds 1 }
+          }
+          if ($proc) { Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue }
+          if (-not $ok) { throw "冻结包启动失败" }
+          Write-Host "冻结包可启动且健康检查通过"
+
+      - name: 安装 Inno Setup
+        run: choco install innosetup --no-progress -y
+
+      - name: 打安装包
+        shell: pwsh
+        run: |
+          $iscc = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { throw "未找到 ISCC.exe" }
+          & $iscc "packaging\setup.iss"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-setup
+          path: dist/*.exe
+          if-no-files-found: error
+
+  release:
+    name: 汇总发布
+    needs: [macos, windows]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: 生成校验和
+        run: |
+          cd artifacts
+          ls -lh
+          sha256sum * > SHA256SUMS
+          cat SHA256SUMS
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/*.dmg
+            artifacts/*.exe
+            artifacts/SHA256SUMS
+          body: |
+            ## 化工巡检 · 隐患识别 MVP ${{ github.ref_name }}
+
+            - macOS（Apple Silicon）：`*-arm64.dmg`
+            - macOS（Intel）：`*-x86_64.dmg`（若未产出，说明该 runner 不可用）
+            - Windows 10/11：`chem-inspect-Setup-*.exe`
+
+            首次打开可能被 Gatekeeper / SmartScreen 拦截，按包内《首次打开说明》操作即可。
