@@ -9,7 +9,8 @@ from chem_inspect import credentials, paths
 from chem_inspect.settings import Settings
 
 
-def test_app_home_defaults_to_project_root_in_dev() -> None:
+def test_app_home_defaults_to_project_root_in_dev(monkeypatch) -> None:
+    monkeypatch.delenv("CHEM_INSPECT_HOME", raising=False)
     assert paths.app_home() == paths.project_root()
 
 
