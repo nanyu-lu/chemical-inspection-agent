@@ -131,6 +131,22 @@ docs/                    MVP开发计划、探针报告、评估报告
 ```
 
 
+## 打包交付（Mac + Windows 同一个包）
+
+```bash
+./scripts/build_release.sh          # 版本号取自 pyproject.toml
+./scripts/build_release.sh 0.1.1    # 或指定版本
+```
+
+产物：`dist/chem-inspect-v<版本>-mvp.tar.gz`（macOS，保留可执行位）、`.zip`（Windows 资源管理器直接解压）、`SHA256SUMS`
+
+构建脚本会自动完成：前端预构建 → 白名单拷贝（**不含 `.env`/`data/`/`node_modules`**）→ 自检（文件齐全、无演示库、无明文 Key）→ 双格式压缩 → 校验和。
+
+包内使用方式（给评委）：见 `交付说明.md`；脚本层统一由 `tools/manage.py` 驱动，Mac 用 `*.sh/.bat`，Windows 用 `*.bat/*.ps1`。
+
+> 运行期**不需要 Node**（前端已构建并由后端托管），也**不需要 nginx**（单端口 8000）。
+> 目标机没有 Python 3.11+ 时，安装脚本会用 uv 自动拉一个（需联网）。
+
 ## 三条硬约定（改动需走评审）
 
 1. **契约冻结**：`contracts/models.py` 只允许向后兼容地新增可选字段；`schema_version` 同步递增。
