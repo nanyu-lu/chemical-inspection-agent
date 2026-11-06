@@ -15,9 +15,11 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import os
 import shutil
+import site
 import socket
 import subprocess
 import sys
@@ -47,35 +49,44 @@ def die(msg: str) -> None:
 # --------------------------------------------------------------------------- uv
 
 
+def _user_uv_path() -> str | None:
+    """`pip install --user uv` 之后可执行文件通常在这里。"""
+    base = Path(site.getuserbase())
+    cand = base / ("Scripts" if IS_WIN else "bin") / ("uv.exe" if IS_WIN else "uv")
+    return str(cand) if cand.exists() else None
+
+
 def uv_prefix() -> list[str] | None:
-    """返回调用 uv 的命令前缀；找不到返回 None。"""
-    exe = shutil.which("uv")
-    if exe:
-        return [exe]
+    """返回调用 uv 的命令前缀；**只认真实可执行文件**。
+
+    早期版本这里会退化成 `python -m uv`，但子进程解释器（项目 venv）里并没有 uv 模块，
+    导致 start 直接失败。这个坑已修：找不到就不返回，由调用方决定是安装还是报错。
+    """
+    for cand in (shutil.which("uv"), _user_uv_path()):
+        if cand:
+            return [cand]
+    return None
+
+
+def _try_install_uv() -> list[str] | None:
+    """尝试用 pip 装 uv；失败返回 None（不退出进程）。"""
+    info("未找到 uv，正在通过 pip 安装（需要网络）…")
     try:
-        subprocess.run(
-            [sys.executable, "-m", "uv", "--version"],
-            capture_output=True,
-            check=True,
-            timeout=20,
-        )
-        return [sys.executable, "-m", "uv"]
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError):
+        code = subprocess.call([sys.executable, "-m", "pip", "install", "--user", "uv"])
+    except OSError:
         return None
+    if code != 0:
+        return None
+    return uv_prefix()
 
 
 def ensure_uv() -> list[str]:
     prefix = uv_prefix()
     if prefix:
         return prefix
-    info("未找到 uv，正在通过 pip 安装（需要网络）…")
-    code = subprocess.call([sys.executable, "-m", "pip", "install", "--user", "uv"])
-    if code != 0:
+    prefix = _try_install_uv()
+    if prefix is None:
         die("uv 安装失败。请手动执行：python -m pip install --user uv")
-    prefix = uv_prefix()
-    if not prefix:
-        # pip --user 装完可能不在当前 PATH，可直接用模块方式
-        prefix = [sys.executable, "-m", "uv"]
     return prefix
 
 
@@ -133,12 +144,25 @@ def wait_health(port: int, seconds: float = 60.0) -> bool:
 
 
 def port_free(port: int) -> bool:
+    """端口是否可用。
+
+    注意：上一个进程被杀后，端口可能处于 TIME_WAIT，此时 bind 会失败，
+    但其实并没有服务在监听。所以 bind 失败后再探测一次是否真的有服务响应。
+    """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:
             s.bind(("127.0.0.1", port))
             return True
         except OSError:
+            pass
+    if health(port):
+        return False
+    try:
+        with socket.create_connection(("127.0.0.1", port), timeout=0.5):
             return False
+    except OSError:
+        return True
 
 
 def read_pid() -> int | None:
@@ -206,6 +230,33 @@ def cmd_install(args: argparse.Namespace) -> int:
     return 0
 
 
+def uvicorn_cmd(port: int) -> list[str]:
+    """优先用当前解释器（通常就是项目 venv，依赖已装好）；否则退回 uv run。"""
+    if importlib.util.find_spec("uvicorn") is not None:
+        return [
+            sys.executable,
+            "-m",
+            "uvicorn",
+            "chem_inspect.api.app:app",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            str(port),
+        ]
+    uv = uv_prefix()
+    if uv is None:
+        die("未找到 uv，且当前解释器没有安装依赖。请先运行 install 脚本。")
+    return uv + [
+        "run",
+        "uvicorn",
+        "chem_inspect.api.app:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        str(port),
+    ]
+
+
 def cmd_start(args: argparse.Namespace) -> int:
     pid = read_pid()
     if pid and pid_alive(pid):
@@ -215,21 +266,12 @@ def cmd_start(args: argparse.Namespace) -> int:
         return 0
 
     if not port_free(args.port):
-        die(f"端口 {args.port} 被占用，请换一个：python tools/manage.py start --port 8010")
+        die(f"端口 {args.port} 已有服务在运行，请换一个：python tools/manage.py start --port 8010")
 
-    uv = uv_prefix() or [sys.executable, "-m", "uv"]
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    cmd = uv + [
-        "run",
-        "uvicorn",
-        "chem_inspect.api.app:app",
-        "--host",
-        "127.0.0.1",
-        "--port",
-        str(args.port),
-    ]
+    cmd = uvicorn_cmd(args.port)
 
     popen_kwargs: dict = {
         "cwd": str(ROOT),
@@ -313,7 +355,27 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 1
 
 
+def ensure_runtime() -> None:
+    """当前解释器过旧时，用 uv 托管的 3.11 重新执行自己。
+
+    评委机器可能只装了 Python 3.9（macOS 自带就是 3.9），
+    这里自动兜底，避免让他们自己去装 Python。
+    """
+    if sys.version_info[:2] >= (3, 11):  # noqa: UP036
+        return
+    uv = uv_prefix() or _try_install_uv()
+    if uv is None:
+        die(
+            f"需要 Python 3.11+（当前 {sys.version.split()[0]}），且无法安装 uv。\n"
+            "请安装 Python 3.11+：https://www.python.org/downloads/"
+        )
+    info(f"当前 Python {sys.version.split()[0]} 过旧，改用 uv 托管的 Python 重新执行…")
+    cmd = uv + ["run", "python", str(Path(__file__).resolve()), *sys.argv[1:]]
+    raise SystemExit(subprocess.call(cmd, cwd=str(ROOT)))
+
+
 def main() -> int:
+    ensure_runtime()
     default_port = int(os.environ.get("PORT", "8000"))
     parser = argparse.ArgumentParser(description="化工巡检 MVP 管理脚本")
     sub = parser.add_subparsers(dest="command", required=True)

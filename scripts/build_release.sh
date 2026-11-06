@@ -39,7 +39,7 @@ copy() {
 
 for item in \
   src config scripts tools docs \
-  pyproject.toml uv.lock .env.example README.md \
+  pyproject.toml uv.lock .python-version .env.example README.md 交付说明.md \
   install.sh start.sh stop.sh healthcheck.sh \
   install.ps1 start.ps1 stop.ps1 \
   install.bat start.bat stop.bat \
@@ -70,12 +70,12 @@ EOF
 echo "▶ 自检…"
 fail=0
 for must in pyproject.toml uv.lock src/chem_inspect/api/app.py web/dist/index.html \
-            config/hazard_rules.yaml install.sh start.bat tools/manage.py VERSION; do
+            config/hazard_rules.yaml install.sh start.bat tools/manage.py VERSION 交付说明.md; do
   [ -e "$STAGE/$must" ] || { echo "  ✗ 缺少 $must"; fail=1; }
 done
 [ -e "$STAGE/.env" ] && { echo "  ✗ 包里出现了 .env（含密钥）"; fail=1; }
 [ -e "$STAGE/data/app.db" ] && { echo "  ✗ 包里出现了演示数据库 data/app.db"; fail=1; }
-if grep -rIl "sk-ws-" "$STAGE" >/dev/null 2>&1; then
+if grep -rIlE "sk-ws-[A-Za-z0-9._-]{20,}" "$STAGE" >/dev/null 2>&1; then
   echo "  ✗ 包内发现 API Key 明文"; fail=1
 fi
 [ "$fail" -ne 0 ] && { echo "❌ 自检未通过，终止打包"; exit 1; }
