@@ -35,8 +35,8 @@ def _hook(exc_type, exc, tb) -> None:
 
 sys.excepthook = _hook
 
-# windowed 模式下这两个流是 None，先占位避免下游库报错
+# windowed 模式下这两个流是 None，先占位避免下游库报错（必须显式 UTF-8）
 if sys.stdout is None:
-    sys.stdout = open(os.devnull, "w")  # noqa: SIM115
+    sys.stdout = open(os.devnull, "w", encoding="utf-8")  # noqa: SIM115
 if sys.stderr is None:
-    sys.stderr = open(os.devnull, "w")  # noqa: SIM115
+    sys.stderr = open(os.devnull, "w", encoding="utf-8")  # noqa: SIM115

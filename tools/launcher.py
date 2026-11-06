@@ -36,11 +36,26 @@ log = logging.getLogger("launcher")
 
 
 def safe_streams() -> None:
-    """windowed 模式下 stdout/stderr 是 None，部分库会因此抛异常。"""
+    """windowed 模式下 stdout/stderr 是 None；重建时**必须显式用 UTF-8**。
+
+    踩过的坑：`open(os.devnull, "w")` 会沿用系统默认编码（Windows 上是 cp1252），
+    之后 print 一个 emoji 或中文就抛 UnicodeEncodeError，进程直接退出——
+    表现成"服务起来了但立刻挂掉"。
+    """
     if sys.stdout is None:
-        sys.stdout = open(os.devnull, "w")  # noqa: SIM115 - 进程级替换，不能关闭
+        sys.stdout = open(os.devnull, "w", encoding="utf-8")  # noqa: SIM115
+    else:
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+        except (AttributeError, ValueError):
+            pass
     if sys.stderr is None:
-        sys.stderr = open(os.devnull, "w")  # noqa: SIM115 - 同上
+        sys.stderr = open(os.devnull, "w", encoding="utf-8")  # noqa: SIM115
+    else:
+        try:
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
+        except (AttributeError, ValueError):
+            pass
 
 
 def setup_logging() -> Path:
@@ -295,12 +310,12 @@ def run_headless(port: int, open_browser: bool = True) -> int:
     handle = ServerHandle(port)
     handle.start()
     if not handle.wait_ready():
-        print(f"❌ 启动失败：{handle.error}")
+        print(f"[FAIL] 启动失败：{handle.error}")
         print(tail_log(logs_dir() / "api.log"))
         return 1
     url = f"http://127.0.0.1:{port}"
     info = health(port) or {}
-    print(f"✅ 已就绪：{url}（mock={info.get('mock')}）")
+    print(f"[OK] 已就绪：{url}（mock={info.get('mock')}）")
     if open_browser:
         webbrowser.open(url)
     try:
@@ -331,7 +346,7 @@ def main() -> int:
     try:
         port = pick_port(args.port or None)
     except RuntimeError as exc:
-        print(f"❌ {exc}")
+        print(f"[FAIL] {exc}")
         return 1
 
     if args.serve_only:
