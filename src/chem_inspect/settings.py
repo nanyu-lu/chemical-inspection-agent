@@ -49,6 +49,9 @@ class Settings(BaseSettings):
     worker_concurrency: int = 2
     worker_poll_interval: float = 1.0
 
+    # 45 项试点（config/pilot_check_items.yaml）
+    check_items_pilot: bool = True
+
     # 图像/视频
     max_long_side: int = 1280   # 小目标（安全帽）需要足够分辨率，别压太狠
     video_fps: float = 0.5      # 视频抽帧频率（帧/秒）

@@ -12,18 +12,21 @@
 from __future__ import annotations
 
 import json
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from typing import Any
 
 from pydantic import ValidationError
 
 from . import imaging
+from .check_items import PilotCheckItems, SubItemSpec, build_sub_item_prompt
 from .contracts import (
     Detection,
     EngineInfo,
     FrameRef,
     HazardEvent,
     NetworkMode,
+    SubItemVerdict,
     UsageInfo,
     Verdict,
     VLJudgeOutput,
@@ -32,7 +35,7 @@ from .contracts import (
 from .llm.base import LLMClient
 from .llm.maas import MaasError
 from .prompt import PROMPT_VERSION, build_judge_prompt, vl_categories
-from .rules import RuleSet, decide, sop_ref_map
+from .rules import RuleSet, decide, decide_sub_item, sop_ref_map
 from .storage import LocalBlobStore
 
 RETRY_HINT = "\n\n注意：只输出 JSON 本体，不要 markdown、不要任何解释。"
@@ -62,6 +65,12 @@ def parse_judge_output(text: str) -> VLJudgeOutput:
     """严格解析模型输出；解析不出就抛异常，由上层降级为人工复核。"""
     data = json.loads(_strip_fence(text))
     return VLJudgeOutput.model_validate(data)
+
+
+def parse_sub_item_output(text: str) -> SubItemVerdict:
+    """严格解析 45 项单子项输出；字段不符直接降级，不猜测。"""
+    data = json.loads(_strip_fence(text))
+    return SubItemVerdict.model_validate(data)
 
 
 def _save_evidence(
@@ -225,5 +234,189 @@ def judge_frame(
     return JudgeOutcome(event=event, raw_text=res.text, ok=True)
 
 
-__all__ = ["JudgeOutcome", "judge_frame", "parse_judge_output"]
+def judge_frame_multi(
+    image_bytes: bytes,
+    *,
+    frame_ref: FrameRef,
+    point: dict[str, Any] | None,
+    client: LLMClient,
+    rules: RuleSet,
+    taxonomy: dict[str, Any],
+    store: LocalBlobStore,
+    model: str,
+    check_items: PilotCheckItems | None = None,
+    network_mode: NetworkMode = NetworkMode.ONLINE,
+    long_side: int = imaging.DEFAULT_LONG_SIDE,
+) -> list[JudgeOutcome]:
+    """一帧多事件判定。
+
+    - 没有启用 45 项试点时，原样走旧 ``judge_frame``（向后兼容）。
+    - 启用时，每个试点子项独立调用一次模型，独立产出一条事件；
+      失败/不可判定也保留事件并强制人工复核，不静默丢失。
+    """
+    if check_items is None or not check_items.specs:
+        return [
+            judge_frame(
+                image_bytes,
+                frame_ref=frame_ref,
+                point=point,
+                client=client,
+                rules=rules,
+                taxonomy=taxonomy,
+                store=store,
+                model=model,
+                network_mode=network_mode,
+                long_side=long_side,
+            )
+        ]
+
+    img = imaging.load_image(image_bytes)
+    work = imaging.resize_long_side(img, long_side)
+    work_bytes = imaging.to_jpeg(work)
+
+    def run_one(spec: SubItemSpec) -> JudgeOutcome:
+        event_id = new_event_id()
+        prompt = build_sub_item_prompt(spec, point)
+        res = None
+        parsed: SubItemVerdict | None = None
+        failure: str | None = None
+
+        try:
+            res = client.chat_vision(work_bytes, prompt, model=model, json_mode=True)
+        except Exception as exc:  # noqa: BLE001 - 单子项失败降级，不拖垮整帧
+            failure = f"模型调用失败：{exc}"
+
+        if res is not None:
+            try:
+                parsed = parse_sub_item_output(res.text)
+            except (json.JSONDecodeError, ValidationError) as exc:
+                failure = f"输出解析失败：{exc}"
+                try:
+                    retry = client.chat_vision(
+                        work_bytes, prompt + RETRY_HINT, model=model, json_mode=True
+                    )
+                except Exception as exc2:  # noqa: BLE001
+                    failure = f"重试仍失败：{exc2}"
+                else:
+                    res = retry
+                    try:
+                        parsed = parse_sub_item_output(retry.text)
+                        failure = None
+                    except (json.JSONDecodeError, ValidationError) as exc3:
+                        failure = f"重试后仍无法解析：{exc3}"
+
+        if res is None or parsed is None:
+            evidence = _save_evidence(store, frame_ref, event_id, work, work_bytes, None, 0)
+            verdict = Verdict(
+                is_hazard=False,
+                confidence=0.0,
+                reason=f"AI 服务不可用（{failure}），请人工判定",
+                evidence_crop_uri=evidence,
+                need_manual_review=True,
+                check_item_code=spec.item_code,
+                sub_item_code=spec.sub_code,
+                check_item_name=f"{spec.item_name}/{spec.sub_name}",
+                detection_mode=spec.detection_mode,
+            )
+            event = HazardEvent(
+                event_id=event_id,
+                frame_ref=frame_ref,
+                verdict=verdict,
+                engine=EngineInfo(
+                    model_id=model,
+                    prompt_version=check_items.prompt_version,
+                    rule_version=rules.version,
+                    degraded=True,
+                    network_mode=network_mode,
+                ),
+                usage=UsageInfo(latency_ms=res.latency_ms if res else 0),
+            )
+            return JudgeOutcome(
+                event=event,
+                raw_text=res.text if res else "",
+                ok=False,
+                error=failure,
+            )
+
+        decision = decide_sub_item(
+            rules,
+            parsed,
+            item_code=spec.item_code,
+            item_name=spec.item_name,
+            sub_code=spec.sub_code,
+            sub_name=spec.sub_name,
+            detection_mode=spec.detection_mode,
+        )
+
+        bbox_px: list[float] | None = None
+        if parsed.present and parsed.bbox:
+            bbox_px = Detection(
+                hazard_type=f"{spec.item_code}/{spec.sub_code}",
+                score=parsed.confidence,
+                bbox=parsed.bbox,
+                bbox_space="norm1000",
+            ).to_pixel_bbox(*work.size)
+
+        evidence_uri = _save_evidence(
+            store, frame_ref, event_id, work, work_bytes, bbox_px, rules.crop_min_side_px
+        )
+
+        detections = []
+        if parsed.present:
+            detections.append(
+                Detection(
+                    hazard_type=f"{spec.item_code}/{spec.sub_code}",
+                    score=parsed.confidence,
+                    bbox=parsed.bbox,
+                    source="vl",
+                    bbox_space="norm1000",
+                )
+            )
+
+        verdict = Verdict(
+            is_hazard=decision.is_hazard,
+            hazard_type=decision.hazard_type,
+            level=decision.level,
+            confidence=decision.confidence,
+            reason=decision.reason,
+            sop_ref=decision.sop_ref,
+            action=decision.action,
+            evidence_crop_uri=evidence_uri,
+            need_manual_review=decision.need_manual_review,
+            check_item_code=decision.check_item_code,
+            sub_item_code=decision.sub_item_code,
+            check_item_name=decision.check_item_name,
+            detection_mode=decision.detection_mode,
+        )
+        event = HazardEvent(
+            event_id=event_id,
+            frame_ref=frame_ref,
+            verdict=verdict,
+            engine=EngineInfo(
+                model_id=res.model or model,
+                prompt_version=check_items.prompt_version,
+                rule_version=rules.version,
+                degraded=False,
+                network_mode=network_mode,
+            ),
+            detections=detections,
+            usage=UsageInfo(
+                prompt_tokens=res.prompt_tokens,
+                completion_tokens=res.completion_tokens,
+                latency_ms=res.latency_ms,
+            ),
+        )
+        return JudgeOutcome(event=event, raw_text=res.text, ok=True)
+
+    with ThreadPoolExecutor(max_workers=check_items.concurrency) as pool:
+        return list(pool.map(run_one, check_items.specs))
+
+
+__all__ = [
+    "JudgeOutcome",
+    "judge_frame",
+    "judge_frame_multi",
+    "parse_judge_output",
+    "parse_sub_item_output",
+]
 

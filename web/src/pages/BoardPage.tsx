@@ -75,8 +75,12 @@ export default function BoardPage() {
       .catch((e: unknown) => message.error(String(e)))
   }, [message])
 
-  const nameOf = (code: string | null) =>
-    config?.categories.find((c) => c.id === code)?.name ?? code ?? '—'
+  const nameOf = (code: string | null) => {
+    const legacy = config?.categories.find((c) => c.id === code)?.name
+    if (legacy) return legacy
+    const item = config?.check_items?.items.find((i) => code?.startsWith(i.code))
+    return item?.name ?? code ?? '—'
+  }
 
   const confirmEvent = async (event: HazardEvent) => {
     try {
@@ -134,7 +138,9 @@ export default function BoardPage() {
             <Tag color="geekblue">{row.hazard_type ?? '—'}</Tag>
             {row.duplicate_of && <Tag>重复</Tag>}
           </Space>
-          <Typography.Text style={{ fontSize: 12 }}>{nameOf(row.hazard_type)}</Typography.Text>
+          <Typography.Text style={{ fontSize: 12 }}>
+            {row.check_item_name ?? nameOf(row.hazard_type)}
+          </Typography.Text>
         </Space>
       ),
     },
@@ -299,7 +305,7 @@ export default function BoardPage() {
       <Drawer
         open={Boolean(detail)}
         width={720}
-        title={detail ? `隐患详情 · ${detail.hazard_type ?? '未分类'}` : ''}
+        title={detail ? `隐患详情 · ${detail.check_item_name ?? detail.hazard_type ?? '未分类'}` : ''}
         onClose={() => setDetail(null)}
       >
         {detail && (
@@ -309,7 +315,7 @@ export default function BoardPage() {
               <Descriptions.Item label="事件ID">{detail.event_id}</Descriptions.Item>
               <Descriptions.Item label="点位">{detail.point_id}</Descriptions.Item>
               <Descriptions.Item label="类别">
-                {detail.hazard_type} {nameOf(detail.hazard_type)}
+                {detail.check_item_name ?? `${detail.hazard_type ?? '—'} ${nameOf(detail.hazard_type)}`}
               </Descriptions.Item>
               <Descriptions.Item label="等级">{detail.level ?? '未定级'}</Descriptions.Item>
               <Descriptions.Item label="置信度">

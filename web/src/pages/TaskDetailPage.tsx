@@ -61,7 +61,10 @@ export default function TaskDetailPage() {
     )
   }
 
-  const hazards = task.frames.filter((f) => f.event?.is_hazard).length
+  const hazards = task.frames.reduce((sum, frame) => {
+    const events = frame.events ?? (frame.event ? [frame.event] : [])
+    return sum + events.filter((event) => event.is_hazard).length
+  }, 0)
 
   return (
     <>
@@ -96,7 +99,9 @@ export default function TaskDetailPage() {
       ) : (
         <Row gutter={[16, 16]}>
           {task.frames.map((frame) => {
-            const event = frame.event
+            const events = frame.events ?? (frame.event ? [frame.event] : [])
+            const hazardEvents = events.filter((event) => event.is_hazard)
+            const primary = hazardEvents[0] ?? events[0]
             return (
               <Col key={frame.frame_id} xs={24} sm={12} lg={8} xl={6}>
                 <Card
@@ -108,9 +113,15 @@ export default function TaskDetailPage() {
                     />
                   }
                   extra={
-                    event?.is_hazard ? (
-                      <Tag color="red">{event.hazard_type}</Tag>
-                    ) : event ? (
+                    hazardEvents.length ? (
+                      <Space size={2} wrap>
+                        {hazardEvents.map((event) => (
+                          <Tag key={event.event_id} color="red">
+                            {event.hazard_type}
+                          </Tag>
+                        ))}
+                      </Space>
+                    ) : primary ? (
                       <Tag color="green">未见隐患</Tag>
                     ) : null
                   }
@@ -126,24 +137,29 @@ export default function TaskDetailPage() {
                     <div style={{ height: 150, background: '#f0f0f0', borderRadius: 4 }} />
                   )}
 
-                  {event && event.is_hazard ? (
-                    <Space direction="vertical" size={4} style={{ marginTop: 8 }}>
-                      <Space size={4} wrap>
-                        <Tag color="orange">{event.level ?? '未定级'}</Tag>
-                        <Tag>置信度 {(event.confidence * 100).toFixed(0)}%</Tag>
-                        {event.sop_pending && <Tag color="warning">判据待确认</Tag>}
-                      </Space>
-                      <Typography.Paragraph
-                        style={{ marginBottom: 0, fontSize: 12 }}
-                        ellipsis={{ rows: 3 }}
-                      >
-                        {event.reason}
-                      </Typography.Paragraph>
-                      <Link to={`/board?event=${event.event_id}`}>去复核 →</Link>
+                  {hazardEvents.length ? (
+                    <Space direction="vertical" size={8} style={{ marginTop: 8 }}>
+                      {hazardEvents.map((event) => (
+                        <Space key={event.event_id} direction="vertical" size={4}>
+                          <Space size={4} wrap>
+                            <Tag color="geekblue">{event.check_item_name ?? event.hazard_type}</Tag>
+                            <Tag color="orange">{event.level ?? '未定级'}</Tag>
+                            <Tag>置信度 {(event.confidence * 100).toFixed(0)}%</Tag>
+                            {event.sop_pending && <Tag color="warning">判据待确认</Tag>}
+                          </Space>
+                          <Typography.Paragraph
+                            style={{ marginBottom: 0, fontSize: 12 }}
+                            ellipsis={{ rows: 3 }}
+                          >
+                            {event.reason}
+                          </Typography.Paragraph>
+                          <Link to={`/board?event=${event.event_id}`}>去复核 →</Link>
+                        </Space>
+                      ))}
                     </Space>
                   ) : (
                     <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-                      {frame.error ?? '本次未发现检查项内隐患'}
+                      {frame.error ?? primary?.reason ?? '本次未发现检查项内隐患'}
                     </Typography.Text>
                   )}
                 </Card>

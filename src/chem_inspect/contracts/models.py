@@ -178,6 +178,11 @@ class Verdict(BaseModel):
     evidence_crop_uri: str | None = None
     need_manual_review: bool = True
     other_observations: str = ""
+    # 45 项检查项（可选，旧 HZ-xx 事件不填）
+    check_item_code: str | None = None
+    sub_item_code: str | None = None
+    check_item_name: str | None = None
+    detection_mode: str | None = None
 
 
 class EngineInfo(BaseModel):
@@ -258,6 +263,26 @@ class VLJudgeOutput(BaseModel):
     other_observations: str = ""
 
 
+class SubItemVerdict(BaseModel):
+    """45 项试点：单个子项的输出契约（一次调用只问一个子项）。"""
+
+    model_config = ConfigDict(extra="forbid")
+
+    present: bool = False
+    confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+    evidence: str = ""
+    bbox: list[float] | None = None
+    undecidable: bool = False
+    reason: str = ""
+
+    @field_validator("bbox")
+    @classmethod
+    def _bbox_len(cls, v: list[float] | None) -> list[float] | None:
+        if v is not None and len(v) != 4:
+            raise ValueError("bbox 必须是 [x1, y1, x2, y2] 四个数字")
+        return v
+
+
 class MeterReading(BaseModel):
     """读表结果。只抽读数，超限判定由规则表 + 量程表完成。"""
 
@@ -308,6 +333,7 @@ __all__ = [
     "RejectReason",
     "ReviewAction",
     "Source",
+    "SubItemVerdict",
     "UsageInfo",
     "VLCheckItem",
     "VLJudgeOutput",

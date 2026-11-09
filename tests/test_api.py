@@ -29,6 +29,7 @@ def client(tmp_path: Path) -> Iterator[TestClient]:
         worker_enabled=True,
         worker_concurrency=1,
         worker_poll_interval=0.05,
+        check_items_pilot=False,
     )
     with TestClient(create_app(settings)) as c:
         yield c

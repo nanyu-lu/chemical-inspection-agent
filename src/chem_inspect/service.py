@@ -15,6 +15,7 @@ import yaml
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from .check_items import PilotCheckItems, load_pilot_check_items
 from .contracts import HazardEvent, NetworkMode
 from .db import Event, Frame, LLMUsage, Task, naive_utcnow
 from .llm.base import LLMClient
@@ -35,6 +36,7 @@ class AppContext:
     points: dict[str, dict[str, Any]]
     client: LLMClient
     model: str
+    check_items: PilotCheckItems | None = None
 
 
 def load_points(path: Path) -> dict[str, dict[str, Any]]:
@@ -85,6 +87,10 @@ def persist_event(
         task_id=event.frame_ref.task_id,
         point_id=event.frame_ref.point_id,
         hazard_type=verdict.hazard_type,
+        check_item_code=verdict.check_item_code,
+        sub_item_code=verdict.sub_item_code,
+        check_item_name=verdict.check_item_name,
+        detection_mode=verdict.detection_mode,
         is_hazard=verdict.is_hazard,
         level=verdict.level,
         confidence=verdict.confidence,
@@ -205,6 +211,8 @@ def export_rows(session: Session, limit: int = 5000) -> list[dict[str, Any]]:
             {
                 "事件ID": e.event_id,
                 "点位": e.point_id,
+                "检查项": e.check_item_code or "",
+                "子项": e.sub_item_code or "",
                 "隐患类别": e.hazard_type or "",
                 "等级": e.level or "",
                 "置信度": f"{e.confidence:.2f}",
@@ -228,6 +236,9 @@ def export_rows(session: Session, limit: int = 5000) -> list[dict[str, Any]]:
 
 def build_context(settings: Settings) -> AppContext:
     cfg = settings.config_dir
+    check_items = (
+        load_pilot_check_items(cfg) if settings.check_items_pilot else None
+    )
     return AppContext(
         settings=settings,
         store=LocalBlobStore(settings.data_dir / "blobs"),
@@ -236,5 +247,6 @@ def build_context(settings: Settings) -> AppContext:
         points=load_points(cfg / "points.yaml"),
         client=build_client(settings),
         model=settings.maas_vision_model,
+        check_items=check_items,
     )
 

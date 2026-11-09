@@ -57,6 +57,10 @@ def event_dict(e: Event, ctx: AppContext) -> dict[str, Any]:
         "task_id": e.task_id,
         "point_id": e.point_id,
         "hazard_type": e.hazard_type,
+        "check_item_code": e.check_item_code,
+        "sub_item_code": e.sub_item_code,
+        "check_item_name": e.check_item_name,
+        "detection_mode": e.detection_mode,
         "is_hazard": e.is_hazard,
         "level": e.level,
         "confidence": round(e.confidence, 3),
@@ -94,7 +98,9 @@ def task_dict(t: Task) -> dict[str, Any]:
     }
 
 
-def frame_dict(f: Frame, event: Event | None, ctx: AppContext) -> dict[str, Any]:
+def frame_dict(f: Frame, events: list[Event], ctx: AppContext) -> dict[str, Any]:
+    # 兼容旧前端：event 取第一条隐患（没有隐患则取第一条结论）；events 保留全部。
+    primary = next((e for e in events if e.is_hazard), events[0] if events else None)
     return {
         "frame_id": f.id,
         "status": f.status,
@@ -103,7 +109,8 @@ def frame_dict(f: Frame, event: Event | None, ctx: AppContext) -> dict[str, Any]
         "width": f.width,
         "height": f.height,
         "captured_at": _iso(f.captured_at),
-        "event": event_dict(event, ctx) if event else None,
+        "event": event_dict(primary, ctx) if primary else None,
+        "events": [event_dict(e, ctx) for e in events],
     }
 
 
@@ -163,6 +170,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "mock": type(ctx.client).__name__ == "MockClient",
             "rules_version": ctx.rules.version,
             "points": list(ctx.points),
+            "check_items_pilot": bool(ctx.check_items and ctx.check_items.enabled),
+            "check_items_count": len(ctx.check_items.specs) if ctx.check_items else 0,
         }
 
     @app.get("/api/v1/config")
@@ -185,6 +194,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 "conf_review": ctx.rules.conf_review,
             },
             "criteria_confirmed": bool(ctx.taxonomy.get("criteria_confirmed", False)),
+            "check_items": (
+                ctx.check_items.to_dict()
+                if ctx.check_items
+                else {"enabled": False, "items": []}
+            ),
         }
 
     # ---------------------------------------------------------------- 任务
@@ -228,10 +242,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 .all()
             )
             events = s.execute(select(Event).where(Event.task_id == task_id)).scalars().all()
-            by_frame = {e.frame_id: e for e in events}
+            by_frame: dict[str, list[Event]] = {}
+            for event in events:
+                by_frame.setdefault(event.frame_id, []).append(event)
             return {
                 **task_dict(task),
-                "frames": [frame_dict(f, by_frame.get(f.id), ctx) for f in frames],
+                "frames": [frame_dict(f, by_frame.get(f.id, []), ctx) for f in frames],
             }
 
     # ---------------------------------------------------------------- 上传

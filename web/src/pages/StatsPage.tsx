@@ -16,8 +16,12 @@ export default function StatsPage() {
     api.config().then(setConfig).catch(() => undefined)
   }, [message])
 
-  const nameOf = (code: string) =>
-    config?.categories.find((c) => c.id === code)?.name ?? code
+  const nameOf = (code: string) => {
+    const legacy = config?.categories.find((c) => c.id === code)?.name
+    if (legacy) return legacy
+    const item = config?.check_items?.items.find((i) => code.startsWith(i.code))
+    return item ? `${item.name}（${code}）` : code
+  }
 
   const maxOf = (record: Record<string, number>) =>
     Math.max(1, ...Object.values(record))

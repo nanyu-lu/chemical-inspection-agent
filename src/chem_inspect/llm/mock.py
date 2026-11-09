@@ -12,6 +12,18 @@ import json
 from .base import LLMResult
 from .maas import MaasError
 
+DEFAULT_SUB_ITEM_JSON = json.dumps(
+    {
+        "present": False,
+        "confidence": 0.2,
+        "evidence": "mock: 未发现该子项缺陷",
+        "bbox": None,
+        "undecidable": False,
+        "reason": "mock",
+    },
+    ensure_ascii=False,
+)
+
 DEFAULT_VISION_JSON = json.dumps(
     {
         "detections": [
@@ -43,11 +55,13 @@ class MockClient:
         self,
         vision_json: str = DEFAULT_VISION_JSON,
         *,
+        sub_item_json: str = DEFAULT_SUB_ITEM_JSON,
         fail_vision_times: int = 0,
         model: str = "mock-vl",
         latency_ms: int = 42,
     ) -> None:
         self._vision_json = vision_json
+        self._sub_item_json = sub_item_json
         self._remaining_failures = fail_vision_times
         self._model = model
         self._latency = latency_ms
@@ -77,8 +91,13 @@ class MockClient:
         if self._remaining_failures > 0:
             self._remaining_failures -= 1
             raise MaasError("mock: upstream timeout", status_code=504)
+        text = (
+            self._sub_item_json
+            if "只判断一个检查项" in prompt
+            else self._vision_json
+        )
         return LLMResult(
-            text=self._vision_json,
+            text=text,
             model=model or self._model,
             latency_ms=self._latency,
             prompt_tokens=1000,
@@ -87,4 +106,4 @@ class MockClient:
         )
 
 
-__all__ = ["DEFAULT_VISION_JSON", "MockClient"]
+__all__ = ["DEFAULT_SUB_ITEM_JSON", "DEFAULT_VISION_JSON", "MockClient"]

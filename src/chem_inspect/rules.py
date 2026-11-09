@@ -16,7 +16,7 @@ from typing import Any
 
 import yaml
 
-from .contracts import VLCheckItem
+from .contracts import SubItemVerdict, VLCheckItem
 
 DEFAULT_RULES_PATH = Path("config/hazard_rules.yaml")
 
@@ -76,6 +76,11 @@ class Decision:
     sop_ref: str | None = None
     missing_sop: bool = False
     need_manual_review: bool = True
+    # 45 项试点：保留检查项/子项溯源
+    check_item_code: str | None = None
+    sub_item_code: str | None = None
+    check_item_name: str | None = None
+    detection_mode: str | None = None
 
 
 def decide(
@@ -143,6 +148,90 @@ def decide(
         sop_ref=sop_ref,
         missing_sop=missing_sop,
         need_manual_review=need_review,
+    )
+
+
+def decide_sub_item(
+    rules: RuleSet,
+    output: SubItemVerdict,
+    *,
+    item_code: str,
+    item_name: str,
+    sub_code: str,
+    sub_name: str,
+    detection_mode: str,
+) -> Decision:
+    """45 项试点的单子项裁决。
+
+    与旧 ``decide`` 的区别：不取“最高置信度那一个”，而是每个子项独立产出一条
+    Decision；不可判定/低置信度也保留为需复核结论，不静默丢弃。
+    """
+    hazard_type = f"{item_code}/{sub_code}"
+    common = {
+        "check_item_code": item_code,
+        "sub_item_code": sub_code,
+        "check_item_name": f"{item_name}/{sub_name}",
+        "detection_mode": detection_mode,
+    }
+
+    if output.undecidable:
+        reason = output.reason or output.evidence or "图像无法判断"
+        return Decision(
+            is_hazard=False,
+            hazard_type=None,
+            level=None,
+            confidence=output.confidence,
+            reason=f"[不可判定] {item_name}/{sub_name}：{reason}",
+            need_manual_review=True,
+            **common,
+        )
+
+    if not output.present:
+        detail = output.evidence or output.reason
+        reason = f"{item_name}/{sub_name}：未发现缺陷"
+        if detail:
+            reason += f"；{detail}"
+        return Decision(
+            is_hazard=False,
+            hazard_type=None,
+            level=None,
+            confidence=output.confidence,
+            reason=reason,
+            need_manual_review=False,
+            **common,
+        )
+
+    if output.confidence < rules.conf_drop:
+        return Decision(
+            is_hazard=False,
+            hazard_type=None,
+            level=None,
+            confidence=output.confidence,
+            reason=(
+                f"[置信度低于阈值 {rules.conf_drop}] {item_name}/{sub_name}："
+                f"{output.evidence or output.reason or '转人工确认'}"
+            ),
+            need_manual_review=True,
+            **common,
+        )
+
+    evidence_text = (output.evidence or output.reason or "").strip() or "模型未给出具体证据描述"
+    reason = f"{item_name}/{sub_name}：{evidence_text}"
+    # 45 项目录暂未提供企业条款号；沿用「缺失条款 → 强制复核」策略
+    reason = f"[判据条款待专家确认] {reason}"
+    level = rules.level_for(hazard_type) or rules.level_for(item_code)
+    action = rules.action_for(hazard_type) or rules.action_for(item_code)
+    return Decision(
+        is_hazard=True,
+        hazard_type=hazard_type,
+        level=level,
+        confidence=output.confidence,
+        reason=reason,
+        action=action,
+        sop_ref=None,
+        missing_sop=True,
+        need_manual_review=True,
+        **common,
     )
 
 

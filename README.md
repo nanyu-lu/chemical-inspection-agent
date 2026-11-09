@@ -97,6 +97,15 @@ uv run python scripts/eval_maas.py --per-class 5   # 真实图小样本评估
 | GET | `/api/v1/export/events.csv` | 导出隐患台账 CSV（UTF-8 BOM，Excel 直开） |
 | GET | `/files/...` | 证据图/原图静态访问 |
 
+### 45 项试点（CI-06 法兰 / CI-11 防爆电气）
+
+- 开关：`CHECK_ITEMS_PILOT=true|false`（见 `.env.example`）
+- 配置：`config/pilot_check_items.yaml`、`config/baseline_criteria.yaml`
+- 一帧最多 9 个子项调用，每个子项独立一条事件；`/api/v1/tasks/{id}` 的 frame 新增 `events` 数组
+- 事件新增 `check_item_code` / `sub_item_code` / `check_item_name` / `detection_mode`
+- 详细说明：`docs/试点接入-45项-CI06-CI11.md`
+- 当前只接入 2/45 项；其余 43 项仍 `enabled: false`
+
 
 ## 目录结构
 

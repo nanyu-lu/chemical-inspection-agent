@@ -146,6 +146,23 @@ export default function UploadPage() {
           </Card>
 
           <Card title="本次检查项">
+            {config?.check_items?.enabled && (
+              <div style={{ marginBottom: 12 }}>
+                <Tag color="purple">45 项试点</Tag>
+                {config.check_items.items.map((item) => (
+                  <div key={item.code} style={{ marginTop: 8 }}>
+                    <Space size={4} wrap>
+                      <Tag color="geekblue">{item.code}</Tag>
+                      <span>{item.name}</span>
+                      <Tag>{item.sub_items.length} 子项</Tag>
+                    </Space>
+                    <div style={{ fontSize: 12, color: '#888', marginTop: 2 }}>
+                      {item.sub_items.map((s) => `${s.code} ${s.name}`).join('；')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
             <Space direction="vertical" size={4}>
               {mvpCategories.map((c) => (
                 <Space key={c.id}>

@@ -17,7 +17,7 @@ from sqlalchemy import select, update
 
 from .contracts import FrameRef
 from .db import Frame, Task, session_scope
-from .pipeline import judge_frame
+from .pipeline import judge_frame_multi
 from .service import AppContext, persist_event, refresh_task
 
 log = logging.getLogger("chem_inspect.worker")
@@ -98,7 +98,7 @@ class FrameWorker:
                     frame_uri=frame.uri,
                     sha256=frame.sha256,
                 )
-                outcome = judge_frame(
+                outcomes = judge_frame_multi(
                     data,
                     frame_ref=ref,
                     point=point,
@@ -107,11 +107,14 @@ class FrameWorker:
                     taxonomy=self.ctx.taxonomy,
                     store=self.ctx.store,
                     model=self.ctx.model,
+                    check_items=self.ctx.check_items,
                     network_mode=self.ctx.settings.network_mode,
                 )
-                persist_event(s, outcome.event, frame=frame, rules=self.ctx.rules)
-                frame.status = "done" if outcome.ok else "failed"
-                frame.error = outcome.error
+                for outcome in outcomes:
+                    persist_event(s, outcome.event, frame=frame, rules=self.ctx.rules)
+                errors = [o.error for o in outcomes if not o.ok and o.error]
+                frame.status = "done" if all(o.ok for o in outcomes) else "failed"
+                frame.error = "; ".join(errors)[:500] or None
                 refresh_task(s, frame.task_id)
         except Exception as exc:  # noqa: BLE001 - 单帧失败不能拖垮 worker
             log.error("处理帧 %s 失败：%s\n%s", frame_id, exc, traceback.format_exc())

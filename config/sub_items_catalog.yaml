@@ -1,0 +1,3624 @@
+version: 0.1.0
+updated_at: '2026-11-08'
+source: 云文档/化工巡检项目文档/巡检Agent开发训练/巡检典型问题清单.xlsx
+note: 578 条子项判据目录，原文照录（清单存在错别字，未改写）。criteria 尚未经专家确认，故 criteria_confirmed=false、enabled=false；启用前需补判据边界（什么情况不算）与
+  neg_anchor。
+known_mismatches:
+- sub_code: '3.14'
+  catalog_item: CI-03
+  dataset_item: CI-01
+  detail: 第一批图片归在 CI-01 安全阀，编号取自 3 章；同名判据在目录中属 CI-03
+- sub_code: '11.5'
+  catalog_item: CI-11
+  dataset_item: CI-26
+  detail: 电缆绝缘皮破损，图片按内容归 CI-26 电缆布设，编号取自 11 章
+- sub_code: 5.9/5.10
+  catalog_item: null
+  dataset_item: CI-05
+  detail: 第一批图片有 5.9/5.10，但清单呼吸阀只到 5.8，缺对应判据文本
+item_count: 45
+sub_item_count: 578
+items:
+- code: CI-01
+  name: 安全阀
+  sub_items:
+  - code: '1.1'
+    name: 是否存在管道共用？
+    criteria: 是否存在管道共用？
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-02
+  name: 爆破片
+  sub_items:
+  - code: '2.1'
+    name: 一反拱形爆破片装置用于高粘度介质环境或在拱面出现大面积结晶现象；
+    criteria: 一反拱形爆破片装置用于高粘度介质环境或在拱面出现大面积结晶现象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.2'
+    name: 当爆破片安全装置的夹持器为插入式时，夹持器没有安装在法兰的重心；
+    criteria: 当爆破片安全装置的夹持器为插入式时，夹持器没有安装在法兰的重心；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.3'
+    name: 爆破片泄压管路与其他系统共用一个管路，存在被堵塞风险；
+    criteria: 爆破片泄压管路与其他系统共用一个管路，存在被堵塞风险；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.4'
+    name: 爆破片泄压管路出口被堵塞或出口管路存在阀门且阀门处于关闭状态；
+    criteria: 爆破片泄压管路出口被堵塞或出口管路存在阀门且阀门处于关闭状态；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.5'
+    name: 涉及易烯易爆介质或毒性程度为中度以上危吉介质的爆破片泄放侧直接排入大气；
+    criteria: 涉及易烯易爆介质或毒性程度为中度以上危吉介质的爆破片泄放侧直接排入大气；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.6'
+    name: 两个或两个以上爆破片装置泄放管路汇集到同一个汇集管路时，汇集管路面积小于各爆破片装置泄放接管截面积的总和；
+    criteria: 两个或两个以上爆破片装置泄放管路汇集到同一个汇集管路时，汇集管路面积小于各爆破片装置泄放接管截面积的总和；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.7'
+    name: 爆破片装置与设备之间安装有阀门的，阀门处于关闭状态或阀门没有全开或阀门全开但未上锁铅封；
+    criteria: 爆破片装置与设备之间安装有阀门的，阀门处于关闭状态或阀门没有全开或阀门全开但未上锁铅封；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.8'
+    name: 爆破片表面有裂纹、锈斑、小孔、鼓包、凹陷，或有明显划伤；
+    criteria: 爆破片表面有裂纹、锈斑、小孔、鼓包、凹陷，或有明显划伤；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.9'
+    name: 开缝/带槽型爆破片，缝/孔边有毛刺，手摸扎手；缝/孔歪、大小不一;
+    criteria: 开缝/带槽型爆破片，缝/孔边有毛刺，手摸扎手；缝/孔歪、大小不一;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.10'
+    name: 薄爆破片，有透光点；
+    criteria: 薄爆破片，有透光点；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.11'
+    name: 爆破片拱面塌了、歪了，或边缘硅碰变形、卷边；
+    criteria: 爆破片拱面塌了、歪了，或边缘硅碰变形、卷边；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.12'
+    name: 爆破片与夹持器贴合处，有腐蚀、污渍堆积；
+    criteria: 爆破片与夹持器贴合处，有腐蚀、污渍堆积；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.13'
+    name: 夹持器端面比爆破片拱顶低，且无防护罩（裸露在外）；
+    criteria: 夹持器端面比爆破片拱顶低，且无防护罩（裸露在外）；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.14'
+    name: 夹持器上没有介质泄放方向箭头，或爆破片装反（泄压侧贴设备内侧）；
+    criteria: 夹持器上没有介质泄放方向箭头，或爆破片装反（泄压侧贴设备内侧）；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.15'
+    name: 夹持器与法兰连接的密封垫歪了、破了，螺丝孔对着密封垫；
+    criteria: 夹持器与法兰连接的密封垫歪了、破了，螺丝孔对着密封垫；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.16'
+    name: 夹持器螺栓拧的松紧不一，或爆破片边缘与夹持器之间有缝隙；
+    criteria: 夹持器螺栓拧的松紧不一，或爆破片边缘与夹持器之间有缝隙；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.17'
+    name: 密封垫有溶胀、开裂、发硬，或明显与介质腐蚀痕迹；
+    criteria: 密封垫有溶胀、开裂、发硬，或明显与介质腐蚀痕迹；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.18'
+    name: 爆破片【夹持器上没有金属牌，或铬牌掉了、松了；
+    criteria: 爆破片【夹持器上没有金属牌，或铬牌掉了、松了；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.19'
+    name: 背压托架有变形、弯曲，或托架上的孔被堵、孔特别小;
+    criteria: 背压托架有变形、弯曲，或托架上的孔被堵、孔特别小;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.20'
+    name: 张开型爆破片背压托架本身有裂纹；
+    criteria: 张开型爆破片背压托架本身有裂纹；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.21'
+    name: 爆破片周围堆杂物、积油污，把爆破片盖了一半以上;
+    criteria: 爆破片周围堆杂物、积油污，把爆破片盖了一半以上;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '2.22'
+    name: 爆破片表面有水渍、寒斑、原灰尘，长期受潮腐蚀。
+    criteria: 爆破片表面有水渍、寒斑、原灰尘，长期受潮腐蚀。
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-03
+  name: 安全阀与爆破片安全
+  sub_items:
+  - code: '3.1'
+    name: 爆破片出口侧到安全阀入口侧的连接管道，长度明显超过5 倍管径，肉眼可见管段长、弯折多;
+    criteria: 爆破片出口侧到安全阀入口侧的连接管道，长度明显超过5 倍管径，肉眼可见管段长、弯折多;
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.2'
+    name: 爆破片与安全阀之间的连接管路上有缩径、变径、弯头过多，影响介质流通;
+    criteria: 爆破片与安全阀之间的连接管路上有缩径、变径、弯头过多，影响介质流通;
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.3'
+    name: 爆破片有明显碎片状破损（现场能看到碎渣、掉块）；
+    criteria: 爆破片有明显碎片状破损（现场能看到碎渣、掉块）；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.4'
+    name: 爆破片净泄放面积肉眼看明显小于安全阀入口流道面积（口径差距大）；
+    criteria: 爆破片净泄放面积肉眼看明显小于安全阀入口流道面积（口径差距大）；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.5'
+    name: 爆破片出现裂纹、锈蚀、装反、无背压托架等；
+    criteria: 爆破片出现裂纹、锈蚀、装反、无背压托架等；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.6'
+    name: 爆破片与安全阀之间的腔体上，没有装排气阀、压力表或报警指示器，腔体部位无任何附局阀件、仪表；
+    criteria: 爆破片与安全阀之间的腔体上，没有装排气阀、压力表或报警指示器，腔体部位无任何附局阀件、仪表；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.7'
+    name: 腔体上的排气阀处于关闭状态且长期未开启，或阀门手轮缺失、阀杆变形；
+    criteria: 腔体上的排气阀处于关闭状态且长期未开启，或阀门手轮缺失、阀杆变形；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.8'
+    name: 腔体上的压力表无显示、表盘破损、指针卡死，或压力表超检定周期或无检定标签或标签过期；
+    criteria: 腔体上的压力表无显示、表盘破损、指针卡死，或压力表超检定周期或无检定标签或标签过期；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.9'
+    name: 腔体连接部位有介质渗漏痕迹，结霜、结垢、滴液等；
+    criteria: 腔体连接部位有介质渗漏痕迹，结霜、结垢、滴液等；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.10'
+    name: 组合装置排放管路内有杂物堵塞、积液、结垢;
+    criteria: 组合装置排放管路内有杂物堵塞、积液、结垢;
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.11'
+    name: 排放管路有弯折、压扁、阀门关闭等阻碍介质排放的情况；
+    criteria: 排放管路有弯折、压扁、阀门关闭等阻碍介质排放的情况；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.12'
+    name: 排放口朝向人员操作区、设备本体、易燃易爆区域，无安全导向措施；
+    criteria: 排放口朝向人员操作区、设备本体、易燃易爆区域，无安全导向措施；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.13'
+    name: 安全阀阀杆变形、手轮缺失、铅封破损或脱落；
+    criteria: 安全阀阀杆变形、手轮缺失、铅封破损或脱落；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.14'
+    name: 安全阀有明显渗漏、锈蚀；
+    criteria: 安全阀有明显渗漏、锈蚀；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.15'
+    name: 安全阀后端排放口可能受到雨水侵入或凝结水情况下排放管低点无开孔用于排水；
+    criteria: 安全阀后端排放口可能受到雨水侵入或凝结水情况下排放管低点无开孔用于排水；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.16'
+    name: 低温/高温工况下，组合装置无保温、保冷措施，或保温层脱落、破损;
+    criteria: 低温/高温工况下，组合装置无保温、保冷措施，或保温层脱落、破损;
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '3.17'
+    name: 组合装置各连接法兰密封垫破损、法兰面趣曲，连接处有介质泄漏痕迹
+    criteria: 组合装置各连接法兰密封垫破损、法兰面趣曲，连接处有介质泄漏痕迹
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+- code: CI-04
+  name: 泄压人孔
+  sub_items:
+  - code: '4.1'
+    name: 泄压人孔盖与罐体或支架之间用铁丝、钢丝绳、塑料绳等捆绑定；
+    criteria: 泄压人孔盖与罐体或支架之间用铁丝、钢丝绳、塑料绳等捆绑定；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.2'
+    name: 泄压人孔盖与法兰或罐体焊接，使其成为永久封闭结构；
+    criteria: 泄压人孔盖与法兰或罐体焊接，使其成为永久封闭结构；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.3'
+    name: 重物压在泄压人孔上；
+    criteria: 重物压在泄压人孔上；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.4'
+    name: 泄压人孔定位杆偏移；
+    criteria: 泄压人孔定位杆偏移；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.5'
+    name: 泄压人孔密封垫片破损，垫片老化、开裂、被腐蚀;
+    criteria: 泄压人孔密封垫片破损，垫片老化、开裂、被腐蚀;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.6'
+    name: 泄压人孔弹簧锈蚀卡滞、断裂或被物料粘结；
+    criteria: 泄压人孔弹簧锈蚀卡滞、断裂或被物料粘结；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.7'
+    name: 泄压人孔未垂直安装；
+    criteria: 泄压人孔未垂直安装；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '4.8'
+    name: 设重了氮气密封的储罐顶部没有设重紧急泄压人孔
+    criteria: 设重了氮气密封的储罐顶部没有设重紧急泄压人孔
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-05
+  name: 呼吸阀
+  sub_items:
+  - code: '5.1'
+    name: 呼吸阀阀盘冻结卡死，如冬季气温低结冰；
+    criteria: 呼吸阀阀盘冻结卡死，如冬季气温低结冰；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.2'
+    name: 灰尘鸟窝堵住呼吸阀气道;
+    criteria: 灰尘鸟窝堵住呼吸阀气道;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.3'
+    name: 阀盘和阀座变形，接触面不平；
+    criteria: 阀盘和阀座变形，接触面不平；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.4'
+    name: 呼吸阀导杆弯曲脱落，导杆变形导致阀盘卡死;
+    criteria: 呼吸阀导杆弯曲脱落，导杆变形导致阀盘卡死;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.5'
+    name: 弹簧生锈、断裂或被物料粘结失效；
+    criteria: 弹簧生锈、断裂或被物料粘结失效；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.6'
+    name: 呼吸阀垫片开裂、硬化或被腐蚀；
+    criteria: 呼吸阀垫片开裂、硬化或被腐蚀；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.7'
+    name: 呼吸阀未垂直安装;
+    criteria: 呼吸阀未垂直安装;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '5.8'
+    name: 甲B、乙类液体储罐呼吸阀未配备阻火器;
+    criteria: 甲B、乙类液体储罐呼吸阀未配备阻火器;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-06
+  name: 法兰
+  sub_items:
+  - code: '6.1'
+    name: 板式平焊法兰被用于有毒、可燃介质输送；
+    criteria: 板式平焊法兰被用于有毒、可燃介质输送；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.2'
+    name: 带颈承插焊法兰用于公称直径大于DN50的管道；
+    criteria: 带颈承插焊法兰用于公称直径大于DN50的管道；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.3'
+    name: 带颈螺纹法兰用于GC2级工业管道、或用于输送极度和高度危吉介质；
+    criteria: 带颈螺纹法兰用于GC2级工业管道、或用于输送极度和高度危吉介质；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.4'
+    name: 非金属环垫片用于高温、高压管道；
+    criteria: 非金属环垫片用于高温、高压管道；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.5'
+    name: 酸碱管道法兰处为安装防喷溅防护套;
+    criteria: 酸碱管道法兰处为安装防喷溅防护套;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.6'
+    name: 六角头螺栓或等长双头螺柱被用于有毒、可燃介质；
+    criteria: 六角头螺栓或等长双头螺柱被用于有毒、可燃介质；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.7'
+    name: 管道法兰螺栓未使用同一规格，或安装方向不一致；
+    criteria: 管道法兰螺栓未使用同一规格，或安装方向不一致；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.8'
+    name: 有毒气体管道法兰单头螺栓连接、全螺纹与非全螺纹螺栓共用、1型和2型螺母共用
+    criteria: 有毒气体管道法兰单头螺栓连接、全螺纹与非全螺纹螺栓共用、1型和2型螺母共用
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.9'
+    name: 法兰密封面有介质混痕迹（如结霜、结垢、腐蚀斑）；
+    criteria: 法兰密封面有介质混痕迹（如结霜、结垢、腐蚀斑）；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.10'
+    name: 高温管道法兰橡胶垫片出现软化、流消现象；
+    criteria: 高温管道法兰橡胶垫片出现软化、流消现象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.11'
+    name: 法兰螺栓松动、缺失或腐蚀生锈；
+    criteria: 法兰螺栓松动、缺失或腐蚀生锈；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.12'
+    name: 螺栓紧固过度导致螺杆变形、断裂；
+    criteria: 螺栓紧固过度导致螺杆变形、断裂；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.13'
+    name: 长度过短导致丝扣外露不足2-3扣；
+    criteria: 长度过短导致丝扣外露不足2-3扣；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.14'
+    name: 法兰存在偏口，两法兰面不平行，有明显夹角翘曲变形；
+    criteria: 法兰存在偏口，两法兰面不平行，有明显夹角翘曲变形；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.15'
+    name: 垫片外露、破损；
+    criteria: 垫片外露、破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.16'
+    name: 两片法兰尺寸不匹配，螺栓孔无法对齐；
+    criteria: 两片法兰尺寸不匹配，螺栓孔无法对齐；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.17'
+    name: 法兰盘有裂纹、砂眼;
+    criteria: 法兰盘有裂纹、砂眼;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.18'
+    name: 法兰跨接线脱落
+    criteria: 法兰跨接线脱落
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '6.19'
+    name: 聚四氟乙烯材质的垫片、填料、阀座被用在设计温度200℃以上的环境
+    criteria: 聚四氟乙烯材质的垫片、填料、阀座被用在设计温度200℃以上的环境
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-07
+  name: 工业管道（压力管道
+  sub_items:
+  - code: '7.1'
+    name: 管道机关键外观破损、变形；
+    criteria: 管道机关键外观破损、变形；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.2'
+    name: 管道表面有轻微或严重的裂纹，
+    criteria: 管道表面有轻微或严重的裂纹，
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.3'
+    name: 管道外防腐层鼓包、剥落、破损露出金属本体，腐蚀严重；
+    criteria: 管道外防腐层鼓包、剥落、破损露出金属本体，腐蚀严重；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.4'
+    name: 管道上阀门安装位置过高不便操作；
+    criteria: 管道上阀门安装位置过高不便操作；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.5'
+    name: 管道焊缝外观质量不合格存在鼓包、裂纹、凹凸不平、未焊透、未熔合等现场；
+    criteria: 管道焊缝外观质量不合格存在鼓包、裂纹、凹凸不平、未焊透、未熔合等现场；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.6'
+    name: 管道保温或保冷破损、脱落、潮湿发霉；
+    criteria: 管道保温或保冷破损、脱落、潮湿发霉；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.7'
+    name: 蒸气管道保温破损，管道表面保温层下腐蚀；
+    criteria: 蒸气管道保温破损，管道表面保温层下腐蚀；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.8'
+    name: 波纹管膨胀节表面损伤；
+    criteria: 波纹管膨胀节表面损伤；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.9'
+    name: 埋地管道出土段防腐层开裂、老化；
+    criteria: 埋地管道出土段防腐层开裂、老化；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.10'
+    name: 管道低点排污阀或高点放空阀锈蚀严重或存在滴漏；
+    criteria: 管道低点排污阀或高点放空阀锈蚀严重或存在滴漏；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.11'
+    name: 管道低点排污口或高点放空口言法兰缺失或未上紧螺栓或上紧螺栓缺失；
+    criteria: 管道低点排污口或高点放空口言法兰缺失或未上紧螺栓或上紧螺栓缺失；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.12'
+    name: 管道存在带压堵漏夹具涂抹金属胶；
+    criteria: 管道存在带压堵漏夹具涂抹金属胶；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.13'
+    name: 有毒或可燃介质管道采用板式平焊法兰；
+    criteria: 有毒或可燃介质管道采用板式平焊法兰；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '7.14'
+    name: 聚四氟乙烯材质的垫、填料、阀座被用在设计温度200°C以上的环境
+    criteria: 聚四氟乙烯材质的垫、填料、阀座被用在设计温度200°C以上的环境
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-08
+  name: 管道支承件
+  sub_items:
+  - code: '8.1'
+    name: 支吊架锈蚀、断裂、变形；
+    criteria: 支吊架锈蚀、断裂、变形；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.2'
+    name: 弹簧支吊架压缩/ 拉伸状态异常;
+    criteria: 弹簧支吊架压缩/ 拉伸状态异常;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.3'
+    name: 管道与支吊架接触处磨损、脱漆；
+    criteria: 管道与支吊架接触处磨损、脱漆；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.4'
+    name: 支吊架松动、移位，未有效支撑管道；
+    criteria: 支吊架松动、移位，未有效支撑管道；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.5'
+    name: 导向支架间隙过大或过小；
+    criteria: 导向支架间隙过大或过小；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.6'
+    name: 管道支架卡箍过松与管道间隙过大；
+    criteria: 管道支架卡箍过松与管道间隙过大；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.7'
+    name: 管道支撑接触处磨损、损伤；
+    criteria: 管道支撑接触处磨损、损伤；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.8'
+    name: 管道支撑本体变形、偏移、翻转
+    criteria: 管道支撑本体变形、偏移、翻转
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.9'
+    name: T型支撑底座螺栓缺失、松动（外露丝扣不足2-3扣），或螺栓锈蚀断裂;
+    criteria: T型支撑底座螺栓缺失、松动（外露丝扣不足2-3扣），或螺栓锈蚀断裂;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.10'
+    name: 滑动或导向支架的滑动面有锈蚀、焊渣、灰尘等杂物堆积；
+    criteria: 滑动或导向支架的滑动面有锈蚀、焊渣、灰尘等杂物堆积；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.11'
+    name: 管道滑动支撑底座四面被固定;
+    criteria: 管道滑动支撑底座四面被固定;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.12'
+    name: 滑动管托的滑块、滚柱缺失或锈蚀卡死，滑动面有焊渣、灰尘堆积；
+    criteria: 滑动管托的滑块、滚柱缺失或锈蚀卡死，滑动面有焊渣、灰尘堆积；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.13'
+    name: 泵、压缩机进出口管道的T型支撑未加减震垫；
+    criteria: 泵、压缩机进出口管道的T型支撑未加减震垫；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.14'
+    name: 高温管道的吊杆未偏重安装；
+    criteria: 高温管道的吊杆未偏重安装；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.15'
+    name: 两根都会热胀的管道共用一根吊杆；
+    criteria: 两根都会热胀的管道共用一根吊杆；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.16'
+    name: 一段直管上同时安装2个及以上固定支架
+    criteria: 一段直管上同时安装2个及以上固定支架
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '8.17'
+    name: 弹簧支座或吊架上临时固定销未拆除
+    criteria: 弹簧支座或吊架上临时固定销未拆除
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-09
+  name: 阻火器
+  sub_items:
+  - code: '9.1'
+    name: 阻火器壳体表面或法兰连接处有明显积尘或附着物或介质渗漏痕迹，出现结霜、汗或油迹；
+    criteria: 阻火器壳体表面或法兰连接处有明显积尘或附着物或介质渗漏痕迹，出现结霜、汗或油迹；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.2'
+    name: 阻火器壳体表面有炭化黑斑或金属变色区域；
+    criteria: 阻火器壳体表面有炭化黑斑或金属变色区域；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.3'
+    name: 一阻火元件边缘有熔融或烧套现象；
+    criteria: 一阻火元件边缘有熔融或烧套现象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.4'
+    name: 阻火器与管道连接部位有介质泄漏痕迹；
+    criteria: 阻火器与管道连接部位有介质泄漏痕迹；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.5'
+    name: 金属壳体出现点蚀、渍病状腐蚀，尤其在法兰密封面和焊接部位；
+    criteria: 金属壳体出现点蚀、渍病状腐蚀，尤其在法兰密封面和焊接部位；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.6'
+    name: 壳体有明显凹陷或鼓包；
+    criteria: 壳体有明显凹陷或鼓包；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.7'
+    name: 阻火器压环或固定螺栓变形、松动；
+    criteria: 阻火器压环或固定螺栓变形、松动；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.8'
+    name: 阻火器上流向标识与介质实际流向相反；
+    criteria: 阻火器上流向标识与介质实际流向相反；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '9.9'
+    name: 阻火器与管道连接不同心，存在明显应力。
+    criteria: 阻火器与管道连接不同心，存在明显应力。
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-10
+  name: 静电接地
+  sub_items:
+  - code: '10.1'
+    name: 接地螺栓松动、未拧紧、螺栓锈蚀;
+    criteria: 接地螺栓松动、未拧紧、螺栓锈蚀;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.2'
+    name: 跨接线断裂、缺失或未连接；
+    criteria: 跨接线断裂、缺失或未连接；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.3'
+    name: 使用非导电材质夹具，塑料、橡胶夹等；
+    criteria: 使用非导电材质夹具，塑料、橡胶夹等；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.4'
+    name: 接地线被油漆、保温层、油污覆盖;
+    criteria: 接地线被油漆、保温层、油污覆盖;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.5'
+    name: 设备外壳未接地（如泵、反应釜、过滤器）；
+    criteria: 设备外壳未接地（如泵、反应釜、过滤器）；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.6'
+    name: 涉及易燃易爆化学品的油罐车/桶装容器/移动容器未接地或跨接；
+    criteria: 涉及易燃易爆化学品的油罐车/桶装容器/移动容器未接地或跨接；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.7'
+    name: 使用非导电容器盛装易燃液体如塑料桶、塑料瓶等；
+    criteria: 使用非导电容器盛装易燃液体如塑料桶、塑料瓶等；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.8'
+    name: 易易爆化学品盛装容器内存在细长导电性突出物或有未接地的孤立导体；
+    criteria: 易易爆化学品盛装容器内存在细长导电性突出物或有未接地的孤立导体；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.9'
+    name: 皮带传动泵、输送机使用普通橡胶皮带；
+    criteria: 皮带传动泵、输送机使用普通橡胶皮带；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.10'
+    name: 装卸区域或装卸管临时使用铁丝、钢筋代替接地线；
+    criteria: 装卸区域或装卸管临时使用铁丝、钢筋代替接地线；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.11'
+    name: 一静电消除器（离子风机）未启用或失效，静电释放灯不亮或接地线缆断裂等；
+    criteria: 一静电消除器（离子风机）未启用或失效，静电释放灯不亮或接地线缆断裂等；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.12'
+    name: 装在绝缘体上的金属部件未静电接地；
+    criteria: 装在绝缘体上的金属部件未静电接地；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '10.13'
+    name: 一接地夹头或夹钳位置锈蚀严重或有油污
+    criteria: 一接地夹头或夹钳位置锈蚀严重或有油污
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-11
+  name: 防爆电气设备
+  sub_items:
+  - code: '11.1'
+    name: 防爆分区内使用电气设备设施铭牌上无防爆EX标识，非防爆；
+    criteria: 防爆分区内使用电气设备设施铭牌上无防爆EX标识，非防爆；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.2'
+    name: I类场所使用非防爆电气，或选用的防爆电气设备类型与实际使用环境不匹配（如在有可燃气体的区域选用仅适用于粉尘环境的防
+    criteria: I类场所使用非防爆电气，或选用的防爆电气设备类型与实际使用环境不匹配（如在有可燃气体的区域选用仅适用于粉尘环境的防
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.3'
+    name: 防爆电气设备设施或带EX标识的防爆接线盒外壳开裂、螺栓（或垫圈或弹簧垫等）缺失、螺栓松动；
+    criteria: 防爆电气设备设施或带EX标识的防爆接线盒外壳开裂、螺栓（或垫圈或弹簧垫等）缺失、螺栓松动；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.4'
+    name: 空闲的电缆进线口没有使用防爆格兰头且无封堵；
+    criteria: 空闲的电缆进线口没有使用防爆格兰头且无封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.5'
+    name: 多个电缆共用一个电缆进线口、电缆绝缘皮破损；
+    criteria: 多个电缆共用一个电缆进线口、电缆绝缘皮破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.6'
+    name: 电缆进出口未使用防爆格兰头且未使用防爆胶泥封堵；
+    criteria: 电缆进出口未使用防爆格兰头且未使用防爆胶泥封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.7'
+    name: 防爆格兰头脱落或未拧紧；
+    criteria: 防爆格兰头脱落或未拧紧；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.8'
+    name: 防爆照明灯防爆结构及保护氧有缝隙；
+    criteria: 防爆照明灯防爆结构及保护氧有缝隙；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.9'
+    name: 带螺纹的电缆引入装置（喇叭嘴），螺纹拧入扣数不够；
+    criteria: 带螺纹的电缆引入装置（喇叭嘴），螺纹拧入扣数不够；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.10'
+    name: 密封圈切开套在电缆上，或一处喇叭嘴密封圈单孔内套进多根电缆；
+    criteria: 密封圈切开套在电缆上，或一处喇叭嘴密封圈单孔内套进多根电缆；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.11'
+    name: 防爆电气设备设施内部有积水、积尘等；
+    criteria: 防爆电气设备设施内部有积水、积尘等；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.12'
+    name: 外接地未连接至接地体，或接地导线串接；
+    criteria: 外接地未连接至接地体，或接地导线串接；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.13'
+    name: 防爆分区内使用不防爆工具（非铜类工具，或非合金类工具）；
+    criteria: 防爆分区内使用不防爆工具（非铜类工具，或非合金类工具）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.14'
+    name: I类场所使用非防爆电气或IC类场所使用IB类防爆电气等，如氢气场所（IIC级）使用IB级设备；
+    criteria: I类场所使用非防爆电气或IC类场所使用IB类防爆电气等，如氢气场所（IIC级）使用IB级设备；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.15'
+    name: 粉尘环境使用气体防爆设备；
+    criteria: 粉尘环境使用气体防爆设备；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.16'
+    name: 0区使用非ia级本质安全设备；
+    criteria: 0区使用非ia级本质安全设备；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '11.17'
+    name: 防爆分区内叉车、火灾报警模块、消防风门电控装置等未采用防爆型式（如普通叉车进入1区）；
+    criteria: 防爆分区内叉车、火灾报警模块、消防风门电控装置等未采用防爆型式（如普通叉车进入1区）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-12
+  name: UPS和蓄电池
+  sub_items:
+  - code: '12.1'
+    name: 蓄电池室内使用的灯具、通风电机等未采用防爆型电器无“EX”标识；
+    criteria: 蓄电池室内使用的灯具、通风电机等未采用防爆型电器无“EX”标识；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '12.2'
+    name: 蓄电池室内照明没有采用穿管暗敷;
+    criteria: 蓄电池室内照明没有采用穿管暗敷;
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '12.3'
+    name: 蓄电池室内装设普通可能产生火花开关和插座；
+    criteria: 蓄电池室内装设普通可能产生火花开关和插座；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '12.4'
+    name: 铅酸蓄电池充电间的地下有无关的沟道和管线；
+    criteria: 铅酸蓄电池充电间的地下有无关的沟道和管线；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '12.5'
+    name: 碱性蓄电池表面有结晶爬碱现场
+    criteria: 碱性蓄电池表面有结晶爬碱现场
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-13
+  name: 围堰防火堤
+  sub_items:
+  - code: '13.1'
+    name: 围堰墙体开裂，围堰墙体塌、掉块、缺角，围堰墙体倾斜、变形；
+    criteria: 围堰墙体开裂，围堰墙体塌、掉块、缺角，围堰墙体倾斜、变形；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.2'
+    name: 围堰混凝土墙体露筋、掉皮；
+    criteria: 围堰混凝土墙体露筋、掉皮；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.3'
+    name: 围堰金属挡板锈蚀、穿孔、变形，铁皮卷边、焊缝开裂;
+    criteria: 围堰金属挡板锈蚀、穿孔、变形，铁皮卷边、焊缝开裂;
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.4'
+    name: 围堰拼接处密封失效，板材或砖块之间有缝隙，能看到液体渗漏痕迹；
+    criteria: 围堰拼接处密封失效，板材或砖块之间有缝隙，能看到液体渗漏痕迹；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.5'
+    name: 围堰实际高度明显过低，低于储罐底部标高，或肉眼看比储罐出料口低；
+    criteria: 围堰实际高度明显过低，低于储罐底部标高，或肉眼看比储罐出料口低；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.6'
+    name: 围堰围合范围不足，未完全包围储罐或设备，有一侧无围挡形成口；
+    criteria: 围堰围合范围不足，未完全包围储罐或设备，有一侧无围挡形成口；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.7'
+    name: 多台储罐共用围堰，分隔堤缺失或破损；
+    criteria: 多台储罐共用围堰，分隔堤缺失或破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.8'
+    name: 围堰局部高度低于整体，成为挡液薄弱点；
+    criteria: 围堰局部高度低于整体，成为挡液薄弱点；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.9'
+    name: 围堰内防渗层（环氧树脂层/防渗膜）起皮、开裂、脱落;
+    criteria: 围堰内防渗层（环氧树脂层/防渗膜）起皮、开裂、脱落;
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.10'
+    name: 堰内混凝土地面起砂、空鼓，有明显裂缝漏液；
+    criteria: 堰内混凝土地面起砂、空鼓，有明显裂缝漏液；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.11'
+    name: 围堰内排水口、预埋件周边密封破损，有介质从缝隙出；
+    criteria: 围堰内排水口、预埋件周边密封破损，有介质从缝隙出；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.12'
+    name: 围堰内有杂物堆积；
+    criteria: 围堰内有杂物堆积；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.13'
+    name: 围堰内无排水阀或排污口；
+    criteria: 围堰内无排水阀或排污口；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.14'
+    name: 围堰排水阀或排污口被堵塞；
+    criteria: 围堰排水阀或排污口被堵塞；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.15'
+    name: 围堰排水口无封堵装置或单向阀；
+    criteria: 围堰排水口无封堵装置或单向阀；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.16'
+    name: 堰内排水坡度反向或无坡度，积液汇流到死角，无法流到排水口；
+    criteria: 堰内排水坡度反向或无坡度，积液汇流到死角，无法流到排水口；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.17'
+    name: 管道穿围堰处未封堵或密封破损；
+    criteria: 管道穿围堰处未封堵或密封破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '13.18'
+    name: 围堰与相邻建构筑物衔接处开裂
+    criteria: 围堰与相邻建构筑物衔接处开裂
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-14
+  name: 固定式可燃有毒气体城或装卸站台）
+  sub_items:
+  - code: '14.1'
+    name: 在如卸车台、灌装间等关键燃气设施区域未安装固定式报警装置
+    criteria: 在如卸车台、灌装间等关键燃气设施区域未安装固定式报警装置
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.2'
+    name: 固定式可燃有毒气体检测仪未安装阀门组或法兰组近，安装位置被管道、设备遮挡导致气体扩散路径受阻；
+    criteria: 固定式可燃有毒气体检测仪未安装阀门组或法兰组近，安装位置被管道、设备遮挡导致气体扩散路径受阻；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.3'
+    name: 固定式可燃有毒气体检测仪安装在阳光直射位置；
+    criteria: 固定式可燃有毒气体检测仪安装在阳光直射位置；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.4'
+    name: 固定式可燃有毒气体检测仪未通电（绿灯不亮或显示器没有显示任何数值）
+    criteria: 固定式可燃有毒气体检测仪未通电（绿灯不亮或显示器没有显示任何数值）
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.5'
+    name: 固定式可燃有毒气体检测仪故障（检测仪故障红灯闪烁或显示器没有显示任何数值）
+    criteria: 固定式可燃有毒气体检测仪故障（检测仪故障红灯闪烁或显示器没有显示任何数值）
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.6'
+    name: 下方探头被包裹；
+    criteria: 下方探头被包裹；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.7'
+    name: 下方探头表面附着油污、灰尘、结冰、结晶物或有盖子未移除；
+    criteria: 下方探头表面附着油污、灰尘、结冰、结晶物或有盖子未移除；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.8'
+    name: 一检测仪电缆保护管破裂或线缆接头处有铜丝外露；
+    criteria: 一检测仪电缆保护管破裂或线缆接头处有铜丝外露；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.9'
+    name: 显示屏数值漂移，数值波动超过±5%；
+    criteria: 显示屏数值漂移，数值波动超过±5%；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.10'
+    name: 检测仪显示屏面板进水、看不清、破裂；
+    criteria: 检测仪显示屏面板进水、看不清、破裂；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.11'
+    name: 一检测仪正在报警，提示现场有泄漏；
+    criteria: 一检测仪正在报警，提示现场有泄漏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.12'
+    name: 检测仪表头显示有数据，表示现场侧有可能有泄漏，或检测仪故障误显示；
+    criteria: 检测仪表头显示有数据，表示现场侧有可能有泄漏，或检测仪故障误显示；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.13'
+    name: 检测仪接线盒密封胶圈老化开裂；
+    criteria: 检测仪接线盒密封胶圈老化开裂；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.14'
+    name: 标定标签显示已超过有效期通常为1年或12个月）；
+    criteria: 标定标签显示已超过有效期通常为1年或12个月）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '14.15'
+    name: 固定式可燃有毒气体检测仪未接地（无黄绿接地线）
+    criteria: 固定式可燃有毒气体检测仪未接地（无黄绿接地线）
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-15
+  name: 紧急切断阀
+  sub_items:
+  - code: '15.1'
+    name: 压力传态器根部手阀或针型阀处于关闭或未全开状态；
+    criteria: 压力传态器根部手阀或针型阀处于关闭或未全开状态；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.2'
+    name: 传感器信号线脱落；
+    criteria: 传感器信号线脱落；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.3'
+    name: 现场SIS防爆控制柜（带EX标识）缺少螺栓、进线孔无封堵；
+    criteria: 现场SIS防爆控制柜（带EX标识）缺少螺栓、进线孔无封堵；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.4'
+    name: 切断阀阀体排污口、丝堵缺失、渗漏，密封垫破损无密封效果;
+    criteria: 切断阀阀体排污口、丝堵缺失、渗漏，密封垫破损无密封效果;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.5'
+    name: .气动执行器（气缸、膜头等）破损、鼓包，气管接头脱落或缠带松脱或开裂;
+    criteria: .气动执行器（气缸、膜头等）破损、鼓包，气管接头脱落或缠带松脱或开裂;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.6'
+    name: 切断阀液压执行器漏油、油管弯折压扁，液压站油位过低、无压力显示;
+    criteria: 切断阀液压执行器漏油、油管弯折压扁，液压站油位过低、无压力显示;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.7'
+    name: 电动切断阀执行器外壳破损、接线外露，指示灯不亮、电机运转无动作，散热口堵塞；
+    criteria: 电动切断阀执行器外壳破损、接线外露，指示灯不亮、电机运转无动作，散热口堵塞；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.8'
+    name: 切断阀执行机构弹簧外露、变形、断裂；
+    criteria: 切断阀执行机构弹簧外露、变形、断裂；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.9'
+    name: 仪表气管或液压管弯折、打结、压扁、断裂，线路外皮破损、芯线外露，气管漏气结霜；
+    criteria: 仪表气管或液压管弯折、打结、压扁、断裂，线路外皮破损、芯线外露，气管漏气结霜；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.10'
+    name: 阀杆填料函处介质渗漏，填料压盖松动或缺失、压盖螺栓不齐；
+    criteria: 阀杆填料函处介质渗漏，填料压盖松动或缺失、压盖螺栓不齐；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.11'
+    name: .气动或液压执行器密封件老化、渗漏，气缸或膜头两端混气或漏油，活塞杆有油迹或气痕;
+    criteria: .气动或液压执行器密封件老化、渗漏，气缸或膜头两端混气或漏油，活塞杆有油迹或气痕;
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.12'
+    name: 联锁旁路超30天；
+    criteria: 联锁旁路超30天；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.13'
+    name: 中控室或机柜间的UPS处于旁路状态；
+    criteria: 中控室或机柜间的UPS处于旁路状态；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '15.14'
+    name: 压力联锁传感器的引压管路上手阀或针型阀被关闭
+    criteria: 压力联锁传感器的引压管路上手阀或针型阀被关闭
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-16
+  name: 磁翻板液位计
+  sub_items:
+  - code: '16.1'
+    name: 磁翻板液位计消栏；
+    criteria: 磁翻板液位计消栏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '16.2'
+    name: 翻板不翻转；
+    criteria: 翻板不翻转；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '16.3'
+    name: 磁翻板液位计根部阀未开或未全开：
+    criteria: 磁翻板液位计根部阀未开或未全开：
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '16.4'
+    name: 磁翻板液位计底部排凝口言法兰缺失或堵头缺失或紧固螺栓松动缺失
+    criteria: 磁翻板液位计底部排凝口言法兰缺失或堵头缺失或紧固螺栓松动缺失
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-17
+  name: 压力表
+  sub_items:
+  - code: '17.1'
+    name: 压力表引压管上根部阀被关闭或未全开；
+    criteria: 压力表引压管上根部阀被关闭或未全开；
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.2'
+    name: 压力表头排污口未关闭封堵；
+    criteria: 压力表头排污口未关闭封堵；
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.3'
+    name: 压力表表盘内防震硅油液位没有在表盘中心上方区域，硅油存在泄漏；
+    criteria: 压力表表盘内防震硅油液位没有在表盘中心上方区域，硅油存在泄漏；
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.4'
+    name: 压力表引压管路上手阀或针型阀被关闭
+    criteria: 压力表引压管路上手阀或针型阀被关闭
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.5'
+    name: 压力表实际指针没有在表盘满量程的1/3~2/3之间，压力表量程选择不当
+    criteria: 压力表实际指针没有在表盘满量程的1/3~2/3之间，压力表量程选择不当
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.6'
+    name: 压力变送器和压力表共用同一取源接口
+    criteria: 压力变送器和压力表共用同一取源接口
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.7'
+    name: 消防水泵吸水管没有设置压力表
+    criteria: 消防水泵吸水管没有设置压力表
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.8'
+    name: 消防水泵出水管没有设置压力表
+    criteria: 消防水泵出水管没有设置压力表
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.9'
+    name: 压力表设置在管道弯曲转弯处或流束成涡旋状处
+    criteria: 压力表设置在管道弯曲转弯处或流束成涡旋状处
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.10'
+    name: 对于水平或倾斜管道上，压力表取压点设置在管道的底部
+    criteria: 对于水平或倾斜管道上，压力表取压点设置在管道的底部
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.11'
+    name: 对于水蒸气介质系统压力表，引压管上没有设置存水弯管
+    criteria: 对于水蒸气介质系统压力表，引压管上没有设置存水弯管
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.12'
+    name: 对于操作温度超过60℃的工艺介质的系统压力表，引压管上没有设置冷凝圈或冷凝弯
+    criteria: 对于操作温度超过60℃的工艺介质的系统压力表，引压管上没有设置冷凝圈或冷凝弯
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.13'
+    name: 压力表与压力容器之间没有装设三通旋塞阀或针形阀
+    criteria: 压力表与压力容器之间没有装设三通旋塞阀或针形阀
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.14'
+    name: 压力表表盘上没有标注红线
+    criteria: 压力表表盘上没有标注红线
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.15'
+    name: 泵出口未设置压力表
+    criteria: 泵出口未设置压力表
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+  - code: '17.16'
+    name: 压力表表破损、污染、进入水汽等导致查看不便
+    criteria: 压力表表破损、污染、进入水汽等导致查看不便
+    required_context: 铭牌/标识/读数清晰可读，占画面 1/5 以上
+    enabled: false
+    criteria_confirmed: false
+- code: CI-18
+  name: 热电偶
+  sub_items:
+  - code: '18.1'
+    name: 一热电偶突出在人行通道附近，可能被不小心撞坏；
+    criteria: 一热电偶突出在人行通道附近，可能被不小心撞坏；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '18.2'
+    name: 一热电偶保护套管破损
+    criteria: 一热电偶保护套管破损
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-19
+  name: 装卸作业
+  sub_items:
+  - code: '19.1'
+    name: 危化品槽车未使用防滑轮挡或防滑枕木；
+    criteria: 危化品槽车未使用防滑轮挡或防滑枕木；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.2'
+    name: 液化烃、液氨、液氧等易燃易爆、有毒有害液化气体的充装未使用万向节管道充装系统；
+    criteria: 液化烃、液氨、液氧等易燃易爆、有毒有害液化气体的充装未使用万向节管道充装系统；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.3'
+    name: 易燃易爆危险介质装卸过程未连接静电接地；
+    criteria: 易燃易爆危险介质装卸过程未连接静电接地；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.4'
+    name: 静电接地系统亮红灯，接地不亮；
+    criteria: 静电接地系统亮红灯，接地不亮；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.5'
+    name: 装卸车辆装卸过程未连接位移保护系统；
+    criteria: 装卸车辆装卸过程未连接位移保护系统；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.6'
+    name: 装卸车辆位移保护系统亮红灯，位移系统未有效连接；
+    criteria: 装卸车辆位移保护系统亮红灯，位移系统未有效连接；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.7'
+    name: 旋转接头密封垫有泄漏；
+    criteria: 旋转接头密封垫有泄漏；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.8'
+    name: 装卸连接口有废旧垫片放置，存在被误用风险；
+    criteria: 装卸连接口有废旧垫片放置，存在被误用风险；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '19.9'
+    name: 拉断阀被加装防护罩或固定支架，影响其自由断开能力
+    criteria: 拉断阀被加装防护罩或固定支架，影响其自由断开能力
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-20
+  name: 化学品存储
+  sub_items:
+  - code: '20.1'
+    name: 易燃易爆化学品使用塑料材质容器装，如非导静电吨桶盛装；
+    criteria: 易燃易爆化学品使用塑料材质容器装，如非导静电吨桶盛装；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-21
+  name: 视镜
+  sub_items:
+  - code: '21.1'
+    name: 视镜镜面有裂纹破损迹象；
+    criteria: 视镜镜面有裂纹破损迹象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '21.2'
+    name: 视镜镜面被污染，看不清；
+    criteria: 视镜镜面被污染，看不清；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '21.3'
+    name: 视镜垫片处有泄漏或垫片破损；
+    criteria: 视镜垫片处有泄漏或垫片破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '21.4'
+    name: 视镜法兰紧固螺栓缺失或未上紧
+    criteria: 视镜法兰紧固螺栓缺失或未上紧
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-22
+  name: 高压水清洗
+  sub_items:
+  - code: '22.1'
+    name: 喷枪操作者站位不佳，高压水喷出方向可能伤到同边人员；
+    criteria: 喷枪操作者站位不佳，高压水喷出方向可能伤到同边人员；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.2'
+    name: 存在两处或两处以上的高压水作业之间无硬隔离防护，可能打击相邻作业人员；
+    criteria: 存在两处或两处以上的高压水作业之间无硬隔离防护，可能打击相邻作业人员；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.3'
+    name: 高压水作业人员未套戴防护铁鞋或防护铅服；
+    criteria: 高压水作业人员未套戴防护铁鞋或防护铅服；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.4'
+    name: 高压水作业人员未有效戴防化服；
+    criteria: 高压水作业人员未有效戴防化服；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.5'
+    name: 高压水管接头无防脱落柔性扣；
+    criteria: 高压水管接头无防脱落柔性扣；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.6'
+    name: 高压水管长距离拖拽无防甩动措施；
+    criteria: 高压水管长距离拖拽无防甩动措施；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.7'
+    name: 高压水喷枪/枪头/扳机/脚阀损坏；
+    criteria: 高压水喷枪/枪头/扳机/脚阀损坏；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.8'
+    name: 高压水软管破损，存在如鼓包、等透、钢丝缠层断丝等；
+    criteria: 高压水软管破损，存在如鼓包、等透、钢丝缠层断丝等；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.9'
+    name: 高压软管存在扭曲、被车辆碾压等现象；
+    criteria: 高压软管存在扭曲、被车辆碾压等现象；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '22.10'
+    name: 一卸扣接头密封面破损或卸扣接头螺纹有刮伤痕迹
+    criteria: 一卸扣接头密封面破损或卸扣接头螺纹有刮伤痕迹
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-23
+  name: 反应釜
+  sub_items:
+  - code: '23.1'
+    name: 反应釜搅拌轴电机不密封或内部导电体课塞；
+    criteria: 反应釜搅拌轴电机不密封或内部导电体课塞；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.2'
+    name: 反应釜搅拌轴电机接线绝缘破损；
+    criteria: 反应釜搅拌轴电机接线绝缘破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.3'
+    name: 反应釜搅拌轴机械密封处有跑料现象；
+    criteria: 反应釜搅拌轴机械密封处有跑料现象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.4'
+    name: 反应釜人孔垫圈突出或垫圈法兰处有物料结晶现象；
+    criteria: 反应釜人孔垫圈突出或垫圈法兰处有物料结晶现象；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.5'
+    name: 反应釜底部放料阀泄漏；
+    criteria: 反应釜底部放料阀泄漏；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.6'
+    name: 超压保护设施根部手阀被关闭或未完全开启；
+    criteria: 超压保护设施根部手阀被关闭或未完全开启；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.7'
+    name: 反应釜安全阀或爆破片出口泄放管道与系统抽真空管道共用一根管道有被物料堵塞风险；
+    criteria: 反应釜安全阀或爆破片出口泄放管道与系统抽真空管道共用一根管道有被物料堵塞风险；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.8'
+    name: 联锁切断阀的驱动气管线脱落或连接不紧；
+    criteria: 联锁切断阀的驱动气管线脱落或连接不紧；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '23.9'
+    name: 联锁切断系统的压力传感器引压管路上手阀或针型阀被关闭；
+    criteria: 联锁切断系统的压力传感器引压管路上手阀或针型阀被关闭；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-24
+  name: 配电（控制）箱、柜
+  sub_items:
+  - code: '24.1'
+    name: 落地式配电箱底部未太高，未设置基础；
+    criteria: 落地式配电箱底部未太高，未设置基础；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.2'
+    name: 室外安装的落地式配电（控制）柜、箱周围排水不畅，有积水；
+    criteria: 室外安装的落地式配电（控制）柜、箱周围排水不畅，有积水；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.3'
+    name: 落地式配电（控制）箱、柜底座未封闭，无法防止蛇、鼠类小动物进入箱内；
+    criteria: 落地式配电（控制）箱、柜底座未封闭，无法防止蛇、鼠类小动物进入箱内；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.4'
+    name: 固定式开关柜周围间距不足，背面距离墙面距离小于0.05米，影响散热与操作空间；
+    criteria: 固定式开关柜周围间距不足，背面距离墙面距离小于0.05米，影响散热与操作空间；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.5'
+    name: 屋内固定式开关柜周围间距不足，顶部距离顶板距离小于1米，影响散热与操作空间；
+    criteria: 屋内固定式开关柜周围间距不足，顶部距离顶板距离小于1米，影响散热与操作空间；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.6'
+    name: 固定式开关柜周围间距不足，侧面距离墙面距离小于0.2米，影响散热与操作空间；
+    criteria: 固定式开关柜周围间距不足，侧面距离墙面距离小于0.2米，影响散热与操作空间；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.7'
+    name: 固定式开关柜周围堆放杂物和可燃物，影响散热与操作空间；
+    criteria: 固定式开关柜周围堆放杂物和可燃物，影响散热与操作空间；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.8'
+    name: 配电箱未采用金属箱体，使用木板制作，木板易燃；
+    criteria: 配电箱未采用金属箱体，使用木板制作，木板易燃；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.9'
+    name: 配电箱体（板）上多余孔洞未封堵；
+    criteria: 配电箱体（板）上多余孔洞未封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.10'
+    name: 爆炸、火灾危险环境中电缆穿进配电箱、接线盒的进线口未完全密封严实；
+    criteria: 爆炸、火灾危险环境中电缆穿进配电箱、接线盒的进线口未完全密封严实；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.11'
+    name: 爆炸、火灾危险环境钢管连接配电箱、接线盒时，涉及螺纹连接的螺纹接口处于松脱状态，未紧密咬合；
+    criteria: 爆炸、火灾危险环境钢管连接配电箱、接线盒时，涉及螺纹连接的螺纹接口处于松脱状态，未紧密咬合；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.12'
+    name: 爆炸、火灾危险环境钢管连接配电箱、接线盒时，无螺纹连接的钢管锁紧螺母处于松脱状态；
+    criteria: 爆炸、火灾危险环境钢管连接配电箱、接线盒时，无螺纹连接的钢管锁紧螺母处于松脱状态；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.13'
+    name: 端子箱未安装牢固；
+    criteria: 端子箱未安装牢固；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.14'
+    name: 配电柜门未关闭，存在触电风险及灰尘侵入隐患；
+    criteria: 配电柜门未关闭，存在触电风险及灰尘侵入隐患；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.15'
+    name: 配电柜、配电箱外壳漆面剥落，锈蚀明显；
+    criteria: 配电柜、配电箱外壳漆面剥落，锈蚀明显；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.16'
+    name: 配电箱柜内端子排破损；
+    criteria: 配电箱柜内端子排破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.17'
+    name: 配电箱、配电柜本体未固定牢固；
+    criteria: 配电箱、配电柜本体未固定牢固；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.18'
+    name: 配电箱或配电柜安装在水管正下方或水管接头下方；
+    criteria: 配电箱或配电柜安装在水管正下方或水管接头下方；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.19'
+    name: 集中摆放的操作按钮未标注编号或区分标识；
+    criteria: 集中摆放的操作按钮未标注编号或区分标识；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.20'
+    name: 急停按钮标识不醒目或急停按钮上没有设置保护罩；
+    criteria: 急停按钮标识不醒目或急停按钮上没有设置保护罩；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.21'
+    name: 低压配电箱、配电柜部分使用可燃材料制作；
+    criteria: 低压配电箱、配电柜部分使用可燃材料制作；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.22'
+    name: 配电箱、开关箱中导线的进线口和/或出线口未设置在箱底的下底面；
+    criteria: 配电箱、开关箱中导线的进线口和/或出线口未设置在箱底的下底面；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.23'
+    name: 配线箱进/出线电线未整理、无固定措施；
+    criteria: 配线箱进/出线电线未整理、无固定措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.24'
+    name: 配线箱进/出线电线绝缘层破损；
+    criteria: 配线箱进/出线电线绝缘层破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.25'
+    name: 地排与零排接线混淆，存在接地保护失效风险；
+    criteria: 地排与零排接线混淆，存在接地保护失效风险；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.26'
+    name: 配电箱内接线凌乱不规范，存在交叉缠绕等氢空，容易引发短路、接触不良；
+    criteria: 配电箱内接线凌乱不规范，存在交叉缠绕等氢空，容易引发短路、接触不良；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.27'
+    name: 配电箱柜的可开启箱柜门和金属柜体框架之间连接接地线破损或未设置截面积不小于4mm2、压接终端接头的多股软铜线；
+    criteria: 配电箱柜的可开启箱柜门和金属柜体框架之间连接接地线破损或未设置截面积不小于4mm2、压接终端接头的多股软铜线；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.28'
+    name: 配电箱体未设置黄绿双色专用接地PE线或PE线已经失效；
+    criteria: 配电箱体未设置黄绿双色专用接地PE线或PE线已经失效；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.29'
+    name: 配电箱接地系统未采用镀锌扁钢或裸铜导线（带）；
+    criteria: 配电箱接地系统未采用镀锌扁钢或裸铜导线（带）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.30'
+    name: 配电箱提设置的黄绿双色接地PE线连接到螺纹钢上，接地失效；
+    criteria: 配电箱提设置的黄绿双色接地PE线连接到螺纹钢上，接地失效；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.31'
+    name: 保护接地线未采用焊接、压接、螺栓联结或其他可靠的方法连接，使用缠绕或挂钩等方式；
+    criteria: 保护接地线未采用焊接、压接、螺栓联结或其他可靠的方法连接，使用缠绕或挂钩等方式；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.32'
+    name: 配电箱接地螺栓生锈严重；
+    criteria: 配电箱接地螺栓生锈严重；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.33'
+    name: 配电箱内同一压接点压接的导线数量多于两条；
+    criteria: 配电箱内同一压接点压接的导线数量多于两条；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.34'
+    name: 箱柜内部裸露带电母线无防护隔离装置，人员存在误碰触电风险；
+    criteria: 箱柜内部裸露带电母线无防护隔离装置，人员存在误碰触电风险；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.35'
+    name: 电缆、导线进入配电柜、配电箱内部存在中间接头；
+    criteria: 电缆、导线进入配电柜、配电箱内部存在中间接头；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.36'
+    name: 配电箱柜内橡胶绝缘电线外部未套绝缘套管防护；
+    criteria: 配电箱柜内橡胶绝缘电线外部未套绝缘套管防护；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.37'
+    name: 电缆、电线进出桥架、箱体位置未加装防护避免线缆外皮磨损；
+    criteria: 电缆、电线进出桥架、箱体位置未加装防护避免线缆外皮磨损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.38'
+    name: 配电箱内有杂物，灰尘较多；
+    criteria: 配电箱内有杂物，灰尘较多；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.39'
+    name: 配电箱内控制回路无标识；
+    criteria: 配电箱内控制回路无标识；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.40'
+    name: 配电箱内控制开关无名称标识，易导致操作混乱；
+    criteria: 配电箱内控制开关无名称标识，易导致操作混乱；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.41'
+    name: 配电箱上无安全警示标志；
+    criteria: 配电箱上无安全警示标志；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.42'
+    name: 配电箱无铭牌标志，无法识别设备信息及操作规范；
+    criteria: 配电箱无铭牌标志，无法识别设备信息及操作规范；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '24.43'
+    name: 室外落地配电柜底座周边积水
+    criteria: 室外落地配电柜底座周边积水
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-25
+  name: 配电室
+  sub_items:
+  - code: '25.1'
+    name: 配电室的百叶窗上未设置防鼠网；
+    criteria: 配电室的百叶窗上未设置防鼠网；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.2'
+    name: 配电室进出口未设置档鼠板；
+    criteria: 配电室进出口未设置档鼠板；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.3'
+    name: 配电室有其他非电气管路通过，易引发漏水、腐蚀等安全隐患；
+    criteria: 配电室有其他非电气管路通过，易引发漏水、腐蚀等安全隐患；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.4'
+    name: 配电室房顶有渗水痕迹，易导致电气设备受潮损坏；
+    criteria: 配电室房顶有渗水痕迹，易导致电气设备受潮损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.5'
+    name: 变压器的通风窗采用可燃材料（木质），存在火灾隐患；
+    criteria: 变压器的通风窗采用可燃材料（木质），存在火灾隐患；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.6'
+    name: 配电室的门是向内开启；
+    criteria: 配电室的门是向内开启；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.7'
+    name: 变配电室未设置应急照明，突发断电时无法操作；
+    criteria: 变配电室未设置应急照明，突发断电时无法操作；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.8'
+    name: 变配电室内未设置温度计；
+    criteria: 变配电室内未设置温度计；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '25.9'
+    name: 变配电室内未配备灭火器，存在火灾隐患；
+    criteria: 变配电室内未配备灭火器，存在火灾隐患；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-26
+  name: 电缆布设
+  sub_items:
+  - code: '26.1'
+    name: 塑料护套线在室内沿建筑物表面水平敷设高度距离地面小于2.5米；
+    criteria: 塑料护套线在室内沿建筑物表面水平敷设高度距离地面小于2.5米；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.2'
+    name: 塑料护套线在室内垂直敷设时距离地面高度1.8米以下部分没有采取保护措施或保护措施失效，无法防止机械损伤；
+    criteria: 塑料护套线在室内垂直敷设时距离地面高度1.8米以下部分没有采取保护措施或保护措施失效，无法防止机械损伤；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.3'
+    name: 临时用电的电缆随意敷设在地面上,未采取防机械伤害的措施；
+    criteria: 临时用电的电缆随意敷设在地面上,未采取防机械伤害的措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.4'
+    name: 临时用电的电缆线随意架设在树木上；
+    criteria: 临时用电的电缆线随意架设在树木上；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.5'
+    name: 临时用电的电缆搭设在脚手架及其他设施上；
+    criteria: 临时用电的电缆搭设在脚手架及其他设施上；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.6'
+    name: 临时用电的电缆敷设在金属铁板上；
+    criteria: 临时用电的电缆敷设在金属铁板上；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.7'
+    name: 临时用电的电缆敷设在锐利的边缘，容易被损坏绝缘皮；
+    criteria: 临时用电的电缆敷设在锐利的边缘，容易被损坏绝缘皮；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.8'
+    name: 电缆杂乱缠绕；
+    criteria: 电缆杂乱缠绕；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.9'
+    name: 电缆穿管穿墙余孔洞未有效封堵；
+    criteria: 电缆穿管穿墙余孔洞未有效封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.10'
+    name: 电气设备多余的电缆引入口未进行相关防爆型式的堵塞原件封堵；
+    criteria: 电气设备多余的电缆引入口未进行相关防爆型式的堵塞原件封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.11'
+    name: 电气设备不使用的线孔，未用相关防爆型式的堵塞原件封堵；
+    criteria: 电气设备不使用的线孔，未用相关防爆型式的堵塞原件封堵；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.12'
+    name: 电缆槽盒底部未开设泄水孔洞；
+    criteria: 电缆槽盒底部未开设泄水孔洞；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.13'
+    name: 电缆桥架上部缺电缆盖板；
+    criteria: 电缆桥架上部缺电缆盖板；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.14'
+    name: 电缆沟未封闭，应用盖板防护并铺设绝缘垫；
+    criteria: 电缆沟未封闭，应用盖板防护并铺设绝缘垫；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.15'
+    name: 变电所、配电所位于室外地坪以下的电缆夹层、电缆沟和电缆室未采取防水、排水措施；
+    criteria: 变电所、配电所位于室外地坪以下的电缆夹层、电缆沟和电缆室未采取防水、排水措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.16'
+    name: 变电所、配电所位于室外地坪以下的电缆进、出口和电缆保护管未采取防水措施；
+    criteria: 变电所、配电所位于室外地坪以下的电缆进、出口和电缆保护管未采取防水措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.17'
+    name: 插座回路未设漏电保护器；
+    criteria: 插座回路未设漏电保护器；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.18'
+    name: 接线端有带电体明漏；
+    criteria: 接线端有带电体明漏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.19'
+    name: 电气开关使用传统闸刀开关（无漏电保护功能）；
+    criteria: 电气开关使用传统闸刀开关（无漏电保护功能）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '26.20'
+    name: 车间开关设在木板上；
+    criteria: 车间开关设在木板上；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-27
+  name: 电动工具/移动电器设备
+  sub_items:
+  - code: '27.1'
+    name: 使用的手持电动工具未使用可靠漏电保护PE线；
+    criteria: 使用的手持电动工具未使用可靠漏电保护PE线；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.2'
+    name: 电动工具外壳、手柄有裂缝或破损；
+    criteria: 电动工具外壳、手柄有裂缝或破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.3'
+    name: 电动工具电源线有破损；
+    criteria: 电动工具电源线有破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.4'
+    name: 电动工具的电源插头有破损；
+    criteria: 电动工具的电源插头有破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.5'
+    name: 电动工具的电源开关有破损；
+    criteria: 电动工具的电源开关有破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.6'
+    name: 电动工具机械保护装置缺失或有缺陷；
+    criteria: 电动工具机械保护装置缺失或有缺陷；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '27.7'
+    name: 角磨机或切割机防护罩缺失或破损；
+    criteria: 角磨机或切割机防护罩缺失或破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-28
+  name: 油浸式变压器
+  sub_items:
+  - code: '28.1'
+    name: 变压器的油位偏低，低于下限警戒线；
+    criteria: 变压器的油位偏低，低于下限警戒线；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.2'
+    name: 变压器有存在渗油、漏油现象；
+    criteria: 变压器有存在渗油、漏油现象；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.3'
+    name: 套管外部有破损裂纹；
+    criteria: 套管外部有破损裂纹；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.4'
+    name: 变压器体有严重油污；
+    criteria: 变压器体有严重油污；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.5'
+    name: 变压器上有明显放电痕迹；
+    criteria: 变压器上有明显放电痕迹；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.6'
+    name: 变压器外壳及箱体沿应有异常过热，表面温度超过60℃；
+    criteria: 变压器外壳及箱体沿应有异常过热，表面温度超过60℃；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.7'
+    name: 变压器吸附剂潮湿或变色；
+    criteria: 变压器吸附剂潮湿或变色；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.8'
+    name: 引线接头、电缆、母线有过热迹象；
+    criteria: 引线接头、电缆、母线有过热迹象；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.9'
+    name: 压力释放器或安全气道及防爆膜破损；
+    criteria: 压力释放器或安全气道及防爆膜破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.10'
+    name: 有载分接开关的分接位置及电源指示不正常；
+    criteria: 有载分接开关的分接位置及电源指示不正常；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.11'
+    name: 各控制箱和二次端子箱未关严；
+    criteria: 各控制箱和二次端子箱未关严；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.12'
+    name: 各控制箱和二次端子箱内有受潮现象；
+    criteria: 各控制箱和二次端子箱内有受潮现象；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.13'
+    name: 变压器外壳接地断裂或虚接；
+    criteria: 变压器外壳接地断裂或虚接；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.14'
+    name: 变压器室的门、窗受损；
+    criteria: 变压器室的门、窗受损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.15'
+    name: 变压器房屋漏水；
+    criteria: 变压器房屋漏水；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '28.16'
+    name: 干式变压器外部表面有积污、裂纹或放电现象；
+    criteria: 干式变压器外部表面有积污、裂纹或放电现象；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-29
+  name: 机械设备
+  sub_items:
+  - code: '29.1'
+    name: 冲剪压设备未设置安全防护隔栏等安全保护装置，人员手部已进入危险区，存在挤压、剪切伤害风险；
+    criteria: 冲剪压设备未设置安全防护隔栏等安全保护装置，人员手部已进入危险区，存在挤压、剪切伤害风险；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.2'
+    name: 未使用辅助工具，手部直接伸入在冲模取放工件；
+    criteria: 未使用辅助工具，手部直接伸入在冲模取放工件；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.3'
+    name: 机械设备转动部位缺失可靠隔离防护装置（防护罩、防护网或防护栏杆）；
+    criteria: 机械设备转动部位缺失可靠隔离防护装置（防护罩、防护网或防护栏杆）；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.4'
+    name: 易于倾倒的直立机械设备或装置未设置隔离防撞措施或未设置禁止推动警示标识；
+    criteria: 易于倾倒的直立机械设备或装置未设置隔离防撞措施或未设置禁止推动警示标识；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.5'
+    name: 有挤压风险设备未设置紧急停车开关或机械闭锁装置；
+    criteria: 有挤压风险设备未设置紧急停车开关或机械闭锁装置；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.6'
+    name: 电动机械/工具的电气回路未单独装设开关或插座，而是和其他用电设备共用开关或插座；
+    criteria: 电动机械/工具的电气回路未单独装设开关或插座，而是和其他用电设备共用开关或插座；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.7'
+    name: 电动机械/工具未装设剩余电流动作保护装置机械设备未牢固固定，可能会倾倒风险；
+    criteria: 电动机械/工具未装设剩余电流动作保护装置机械设备未牢固固定，可能会倾倒风险；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.8'
+    name: 机械设备检修时未采取断电挂牌或上锁等防止意外启动措施；
+    criteria: 机械设备检修时未采取断电挂牌或上锁等防止意外启动措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.9'
+    name: 对运动过程中可能超出极限位置的生产设备或零部件，未设置可靠限位装置或限位装置损坏；
+    criteria: 对运动过程中可能超出极限位置的生产设备或零部件，未设置可靠限位装置或限位装置损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '29.10'
+    name: 机械设备存在跑冒滴漏现场；
+    criteria: 机械设备存在跑冒滴漏现场；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-30
+  name: 化学品存放
+  sub_items:
+  - code: '30.1'
+    name: 易燃易爆油漆桶随意放置在封闭无通风库房内；
+    criteria: 易燃易爆油漆桶随意放置在封闭无通风库房内；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-31
+  name: 作业环境与安全防护
+  sub_items:
+  - code: '31.1'
+    name: 临边洞口未设置防护栏杆；
+    criteria: 临边洞口未设置防护栏杆；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '31.2'
+    name: 临边洞口未设置警示标识
+    criteria: 临边洞口未设置警示标识
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-32
+  name: 动火作业
+  sub_items:
+  - code: '32.1'
+    name: 高处动火作业火星四溅，没有火星收集措施；
+    criteria: 高处动火作业火星四溅，没有火星收集措施；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '32.2'
+    name: 打磨作业人员未使用防护面罩；
+    criteria: 打磨作业人员未使用防护面罩；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '32.3'
+    name: 打磨作业人员防护面罩未佩戴到位，面部大部分区域还是直接面临打磨火花或铁屑飞溅范围；
+    criteria: 打磨作业人员防护面罩未佩戴到位，面部大部分区域还是直接面临打磨火花或铁屑飞溅范围；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '32.4'
+    name: 作业人员使用脚踩工件进行切割的危险方式，没有使用工件切割平台；
+    criteria: 作业人员使用脚踩工件进行切割的危险方式，没有使用工件切割平台；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '32.5'
+    name: 使用煤气罐替代乙炔瓶开展动火作业；
+    criteria: 使用煤气罐替代乙炔瓶开展动火作业；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-33
+  name: 高处作业
+  sub_items:
+  - code: '33.1'
+    name: 超过2米高处作业人员未佩戴并系挂五点式安全带；
+    criteria: 超过2米高处作业人员未佩戴并系挂五点式安全带；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.2'
+    name: 超过2米高处平台通道上工人移动过程未采用安全带双钩换钩前进方式，导致有部分时间段安全带双钩均未挂设情况；
+    criteria: 超过2米高处平台通道上工人移动过程未采用安全带双钩换钩前进方式，导致有部分时间段安全带双钩均未挂设情况；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.3'
+    name: 高处作业人员未佩戴安全帽；
+    criteria: 高处作业人员未佩戴安全帽；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.4'
+    name: 高处作业人员安全帽的帽带未标准佩戴；
+    criteria: 高处作业人员安全帽的帽带未标准佩戴；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.5'
+    name: 高处作业平台的脚手板直接搭放在平台上，没有使用铁丝等牢固的固定措施；
+    criteria: 高处作业平台的脚手板直接搭放在平台上，没有使用铁丝等牢固的固定措施；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.6'
+    name: 简易搭设的作业平台留有很多大的间隙；
+    criteria: 简易搭设的作业平台留有很多大的间隙；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.7'
+    name: 高处作业使用未固定的木跳板作为临时平台有很高的坠落风险；
+    criteria: 高处作业使用未固定的木跳板作为临时平台有很高的坠落风险；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.8'
+    name: 作业平台使用生产装置设备作为支撑或固定锚点；
+    criteria: 作业平台使用生产装置设备作为支撑或固定锚点；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.9'
+    name: 作业平台跨度大无有效的中间垂直支撑或斜拉撑；
+    criteria: 作业平台跨度大无有效的中间垂直支撑或斜拉撑；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.10'
+    name: 高处作业平台上护栏无踢脚板，工具可能掉落；
+    criteria: 高处作业平台上护栏无踢脚板，工具可能掉落；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.11'
+    name: 高处作业平台上工具随意放置，无有效收集整齐放置；
+    criteria: 高处作业平台上工具随意放置，无有效收集整齐放置；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.12'
+    name: 高处作业平台上，人员使用手持工具未将工具与手部或身体其他部位系挂一起，如使用工具手绳，工具使用中可能掉落；
+    criteria: 高处作业平台上，人员使用手持工具未将工具与手部或身体其他部位系挂一起，如使用工具手绳，工具使用中可能掉落；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.13'
+    name: 有其他人员在高处作业下方，可能被高处坠落物品伤害；
+    criteria: 有其他人员在高处作业下方，可能被高处坠落物品伤害；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.14'
+    name: 高处作业与下方存在交叉作业；
+    criteria: 高处作业与下方存在交叉作业；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.15'
+    name: 移动脚手架作业平台没有标准的双防护栏；
+    criteria: 移动脚手架作业平台没有标准的双防护栏；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.16'
+    name: 移动脚手架的脚索未关闭导致移动架子易移动；
+    criteria: 移动脚手架的脚索未关闭导致移动架子易移动；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.17'
+    name: 高处作业人员不走楼梯、斜步道、正式梯子、满铺的作业平台等安全位置，而是沿钢管、工艺管道等禁止人员通行位置行走；
+    criteria: 高处作业人员不走楼梯、斜步道、正式梯子、满铺的作业平台等安全位置，而是沿钢管、工艺管道等禁止人员通行位置行走；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '33.18'
+    name: 移动作业平台无护栏或护栏过低；
+    criteria: 移动作业平台无护栏或护栏过低；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-34
+  name: 吊装作业
+  sub_items:
+  - code: '34.1'
+    name: 起重机作业过程中，起重臂作业半径内有人；
+    criteria: 起重机作业过程中，起重臂作业半径内有人；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.2'
+    name: 起重作业现场无警戒线；
+    criteria: 起重作业现场无警戒线；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.3'
+    name: 起重作业过程中，起重臂作业半径内有气瓶或电焊机等；
+    criteria: 起重作业过程中，起重臂作业半径内有气瓶或电焊机等；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.4'
+    name: 起重作业现场无佩戴或穿戴明显监护人标识的监护人在现场；
+    criteria: 起重作业现场无佩戴或穿戴明显监护人标识的监护人在现场；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.5'
+    name: 有人员站在吊物上；
+    criteria: 有人员站在吊物上；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.6'
+    name: 手拉葫芦使用钢筋等脆性材料作为吊点；
+    criteria: 手拉葫芦使用钢筋等脆性材料作为吊点；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.7'
+    name: 吊钩钩头防脱卡板缺失、变形或无效；
+    criteria: 吊钩钩头防脱卡板缺失、变形或无效；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.8'
+    name: 吊钩钩头放脱钩装置固定插销使用铁丝不符合安全使用要求；
+    criteria: 吊钩钩头放脱钩装置固定插销使用铁丝不符合安全使用要求；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.9'
+    name: 钢丝绳断丝、锈蚀；
+    criteria: 钢丝绳断丝、锈蚀；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.10'
+    name: 吊装卡扣磨损严重，刮痕明显甚至卡扣受力处变细等；
+    criteria: 吊装卡扣磨损严重，刮痕明显甚至卡扣受力处变细等；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.11'
+    name: 吊带破损出现断丝断股现象；
+    criteria: 吊带破损出现断丝断股现象；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.12'
+    name: 卸扣违规侧向受力；
+    criteria: 卸扣违规侧向受力；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.13'
+    name: 吊带直接绑扎在吊物尖锐或锋利表面未使用防止锐角割断吊带的措施；
+    criteria: 吊带直接绑扎在吊物尖锐或锋利表面未使用防止锐角割断吊带的措施；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.14'
+    name: 钢丝绳与物体的锋利边缘接触，无防磨损措施；
+    criteria: 钢丝绳与物体的锋利边缘接触，无防磨损措施；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.15'
+    name: 汽车吊支腿未完全展开；
+    criteria: 汽车吊支腿未完全展开；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.16'
+    name: 吊车支腿位置基础松软，未垫设枕木；
+    criteria: 吊车支腿位置基础松软，未垫设枕木；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.17'
+    name: 吊车支腿直接支撑在不平整地面；
+    criteria: 吊车支腿直接支撑在不平整地面；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.18'
+    name: 吊车吊臂未完全伸出；
+    criteria: 吊车吊臂未完全伸出；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.19'
+    name: 龙门吊钢丝绳缠绕错乱；
+    criteria: 龙门吊钢丝绳缠绕错乱；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.20'
+    name: 卷扬机绳端固定不牢；
+    criteria: 卷扬机绳端固定不牢；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.21'
+    name: 吊装过程存在长短料混吊；
+    criteria: 吊装过程存在长短料混吊；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.22'
+    name: 吊装过程歪拉斜吊；
+    criteria: 吊装过程歪拉斜吊；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.23'
+    name: 吊装半径内存在高压线；
+    criteria: 吊装半径内存在高压线；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.24'
+    name: 吊车大臂距离高压线过近；
+    criteria: 吊车大臂距离高压线过近；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.25'
+    name: 吊物未绑扎牢固起吊；
+    criteria: 吊物未绑扎牢固起吊；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.26'
+    name: 吊运埋在地下载荷不确定的物品；
+    criteria: 吊运埋在地下载荷不确定的物品；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.27'
+    name: 作业人员违规登高摘钩未佩戴安全带，有高坠风险；
+    criteria: 作业人员违规登高摘钩未佩戴安全带，有高坠风险；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.28'
+    name: 吊装过程长短料混吊；
+    criteria: 吊装过程长短料混吊；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.29'
+    name: 吊钩滑轮组钢丝绳防脱轨装置变形、脱落；
+    criteria: 吊钩滑轮组钢丝绳防脱轨装置变形、脱落；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.30'
+    name: 汽车吊小钩无限位器；
+    criteria: 汽车吊小钩无限位器；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.31'
+    name: 吊带断丝断股；
+    criteria: 吊带断丝断股；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.32'
+    name: 吊车吊钩上钢丝绳只有一个U型绳卡，未设置至少两个绳卡；
+    criteria: 吊车吊钩上钢丝绳只有一个U型绳卡，未设置至少两个绳卡；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '34.33'
+    name: 汽车吊第二级等各级吊臂未完全伸开，属于严重违章操作；
+    criteria: 汽车吊第二级等各级吊臂未完全伸开，属于严重违章操作；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-35
+  name: 脚手架作业
+  sub_items:
+  - code: '35.1'
+    name: 脚手架安装过程中人员采用抛掷方式向上传递扣件；
+    criteria: 脚手架安装过程中人员采用抛掷方式向上传递扣件；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '35.2'
+    name: 脚手架安装过程中人员向下抛掷扣件或跳板；
+    criteria: 脚手架安装过程中人员向下抛掷扣件或跳板；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-36
+  name: 钢结构安装
+  sub_items:
+  - code: '36.1'
+    name: 钢结构安装后，下方水平安全网未及时拉设到位；
+    criteria: 钢结构安装后，下方水平安全网未及时拉设到位；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.2'
+    name: 临边洞口未设置防护栏杆；
+    criteria: 临边洞口未设置防护栏杆；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.3'
+    name: 临边洞口未设置警示标识；
+    criteria: 临边洞口未设置警示标识；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.4'
+    name: 直接使用钢管焊接在钢梁上作为立杆，无加劲板，受力达不到要求；
+    criteria: 直接使用钢管焊接在钢梁上作为立杆，无加劲板，受力达不到要求；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.5'
+    name: 违规使用螺母充当拉结件，受力拉扯强度不足；
+    criteria: 违规使用螺母充当拉结件，受力拉扯强度不足；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.6'
+    name: 违规使用自制建议操作平台，建议操作平台防护高度不足，稳定性差；
+    criteria: 违规使用自制建议操作平台，建议操作平台防护高度不足，稳定性差；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '36.7'
+    name: 钢构件放置距离基坑边坡不足1.5米；
+    criteria: 钢构件放置距离基坑边坡不足1.5米；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+- code: CI-37
+  name: 电焊机
+  sub_items:
+  - code: '37.1'
+    name: 一次线输入端接线柱裸露或绝缘罩破损；
+    criteria: 一次线输入端接线柱裸露或绝缘罩破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.2'
+    name: 二次线处输出端接线柱裸露或绝缘罩破损；
+    criteria: 二次线处输出端接线柱裸露或绝缘罩破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.3'
+    name: 一次线或二次线绝缘破损；
+    criteria: 一次线或二次线绝缘破损；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.4'
+    name: 接线端子松动可能会导致接触电阻增大，大电流产生高温可能引发火灾；
+    criteria: 接线端子松动可能会导致接触电阻增大，大电流产生高温可能引发火灾；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.5'
+    name: 焊把或焊钳绝缘层破损裸露，在焊工出汗或潮湿环境下增加漏电风险；
+    criteria: 焊把或焊钳绝缘层破损裸露，在焊工出汗或潮湿环境下增加漏电风险；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.6'
+    name: 电焊机接地线连接到钢筋条上；
+    criteria: 电焊机接地线连接到钢筋条上；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.7'
+    name: 电焊机外壳缺少接地PE线；
+    criteria: 电焊机外壳缺少接地PE线；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.8'
+    name: 电焊机接地线与金属构件连接位置松动或即将脱落；
+    criteria: 电焊机接地线与金属构件连接位置松动或即将脱落；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.9'
+    name: 电焊机一次线或二次线超长拖地；
+    criteria: 电焊机一次线或二次线超长拖地；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.10'
+    name: 电焊机一次线或二次线直接拖放在金属铁板上，一旦漏电导致整块金属板带电；
+    criteria: 电焊机一次线或二次线直接拖放在金属铁板上，一旦漏电导致整块金属板带电；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.11'
+    name: 电焊机本体直接放置在金属构建表面；
+    criteria: 电焊机本体直接放置在金属构建表面；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.12'
+    name: 电焊机一次线长度超过5米；
+    criteria: 电焊机一次线长度超过5米；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.13'
+    name: 电焊机本体或一次线或二次线放置在潮湿地面；
+    criteria: 电焊机本体或一次线或二次线放置在潮湿地面；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.14'
+    name: 室外作业未设置电焊机防雨罩；
+    criteria: 室外作业未设置电焊机防雨罩；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.15'
+    name: 使用中电焊机附近无干粉灭火器；
+    criteria: 使用中电焊机附近无干粉灭火器；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.16'
+    name: 焊工未佩戴电焊面屏；
+    criteria: 焊工未佩戴电焊面屏；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.17'
+    name: 焊工未佩戴焊工手套；
+    criteria: 焊工未佩戴焊工手套；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+  - code: '37.18'
+    name: 焊工手套明显潮湿可能导致绝缘功能丧失；
+    criteria: 焊工手套明显潮湿可能导致绝缘功能丧失；
+    required_context: 近景，目标主体占画面 1/3 以上，清晰对焦
+    enabled: false
+    criteria_confirmed: false
+- code: CI-38
+  name: 气瓶
+  sub_items:
+  - code: '38.1'
+    name: 气瓶无防倾倒措施，直立放置在地面；
+    criteria: 气瓶无防倾倒措施，直立放置在地面；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.2'
+    name: 气瓶无防倾倒措施，随意斜靠放置在其他设施旁；
+    criteria: 气瓶无防倾倒措施，随意斜靠放置在其他设施旁；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.3'
+    name: 气瓶无固定措施，放置在不平整地面；
+    criteria: 气瓶无固定措施，放置在不平整地面；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.4'
+    name: 乙炔气瓶直接横放在地面；
+    criteria: 乙炔气瓶直接横放在地面；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.5'
+    name: 气瓶无防晒措施，太阳直晒；
+    criteria: 气瓶无防晒措施，太阳直晒；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.6'
+    name: 乙炔气瓶和氧气瓶间距不足10米；
+    criteria: 乙炔气瓶和氧气瓶间距不足10米；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.7'
+    name: 乙炔气瓶距离明火点距离不足5米；
+    criteria: 乙炔气瓶距离明火点距离不足5米；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.8'
+    name: 夏季露天作业未采取遮阳防晒措施，乙炔气瓶直接在太阳下暴晒；
+    criteria: 夏季露天作业未采取遮阳防晒措施，乙炔气瓶直接在太阳下暴晒；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.9'
+    name: 气瓶与配电箱距离过近；
+    criteria: 气瓶与配电箱距离过近；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.10'
+    name: 乙炔气瓶使用现场无灭火器；
+    criteria: 乙炔气瓶使用现场无灭火器；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.11'
+    name: 与气瓶相连的气管与电缆线交叉混放在一起；
+    criteria: 与气瓶相连的气管与电缆线交叉混放在一起；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.12'
+    name: 气管颜色错误，乙炔气瓶连接气管非红色，氧气瓶连接的气管非蓝色；
+    criteria: 气管颜色错误，乙炔气瓶连接气管非红色，氧气瓶连接的气管非蓝色；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.13'
+    name: 乙炔气瓶上沾染油污；
+    criteria: 乙炔气瓶上沾染油污；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.14'
+    name: 氧气瓶上沾染油污；
+    criteria: 氧气瓶上沾染油污；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.15'
+    name: 使用沾有油污的手套、工具操作氧气瓶阀门；
+    criteria: 使用沾有油污的手套、工具操作氧气瓶阀门；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.16'
+    name: 气瓶非常靠近电气设备、带电体放置；
+    criteria: 气瓶非常靠近电气设备、带电体放置；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.17'
+    name: 直接在气瓶上进行电焊引弧；
+    criteria: 直接在气瓶上进行电焊引弧；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.18'
+    name: 直接在气瓶上敲击碰撞；
+    criteria: 直接在气瓶上敲击碰撞；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.19'
+    name: 气瓶输气管有明显裂痕；
+    criteria: 气瓶输气管有明显裂痕；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.20'
+    name: 气瓶瓶身腐蚀严重；
+    criteria: 气瓶瓶身腐蚀严重；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.21'
+    name: 气瓶安全附件缺失，无减震圈；
+    criteria: 气瓶安全附件缺失，无减震圈；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.22'
+    name: 涉及爆炸危险区域的气瓶使用中用金属铁链固定气瓶，铁链摩擦碰撞过程可能产生火花，应使用非金属绑带、专用气瓶架或栅栏固定等；
+    criteria: 涉及爆炸危险区域的气瓶使用中用金属铁链固定气瓶，铁链摩擦碰撞过程可能产生火花，应使用非金属绑带、专用气瓶架或栅栏固定等；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.23'
+    name: 氧气瓶没有安装减压阀、压力表；
+    criteria: 氧气瓶没有安装减压阀、压力表；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.24'
+    name: 乙炔气瓶没有安装减压阀、压力表；
+    criteria: 乙炔气瓶没有安装减压阀、压力表；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.25'
+    name: 乙炔气瓶安装减压阀、压力表损坏；
+    criteria: 乙炔气瓶安装减压阀、压力表损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.26'
+    name: 乙炔气瓶没有安装回火防止器；
+    criteria: 乙炔气瓶没有安装回火防止器；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.27'
+    name: 乙炔气瓶安装的回火防止器损坏；
+    criteria: 乙炔气瓶安装的回火防止器损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.28'
+    name: 乙炔气瓶存储区域内温度超过40℃；
+    criteria: 乙炔气瓶存储区域内温度超过40℃；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.29'
+    name: 氢气气瓶存储区域内温度超过40℃；
+    criteria: 氢气气瓶存储区域内温度超过40℃；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.30'
+    name: 丙烷气瓶存储区域内温度超过40℃；
+    criteria: 丙烷气瓶存储区域内温度超过40℃；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.31'
+    name: 气瓶存储区域阳光直射；
+    criteria: 气瓶存储区域阳光直射；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.32'
+    name: 气瓶存储区域距离明火、热源不足10m；
+    criteria: 气瓶存储区域距离明火、热源不足10m；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.33'
+    name: 可燃气体如乙炔气瓶存储区域未配备可燃气体监测报警装置；
+    criteria: 可燃气体如乙炔气瓶存储区域未配备可燃气体监测报警装置；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.34'
+    name: 乙炔气瓶现场临时存放数量超过5瓶；
+    criteria: 乙炔气瓶现场临时存放数量超过5瓶；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.35'
+    name: 气瓶直接存放在临时搭建的铁皮屋内，封闭空间无通风设施；
+    criteria: 气瓶直接存放在临时搭建的铁皮屋内，封闭空间无通风设施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.36'
+    name: 乙炔气瓶存放与氧气瓶存放放置在一起或距离不足10米；
+    criteria: 乙炔气瓶存放与氧气瓶存放放置在一起或距离不足10米；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.37'
+    name: 气瓶区空瓶和满瓶混放，未设置空瓶区和满瓶区并设置明显标识；
+    criteria: 气瓶区空瓶和满瓶混放，未设置空瓶区和满瓶区并设置明显标识；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.38'
+    name: 气瓶未直立固定，无防倾倒措施；
+    criteria: 气瓶未直立固定，无防倾倒措施；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.39'
+    name: 气瓶存放中未佩戴瓶帽；
+    criteria: 气瓶存放中未佩戴瓶帽；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.40'
+    name: 氧气瓶与油脂类类物质同库或同区域存储；
+    criteria: 氧气瓶与油脂类类物质同库或同区域存储；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.41'
+    name: 压缩空气瓶与油脂类类物质同库或同区域存储；
+    criteria: 压缩空气瓶与油脂类类物质同库或同区域存储；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.42'
+    name: 氧气瓶或压缩空气炮与易燃物质间间距小于6m;
+    criteria: 氧气瓶或压缩空气炮与易燃物质间间距小于6m;
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.43'
+    name: 氮气瓶、氩气瓶或二氧化碳气瓶等惰性气瓶存放间未设置氧含量报警器；
+    criteria: 氮气瓶、氩气瓶或二氧化碳气瓶等惰性气瓶存放间未设置氧含量报警器；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.44'
+    name: 气瓶搬运未使用专用手推车；
+    criteria: 气瓶搬运未使用专用手推车；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.45'
+    name: 作业人员通过肩扛气瓶方式进行搬运；
+    criteria: 作业人员通过肩扛气瓶方式进行搬运；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.46'
+    name: 作业人员通过怀抱气瓶方式进行搬运；
+    criteria: 作业人员通过怀抱气瓶方式进行搬运；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.47'
+    name: 作业人员通过拖拽气瓶方式进行搬运；
+    criteria: 作业人员通过拖拽气瓶方式进行搬运；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.48'
+    name: 作业人员通过滚动气瓶方式进行搬运；
+    criteria: 作业人员通过滚动气瓶方式进行搬运；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.49'
+    name: 气瓶搬运使用的手推车没有配备固定绑带，气瓶运输过程可能倾倒；
+    criteria: 气瓶搬运使用的手推车没有配备固定绑带，气瓶运输过程可能倾倒；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.50'
+    name: 通过起重吊运方式时，没有使用专用气瓶吊笼或夹具；
+    criteria: 通过起重吊运方式时，没有使用专用气瓶吊笼或夹具；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.51'
+    name: 使用电磁吸盘直接吊运气瓶；
+    criteria: 使用电磁吸盘直接吊运气瓶；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.52'
+    name: 使用金属链条直接吊运气瓶；
+    criteria: 使用金属链条直接吊运气瓶；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '38.53'
+    name: 未使用固定措施专用托架或吊笼，使用叉车直接叉运气瓶；
+    criteria: 未使用固定措施专用托架或吊笼，使用叉车直接叉运气瓶；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-39
+  name: 施工电梯
+  sub_items:
+  - code: '39.1'
+    name: 施工电梯传动螺栓松动；
+    criteria: 施工电梯传动螺栓松动；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.2'
+    name: 施工电梯滑轮松动；
+    criteria: 施工电梯滑轮松动；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.3'
+    name: 施工电梯滑轴线固定螺栓松动；
+    criteria: 施工电梯滑轴线固定螺栓松动；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.4'
+    name: 施工电梯刹车片开裂；
+    criteria: 施工电梯刹车片开裂；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.5'
+    name: 施工电梯减速器漏油；
+    criteria: 施工电梯减速器漏油；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.6'
+    name: 施工电梯减速器注油口未封闭；
+    criteria: 施工电梯减速器注油口未封闭；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.7'
+    name: 连接螺栓规格不符或缺失；
+    criteria: 连接螺栓规格不符或缺失；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.8'
+    name: 笼顶防护栏杆破损变形；
+    criteria: 笼顶防护栏杆破损变形；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.9'
+    name: 传动板电子传感器松动；
+    criteria: 传动板电子传感器松动；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.10'
+    name: 导轨架连接螺栓过短未冒出3丝及以上；
+    criteria: 导轨架连接螺栓过短未冒出3丝及以上；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.11'
+    name: 梯笼门两侧钢丝绳有断丝、断股现象；
+    criteria: 梯笼门两侧钢丝绳有断丝、断股现象；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.12'
+    name: 附墙杆安装倾斜；
+    criteria: 附墙杆安装倾斜；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.13'
+    name: 斜拉杆缺失；
+    criteria: 斜拉杆缺失；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.14'
+    name: 外笼门限位装置缺失；
+    criteria: 外笼门限位装置缺失；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.15'
+    name: 外笼门限位装置变形失效；
+    criteria: 外笼门限位装置变形失效；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.16'
+    name: 施工电梯外笼门机械安全钩作用失效；
+    criteria: 施工电梯外笼门机械安全钩作用失效；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.17'
+    name: 天窗限位损坏；
+    criteria: 天窗限位损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.18'
+    name: 单开门限位损坏；
+    criteria: 单开门限位损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.19'
+    name: 急停装置失效；
+    criteria: 急停装置失效；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.20'
+    name: 进料门限位损坏；
+    criteria: 进料门限位损坏；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.21'
+    name: 滑触线接地未接；
+    criteria: 滑触线接地未接；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.22'
+    name: 电梯轿厢顶部防护围栏低于1.2米或缺失破损；
+    criteria: 电梯轿厢顶部防护围栏低于1.2米或缺失破损；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.23'
+    name: 电梯电缆未落入电缆筒内；
+    criteria: 电梯电缆未落入电缆筒内；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.24'
+    name: 电缆老化破皮；
+    criteria: 电缆老化破皮；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.25'
+    name: 专用电箱无防雨防砸棚；
+    criteria: 专用电箱无防雨防砸棚；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.26'
+    name: 电梯基础未做防雷接地；
+    criteria: 电梯基础未做防雷接地；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.27'
+    name: 电梯超员超载，超过8人；
+    criteria: 电梯超员超载，超过8人；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.28'
+    name: 人员离开未锁闭梯笼；
+    criteria: 人员离开未锁闭梯笼；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.29'
+    name: 违规开启天窗运输超长物料；
+    criteria: 违规开启天窗运输超长物料；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.30'
+    name: 楼层防护门安装滞后；
+    criteria: 楼层防护门安装滞后；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '39.31'
+    name: 施工电梯运行轨迹上方存在相关障碍物
+    criteria: 施工电梯运行轨迹上方存在相关障碍物
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-40
+  name: 吊篮
+  sub_items:
+  - code: '40.1'
+    name: 安装环节存在吊篮支座直接放置在女儿墙；
+    criteria: 安装环节存在吊篮支座直接放置在女儿墙；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.2'
+    name: 安装基础不稳固；
+    criteria: 安装基础不稳固；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.3'
+    name: 洞口未封闭；
+    criteria: 洞口未封闭；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.4'
+    name: 钢丝绳固定点位违规；
+    criteria: 钢丝绳固定点位违规；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.5'
+    name: 绳卡安装方向错误；
+    criteria: 绳卡安装方向错误；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.6'
+    name: 配重不规范且未锁定；
+    criteria: 配重不规范且未锁定；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.7'
+    name: 吊篮锁具螺旋扣未采用全封闭式花篮螺栓作为拉节点，存在变形脱落风险；
+    criteria: 吊篮锁具螺旋扣未采用全封闭式花篮螺栓作为拉节点，存在变形脱落风险；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.8'
+    name: 安全锁超期未检定；
+    criteria: 安全锁超期未检定；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.9'
+    name: 防冲顶限位损坏；
+    criteria: 防冲顶限位损坏；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.10'
+    name: 安全绳破损打结；
+    criteria: 安全绳破损打结；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.11'
+    name: 重锤块设置不规范；
+    criteria: 重锤块设置不规范；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.12'
+    name: 螺丝松动吊篮篮螺栓规格不符；
+    criteria: 螺丝松动吊篮篮螺栓规格不符；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.13'
+    name: 吊篮配重为非标准配重且损坏严重；
+    criteria: 吊篮配重为非标准配重且损坏严重；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.14'
+    name: 配重块未固定在支座上；
+    criteria: 配重块未固定在支座上；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.15'
+    name: 配重块无警示标识，如“吊篮配重严禁挪移”等警示牌；
+    criteria: 配重块无警示标识，如“吊篮配重严禁挪移”等警示牌；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.16'
+    name: 吊篮停用未落地；
+    criteria: 吊篮停用未落地；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.17'
+    name: 作业人员空中进出吊篮；
+    criteria: 作业人员空中进出吊篮；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.18'
+    name: 私自加装作业附件；
+    criteria: 私自加装作业附件；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.19'
+    name: 同一吊篮上作业人员超过2名；
+    criteria: 同一吊篮上作业人员超过2名；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.20'
+    name: 安全带错误挂设，将安全带系挂在吊篮边框上；
+    criteria: 安全带错误挂设，将安全带系挂在吊篮边框上；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.21'
+    name: 吊篮下方未设置警示隔离区；
+    criteria: 吊篮下方未设置警示隔离区；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.22'
+    name: 吊篮防护踢脚板缺失；
+    criteria: 吊篮防护踢脚板缺失；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.23'
+    name: 安全绳未拉直，违章直接拉设在吊篮支架上；
+    criteria: 安全绳未拉直，违章直接拉设在吊篮支架上；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+  - code: '40.24'
+    name: 吊篮与结构拉设位置棱角无防磨措施；
+    criteria: 吊篮与结构拉设位置棱角无防磨措施；
+    required_context: 需参照物或正视角，可量取尺寸/间距/角度
+    enabled: false
+    criteria_confirmed: false
+- code: CI-41
+  name: 挖机
+  sub_items:
+  - code: '41.1'
+    name: 挖机操作旋转半径内有人员站立；
+    criteria: 挖机操作旋转半径内有人员站立；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-42
+  name: 登高车
+  sub_items:
+  - code: '42.1'
+    name: 作业人员攀坐在登高车作业平台的护栏上；
+    criteria: 作业人员攀坐在登高车作业平台的护栏上；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '42.2'
+    name: 使用登高车时，同一登高车上作业人员超过2人；
+    criteria: 使用登高车时，同一登高车上作业人员超过2人；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '42.3'
+    name: 利用跳板、模板等增改登高车作业平台；
+    criteria: 利用跳板、模板等增改登高车作业平台；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '42.4'
+    name: 登高车未安装防碰撞限位杆，平台升顶离结构距离过近；
+    criteria: 登高车未安装防碰撞限位杆，平台升顶离结构距离过近；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-43
+  name: 应急消防设施
+  sub_items:
+  - code: '43.1'
+    name: 消火栓被货物杜塞遮挡，取用不便；
+    criteria: 消火栓被货物杜塞遮挡，取用不便；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '43.2'
+    name: 灭火器筒体腐蚀明显；
+    criteria: 灭火器筒体腐蚀明显；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '43.3'
+    name: 灭火器想内两具灭火器大小不一、种类不一；
+    criteria: 灭火器想内两具灭火器大小不一、种类不一；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '43.4'
+    name: 灭火器压力指示低于绿区或进入高压红区；
+    criteria: 灭火器压力指示低于绿区或进入高压红区；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '43.5'
+    name: 灭火器箱被货物堵塞遮挡，取用不便；
+    criteria: 灭火器箱被货物堵塞遮挡，取用不便；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+- code: CI-44
+  name: 叉车
+  sub_items:
+  - code: '44.1'
+    name: 只使用单叉进行材料转移；
+    criteria: 只使用单叉进行材料转移；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.2'
+    name: 插齿载人行驶或载人举升；
+    criteria: 插齿载人行驶或载人举升；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.3'
+    name: 人员站在叉齿上扶货物；
+    criteria: 人员站在叉齿上扶货物；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.4'
+    name: 插齿载气瓶举升；
+    criteria: 插齿载气瓶举升；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.5'
+    name: 叉车叉距过小，受力面积不足；
+    criteria: 叉车叉距过小，受力面积不足；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.6'
+    name: 人员违规充当叉车配重；
+    criteria: 人员违规充当叉车配重；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.7'
+    name: 叉车插货行驶时，货物高度遮挡叉车司机视线，叉车未采用倒车前进方式；
+    criteria: 叉车插货行驶时，货物高度遮挡叉车司机视线，叉车未采用倒车前进方式；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.8'
+    name: 仓库内叉车行驶速度超5km/h；
+    criteria: 仓库内叉车行驶速度超5km/h；
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+  - code: '44.9'
+    name: 叉车司机行驶中未系挂安全带
+    criteria: 叉车司机行驶中未系挂安全带
+    required_context: 视频或连续多帧，覆盖完整作业过程
+    enabled: false
+    criteria_confirmed: false
+- code: CI-45
+  name: 堆垛
+  sub_items:
+  - code: '45.1'
+    name: 托盘堆放高度超2m；
+    criteria: 托盘堆放高度超2m；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.2'
+    name: 托盘堆放不齐整，随时有塌落风险；
+    criteria: 托盘堆放不齐整，随时有塌落风险；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.3'
+    name: 托盘放置区与货区未分开；
+    criteria: 托盘放置区与货区未分开；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.4'
+    name: 托盘破损严重仍然在使用；
+    criteria: 托盘破损严重仍然在使用；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.5'
+    name: 货物摆放不齐整，超出货区线；
+    criteria: 货物摆放不齐整，超出货区线；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.6'
+    name: 码货不遵守”大不压小、重不压轻、木不压纸”原则；
+    criteria: 码货不遵守”大不压小、重不压轻、木不压纸”原则；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.7'
+    name: 货物摆放堵塞消防通道；
+    criteria: 货物摆放堵塞消防通道；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false
+  - code: '45.8'
+    name: 包装有锋利菱角的货物锋利棱角朝外无保护人员可以直接靠近；
+    criteria: 包装有锋利菱角的货物锋利棱角朝外无保护人员可以直接靠近；
+    required_context: 单帧整图可判，目标完整入画
+    enabled: false
+    criteria_confirmed: false

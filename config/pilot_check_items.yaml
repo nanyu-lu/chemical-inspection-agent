@@ -1,0 +1,22 @@
+# 45 项·第一批试点（接入 agent 用）
+# 只启用已有判据且已有离线基线的 2 项 / 9 个子项。
+# 其余 43 项仍 enabled: false，不参与线上判定。
+version: "2026-11-08.pilot.1"
+enabled: true
+prompt_version: "pilot-v1"
+criteria_ref: config/baseline_criteria.yaml
+
+# 单帧最多调用 9 次（每个子项 1 次）；超过则启动时报错，避免成本失控。
+max_calls_per_frame: 9
+concurrency: 4
+
+items:
+  - code: CI-06          # 法兰
+    sub_items: ["6.11", "6.13", "6.9"]
+  - code: CI-11          # 防爆电气设备
+    sub_items: ["11.1", "11.3", "11.4", "11.6", "11.7", "11.8"]
+
+note: >
+  试点只做“带标注确认能力”的线上化，不是 45 项全量。
+  提示词不注入点位上下文（基线显示点位上下文会增加误报），
+  并明确“图片可能带人工标注/水印，不要依赖标注”。

@@ -19,11 +19,34 @@ export interface PointInfo {
   focus?: string[]
 }
 
+export interface CheckItemSubItem {
+  code: string
+  name: string
+}
+
+export interface CheckItem {
+  code: string
+  name: string
+  group: string
+  detection_mode: string
+  enabled: boolean
+  sub_items: CheckItemSubItem[]
+}
+
+export interface CheckItemsConfig {
+  enabled: boolean
+  version?: string
+  prompt_version?: string
+  max_calls_per_frame?: number
+  items: CheckItem[]
+}
+
 export interface AppConfig {
   categories: Category[]
   points: PointInfo[]
   thresholds: { conf_drop: number; conf_review: number }
   criteria_confirmed: boolean
+  check_items?: CheckItemsConfig
 }
 
 export interface Detection {
@@ -39,6 +62,10 @@ export interface HazardEvent {
   task_id: string
   point_id: string
   hazard_type: string | null
+  check_item_code?: string | null
+  sub_item_code?: string | null
+  check_item_name?: string | null
+  detection_mode?: string | null
   is_hazard: boolean
   level: string | null
   confidence: number
@@ -65,6 +92,7 @@ export interface TaskFrame {
   height: number
   captured_at: string
   event: HazardEvent | null
+  events?: HazardEvent[]
 }
 
 export interface TaskSummary {

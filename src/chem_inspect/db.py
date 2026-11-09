@@ -78,6 +78,11 @@ class Event(Base):
     task_id: Mapped[str] = mapped_column(String(64), index=True)
     point_id: Mapped[str] = mapped_column(String(64), index=True)
     hazard_type: Mapped[str | None] = mapped_column(String(32), default=None, index=True)
+    # 45 项试点：检查项/子项溯源（旧 HZ-xx 事件为空）
+    check_item_code: Mapped[str | None] = mapped_column(String(64), default=None, index=True)
+    sub_item_code: Mapped[str | None] = mapped_column(String(32), default=None)
+    check_item_name: Mapped[str | None] = mapped_column(String(128), default=None)
+    detection_mode: Mapped[str | None] = mapped_column(String(32), default=None)
     is_hazard: Mapped[bool] = mapped_column(Boolean, default=False)
     level: Mapped[str | None] = mapped_column(String(32), default=None)
     confidence: Mapped[float] = mapped_column(Float, default=0.0)
@@ -128,6 +133,28 @@ _engine = None
 _SessionLocal: sessionmaker[Session] | None = None
 
 
+def _migrate_sqlite(engine) -> None:
+    """SQLite 轻量迁移：老库补 45 项试点列，不删不改已有数据。"""
+    if engine.dialect.name != "sqlite":
+        return
+    wanted = {
+        "check_item_code": "VARCHAR(64)",
+        "sub_item_code": "VARCHAR(32)",
+        "check_item_name": "VARCHAR(128)",
+        "detection_mode": "VARCHAR(32)",
+    }
+    with engine.begin() as conn:
+        rows = conn.exec_driver_sql("PRAGMA table_info(events)").fetchall()
+        cols = {row[1] for row in rows}
+        for name, ddl in wanted.items():
+            if name not in cols:
+                conn.exec_driver_sql(f"ALTER TABLE events ADD COLUMN {name} {ddl}")
+        conn.exec_driver_sql(
+            "CREATE INDEX IF NOT EXISTS ix_events_check_item_code "
+            "ON events (check_item_code)"
+        )
+
+
 def init_db(db_path: Path) -> Session:
     """建库并返回一个 Session（首次调用时初始化引擎）。"""
     global _engine, _SessionLocal
@@ -139,6 +166,7 @@ def init_db(db_path: Path) -> Session:
             future=True,
         )
         Base.metadata.create_all(_engine)
+        _migrate_sqlite(_engine)
         _SessionLocal = sessionmaker(bind=_engine, expire_on_commit=False, future=True)
     assert _SessionLocal is not None
     return _SessionLocal()
