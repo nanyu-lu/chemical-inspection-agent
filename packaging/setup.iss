@@ -3,7 +3,7 @@
 ; 产物：dist\chem-inspect-Setup-<版本>.exe
 
 #define MyAppName "化工巡检"
-#define MyAppVersion "0.1.0"
+#define MyAppVersion "0.2.0"
 #define MyAppPublisher "Scouter"
 #define MyAppExeName "ChemInspect.exe"
 

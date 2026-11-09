@@ -81,7 +81,7 @@ if sys.platform == "darwin":
         info_plist={
             "CFBundleDisplayName": "化工巡检",
             "CFBundleName": "ChemInspect",
-            "CFBundleShortVersionString": "0.1.0",
+            "CFBundleShortVersionString": "0.2.0",
             "LSMinimumSystemVersion": "11.0",
             "NSHighResolutionCapable": True,
             "NSRequiresAquaSystemAppearance": False,
